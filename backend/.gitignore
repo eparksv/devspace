@@ -1,11 +1,10 @@
-### Gradle template
+### Gradle ###
 .gradle
-**/build/
+build/
 !src/**/build/
 !gradle-wrapper.jar
 
 ### IntelliJ IDEA ###
-.idea
 *.iws
 *.iml
 *.ipr
