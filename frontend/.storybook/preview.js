@@ -12,15 +12,17 @@ Object.defineProperty(NextImage, "default", {
 })
 
 const withThemeProvider = (Story, context) => {
-  const background = context.globals.backgrounds?.value || parameters.backgrounds.defaultColor; 
-  const theme = Object.values(Themes).find(theme => theme.background === background) 
+  const background = context.globals.backgrounds?.value || parameters.backgrounds.defaultColor;
+  const theme = Object.values(Themes).find(theme => theme.background === background)
+
 
   return (
     <ThemeProvider theme={theme}>
+      <Global styles={GlobalStyles} />
       <Story {...context} />
     </ThemeProvider>
   )
-};
+}
 
 const withGlobalStyles = (Story, context) => (
   <>

@@ -1,4 +1,4 @@
-import '@emotion/react';
+import "@emotion/react";
 import { AppTheme } from './theme/themes'
 
 declare module '@emotion/react' {

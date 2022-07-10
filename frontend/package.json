@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest",
     "storybook": "start-storybook",
     "build-storybook": "build-storybook"
   },
@@ -31,6 +32,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.1",
     "@types/node": "18.0.1",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
@@ -40,6 +42,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-storybook": "^0.5.13",
     "jest": "^28.1.2",
+    "jest-environment-jsdom": "^28.1.2",
     "prettier": "2.7.1",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "4.7.4"
