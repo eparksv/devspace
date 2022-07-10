@@ -3,7 +3,6 @@
 **/build/
 !src/**/build/
 !gradle-wrapper.jar
-.DS_Store
 ### IntelliJ IDEA ###
 .idea
 *.iws
