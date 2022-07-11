@@ -1877,7 +1877,7 @@
     "lodash" "^4.17.21"
     "ts-dedent" "^2.0.0"
 
-"@storybook/addon-docs@6.5.9":
+"@storybook/addon-docs@^6.5.9", "@storybook/addon-docs@6.5.9":
   "integrity" "sha512-9lwOZyiOJFUgGd9ADVfcgpels5o0XOXqGMeVLuzT1160nopbZjNjo/3+YLJ0pyHRPpMJ4rmq2+vxRQR6PVRgPg=="
   "resolved" "https://registry.npmjs.org/@storybook/addon-docs/-/addon-docs-6.5.9.tgz"
   "version" "6.5.9"
@@ -2235,7 +2235,7 @@
     "core-js" "^3.8.2"
     "global" "^4.4.0"
 
-"@storybook/components@6.5.9":
+"@storybook/components@^6.5.9", "@storybook/components@6.5.9":
   "integrity" "sha512-BhfX980O9zn/1J4FNMeDo8ZvL1m5Ml3T4HRpfYmEBnf8oW5b5BeF6S2K2cwFStZRjWqm1feUcwNpZxCBVMkQnQ=="
   "resolved" "https://registry.npmjs.org/@storybook/components/-/components-6.5.9.tgz"
   "version" "6.5.9"
