@@ -1,0 +1,106 @@
+import { Meta } from '@storybook/addon-docs';
+import { ColorPalette, ColorItem, Typeset } from '@storybook/components';
+import tokens from './../index.ts'
+import { Table } from '../../docs/Table.component.js'
+import { ColorSwatches } from '../../docs/ColorSwatches.component.js'
+import colors, { swatches, palette } from '../colors.token.ts'
+
+<Meta title="Design Tokens/Design Tokens" />
+
+# Design Tokens 
+
+<br />
+<br />
+<br />
+
+## font Size
+
+<Table data={tokens.zIndices} />
+
+<br />
+<br />
+<br />
+<br />
+
+### Color swatches
+
+<br />
+<br />
+
+<div>
+	{Object.keys(palette).map(color => (
+		<ColorSwatches key={color} title={`tokens.colors.${color}`} color={color} colors={swatches} />
+	))}
+</div>
+
+<br />
+<br />
+
+## fonts
+
+프리텐다드 국문 폰트 입니다.
+
+<Typeset 
+sampleText={'안녕하세요, 반가워요'}
+fontSizes={[12, 14, 18, 20, 22, 24, 32, 40]} fontFamily={tokens.fonts.pretendards} />
+
+roboto 영문 폰트 입니다.
+
+<Typeset 
+fontSizes={[12, 14, 18, 20, 22, 24, 32, 40]} fontFamily={tokens.fonts.roboto} />
+
+<br />
+<br />
+
+## fontWeights 
+
+<Table data={tokens.fontWeights} />
+
+<br />
+<br />
+
+## lineHeights 
+
+<Table data={tokens.lineHeights} />
+
+<br />
+<br />
+
+## borders 
+
+<Table data={tokens.borders} />
+
+<br />
+<br />
+
+## transitions 
+
+<Table data={tokens.transitions} />
+
+<br />
+<br />
+
+## breakpoints 
+
+<Table data={tokens.breakpoints} />
+
+<br />
+<br />
+
+## letterSpacings 
+
+<Table data={tokens.letterSpacings} />
+
+<br />
+<br />
+
+## opacity 
+
+<Table data={tokens.opacity} />
+
+<br />
+<br />
+
+## zIndices
+
+<Table data={tokens.zIndices} />

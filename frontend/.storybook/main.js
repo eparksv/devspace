@@ -6,13 +6,15 @@ module.exports = {
     "../stories/**/*.stories.@(js|jsx|ts|tsx)",
     '../components/**/*.stories.mdx',
     '../components/**/*.stories.@(js|jsx|ts|tsx)',
+    '../**/*.stories.@(js|mdx)',
   ],
   "staticDirs": ['../public'],
   "addons": [
     "@storybook/addon-a11y",
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
+    "@storybook/addon-interactions",
+    '@storybook/addon-docs'
   ],
   "webpackFinal": async (config) => {
     config.resolve.plugins = [
