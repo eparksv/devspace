@@ -9,3 +9,10 @@ build/
 *.iml
 *.ipr
 out/
+
+### API Doc ###
+api-doc.yaml
+
+### Environment ###
+application.properties
+application.yml
