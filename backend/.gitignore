@@ -1,0 +1,18 @@
+### Gradle ###
+.gradle
+build/
+!src/**/build/
+!gradle-wrapper.jar
+
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+out/
+
+### API Doc ###
+api-doc.yaml
+
+### Environment ###
+application.properties
+application.yml
