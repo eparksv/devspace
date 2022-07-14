@@ -1,0 +1,3 @@
+[submodule "devspace-sub"]
+	path = devspace-sub
+	url = https://github.com/epark-grace/devspace-sub.git
