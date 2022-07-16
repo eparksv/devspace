@@ -44,7 +44,6 @@ dependencies {
 test {
     outputs.dir snippetsDir
     useJUnitPlatform()
-    finalizedBy ':openapi3'
 }
 
 openapi3 {
@@ -55,8 +54,4 @@ openapi3 {
     format = 'yaml'
     outputDirectory = 'src/main/resources/static/docs'
     outputFileNamePrefix = 'api-doc'
-}
-
-build {
-    dependsOn ':openapi3'
 }
