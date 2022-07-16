@@ -16,9 +16,9 @@ import our.portfolio.devspace.domain.BaseTimeEntity;
 import our.portfolio.devspace.domain.user.User;
 
 @Getter
-@Entity
 @NoArgsConstructor
 @Table(name = "jobs")
+@Entity
 public class Job extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "job")
