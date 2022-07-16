@@ -23,20 +23,11 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-            .mvcMatchers("/docs/**", "/swagger-ui/**", "/v3/api-docs/**").hasRole("ADMIN")
-            .mvcMatchers("/api/hello").authenticated()
-            .anyRequest().denyAll()
-        ).formLogin(withDefaults()).oauth2Login(withDefaults());
+        http.csrf().disable().headers().frameOptions().disable() // H2 콘솔 사용 설정
+            .and()
+            .authorizeHttpRequests(authorize -> authorize
+                .anyRequest().permitAll()
+            );
         return http.build();
     }
-
-    @Bean
-    public UserDetailsService users() {
-        UserDetails admin = User.withDefaultPasswordEncoder()
-            .username(adminName).password(adminPassword).roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(admin);
-    }
-
-
 }
