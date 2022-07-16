@@ -12,14 +12,13 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import our.portfolio.devspace.domain.BaseTimeEntity;
 import our.portfolio.devspace.domain.user.User;
 
 @Getter
 @NoArgsConstructor
 @Table(name = "jobs")
 @Entity
-public class Job extends BaseTimeEntity {
+public class Job {
 
     @OneToMany(mappedBy = "job")
     final private List<User> users = new ArrayList<>();
