@@ -1,38 +1,35 @@
-package our.portfolio.devspace.domain.job;
+package our.portfolio.devspace.domain.user;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import our.portfolio.devspace.domain.user.User;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "jobs")
+@Table(name = "refresh_tokens")
 @Entity
-public class Job {
-
-    @OneToMany(mappedBy = "job")
-    private final List<User> users = new ArrayList<>();
+public class UserRefreshToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(nullable = false, length = 10)
-    private String title;
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String token;
 
     @Builder
-    public Job(String title) {
-        this.title = title;
+    public UserRefreshToken(String email, String token) {
+        this.email = email;
+        this.token = token;
     }
 }
