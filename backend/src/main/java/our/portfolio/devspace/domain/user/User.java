@@ -2,12 +2,14 @@ package our.portfolio.devspace.domain.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ import our.portfolio.devspace.domain.BaseTimeEntity;
 import our.portfolio.devspace.domain.job.Job;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users")
 @Entity
 public class User extends BaseTimeEntity {
@@ -33,24 +35,15 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String introduction;
 
-    @Column(nullable = false)
-    private String refreshToken;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-    /*
-    @Enumerated(EnumType.STRING)
-    private Role role;
-    */
-
     @Builder
-    public User(String email, String name, String introduction, String refreshToken, Job job) {
+    public User(String email, String name, String introduction, Job job) {
         this.email = email;
         this.name = name;
         this.introduction = introduction;
-        this.refreshToken = refreshToken;
         this.job = job;
 
         job.getUsers().add(this);
