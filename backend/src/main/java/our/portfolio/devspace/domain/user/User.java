@@ -41,16 +41,15 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id", nullable = false)
+    @JoinColumn(name = "job_id")
     private Job job;
 
     @Builder
-    public User(String email, String name, String introduction, Job job) {
+    public User(String email, String name, String introduction, Job job, Role role) {
         this.email = email;
         this.name = name;
         this.introduction = introduction;
         this.job = job;
-
-        job.getUsers().add(this);
+        this.role = role;
     }
 }
