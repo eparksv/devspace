@@ -2,6 +2,8 @@ package our.portfolio.devspace.domain.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,17 +37,19 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String introduction;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id", nullable = false)
+    @JoinColumn(name = "job_id")
     private Job job;
 
     @Builder
-    public User(String email, String name, String introduction, Job job) {
+    public User(String email, String name, String introduction, Job job, Role role) {
         this.email = email;
         this.name = name;
         this.introduction = introduction;
         this.job = job;
-
-        job.getUsers().add(this);
+        this.role = role;
     }
 }

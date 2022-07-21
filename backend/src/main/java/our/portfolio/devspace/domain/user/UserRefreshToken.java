@@ -32,4 +32,8 @@ public class UserRefreshToken {
         this.email = email;
         this.token = token;
     }
+
+    public void reissueToken(String newRefreshToken) {
+        this.token = newRefreshToken;
+    }
 }
