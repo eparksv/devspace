@@ -33,8 +33,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final HttpCookieOAuth2AuthorizationRequestRepository authorizationRequestRepository;
 
+    @Value("${security.oauth.default-redirect-uri}")
+    private String defaultRedirectUri;
+
     @Value("${security.oauth.authorized-redirect-uri}")
-    String[] authorizedRedirectUris;
+    private String[] authorizedRedirectUris;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -63,7 +66,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
-        return redirectUri.orElse(getDefaultTargetUrl());
+        return redirectUri.orElse(defaultRedirectUri);
     }
 
     private String saveRefreshToken(Authentication authentication) {
