@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import our.portfolio.devspace.configuration.security.oauth.domain.OAuth2UserPrincipal;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2UserInfo;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2UserInfoFactory;
-import our.portfolio.devspace.domain.user.Role;
-import our.portfolio.devspace.domain.user.User;
+import our.portfolio.devspace.domain.user.entity.Role;
+import our.portfolio.devspace.domain.user.entity.User;
 import our.portfolio.devspace.repository.UserRepository;
 
 @Service
