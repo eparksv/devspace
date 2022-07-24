@@ -21,6 +21,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
+import our.portfolio.devspace.configuration.security.oauth.domain.OAuth2UserPrincipal;
 
 @Slf4j
 @Component
@@ -43,12 +44,12 @@ public class JwtTokenProvider implements InitializingBean {
         this.refreshExpirationTime = refreshExpirationTime;
     }
 
-    public String createAccessToken(Authentication authentication) {
-        String authorities = authentication.getAuthorities().stream()
+    public String createAccessToken(OAuth2UserPrincipal principal) {
+        String authorities = principal.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
         return Jwts.builder()
-            .setSubject(authentication.getName())
+            .setSubject(principal.getId().toString())
             .claim(AUTHORITIES_KEY, authorities)
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
@@ -56,9 +57,9 @@ public class JwtTokenProvider implements InitializingBean {
             .compact();
     }
 
-    public String createRefreshToken(Authentication authentication) {
+    public String createRefreshToken(OAuth2UserPrincipal principal) {
         return Jwts.builder()
-            .setSubject(authentication.getName())
+            .setSubject(principal.getId().toString())
             .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationTime))
             .signWith(key, SignatureAlgorithm.HS512)
             .compact();
