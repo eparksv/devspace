@@ -32,8 +32,9 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private OAuth2Provider provider = OAuth2Provider.GOOGLE;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OAuth2Provider provider;
 
     @Column(nullable = false, length = 12)
     private String name;
