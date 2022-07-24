@@ -66,23 +66,22 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
             .map(Cookie::getValue);
 
-        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+        if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
         return redirectUri.orElse(defaultRedirectUri);
     }
 
-    private String saveRefreshToken(Authentication authentication) {
-        String refreshToken = tokenProvider.createRefreshToken(authentication);
+    private String saveRefreshToken(OAuth2UserPrincipal principal) {
+        String refreshToken = tokenProvider.createRefreshToken(principal);
 
-        OAuth2User user = (OAuth2User)authentication.getPrincipal();
-
-        Optional<UserRefreshToken> userRefreshToken = userRefreshTokenRepository.findByEmail(user.getName());
+        Optional<UserRefreshToken> userRefreshToken = userRefreshTokenRepository
+            .findByUserId(principal.getId());
         if (userRefreshToken.isPresent()) {
             userRefreshToken.get().reissueToken(refreshToken);
         } else {
-            userRefreshTokenRepository.save(new UserRefreshToken(user.getName(), refreshToken));
+            userRefreshTokenRepository.save(new UserRefreshToken(principal.getId(), refreshToken));
         }
         return refreshToken;
     }
