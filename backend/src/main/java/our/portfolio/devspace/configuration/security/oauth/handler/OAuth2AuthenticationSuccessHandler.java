@@ -14,14 +14,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 import our.portfolio.devspace.common.utils.CookieUtils;
+import our.portfolio.devspace.configuration.security.oauth.domain.OAuth2UserPrincipal;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
 import our.portfolio.devspace.configuration.security.oauth.repository.HttpCookieOAuth2AuthorizationRequestRepository;
-import our.portfolio.devspace.domain.user.UserRefreshToken;
+import our.portfolio.devspace.domain.job.Job;
+import our.portfolio.devspace.domain.profile.entity.Profile;
+import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
+import our.portfolio.devspace.domain.user.entity.UserRefreshToken;
 import our.portfolio.devspace.repository.UserRefreshTokenRepository;
 
 @Slf4j
@@ -31,6 +34,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private final JwtTokenProvider tokenProvider;
     private final UserRefreshTokenRepository userRefreshTokenRepository;
+    private final ProfileRepository profileRepository;
     private final HttpCookieOAuth2AuthorizationRequestRepository authorizationRequestRepository;
 
     @Value("${security.oauth.default-redirect-uri}")
@@ -62,38 +66,44 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
             .map(Cookie::getValue);
 
-        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+        if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
             throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
         }
 
         return redirectUri.orElse(defaultRedirectUri);
     }
 
-    private String saveRefreshToken(Authentication authentication) {
-        String refreshToken = tokenProvider.createRefreshToken(authentication);
+    private String saveRefreshToken(OAuth2UserPrincipal principal) {
+        String refreshToken = tokenProvider.createRefreshToken(principal);
 
-        OAuth2User user = (OAuth2User)authentication.getPrincipal();
-
-        Optional<UserRefreshToken> userRefreshToken = userRefreshTokenRepository.findByEmail(user.getName());
+        Optional<UserRefreshToken> userRefreshToken = userRefreshTokenRepository
+            .findByUserId(principal.getId());
         if (userRefreshToken.isPresent()) {
             userRefreshToken.get().reissueToken(refreshToken);
         } else {
-            userRefreshTokenRepository.save(new UserRefreshToken(user.getName(), refreshToken));
+            userRefreshTokenRepository.save(new UserRefreshToken(principal.getId(), refreshToken));
         }
         return refreshToken;
     }
 
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        OAuth2UserPrincipal principal = (OAuth2UserPrincipal) authentication.getPrincipal();
+
         String targetUrl = getTargetUrl(request);
-        String accessToken = tokenProvider.createAccessToken(authentication);
-        String refreshToken = saveRefreshToken(authentication);
+        String accessToken = tokenProvider.createAccessToken(principal);
+        String refreshToken = saveRefreshToken(principal);
+        String job = profileRepository.findById(principal.getId())
+            .map(Profile::getJob)
+            .map(Job::getTitle).orElse("");
 
         addRefreshTokenCookie(request, response, refreshToken);
 
         log.info("accessToken: {}", accessToken);
         return UriComponentsBuilder.fromUriString(targetUrl)
             .queryParam("token", accessToken)
+            .queryParam("id", principal.getId())
+            .queryParam("job", job)
             .build().toUriString();
     }
 

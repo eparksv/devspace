@@ -1,4 +1,4 @@
-package our.portfolio.devspace.domain.user;
+package our.portfolio.devspace.domain.user.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,14 +22,14 @@ public class UserRefreshToken {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private Long userId;
 
     @Column(nullable = false)
     private String token;
 
     @Builder
-    public UserRefreshToken(String email, String token) {
-        this.email = email;
+    public UserRefreshToken(Long userId, String token) {
+        this.userId = userId;
         this.token = token;
     }
 

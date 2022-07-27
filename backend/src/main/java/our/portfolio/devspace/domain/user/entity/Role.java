@@ -1,4 +1,4 @@
-package our.portfolio.devspace.domain.user;
+package our.portfolio.devspace.domain.user.entity;
 
 import java.util.Arrays;
 import lombok.Getter;

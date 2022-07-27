@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import our.portfolio.devspace.configuration.security.oauth.domain.OAuth2UserPrincipal;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2UserInfo;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2UserInfoFactory;
-import our.portfolio.devspace.domain.user.Role;
-import our.portfolio.devspace.domain.user.User;
+import our.portfolio.devspace.domain.user.entity.Role;
+import our.portfolio.devspace.domain.user.entity.User;
 import our.portfolio.devspace.repository.UserRepository;
 
 @Service
@@ -26,7 +26,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.of(registrationId, oAuth2User.getAttributes());
 
-        Optional<User> foundUser = userRepository.findByEmail(userInfo.getEmail());
+        Optional<User> foundUser = userRepository.findBySubjectAndProvider(userInfo.getSubject(), userInfo.getProvider());
         if (foundUser.isEmpty()) {
             return OAuth2UserPrincipal.from(createUser(userInfo));
         }
@@ -35,7 +35,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private User createUser(OAuth2UserInfo userInfo) {
         User newUser = User.builder()
-            .email(userInfo.getEmail())
+            .subject(userInfo.getSubject())
+            .provider(userInfo.getProvider())
             .name(userInfo.getName())
             .role(Role.USER)
             .build();

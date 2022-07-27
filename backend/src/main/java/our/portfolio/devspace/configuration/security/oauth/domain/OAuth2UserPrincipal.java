@@ -10,13 +10,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import our.portfolio.devspace.domain.user.Role;
-import our.portfolio.devspace.domain.user.User;
+import our.portfolio.devspace.domain.user.entity.Role;
+import our.portfolio.devspace.domain.user.entity.User;
 
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
+
+    @Getter
+    private final Long id;
     private final String username;
     private final Role role;
     private final Collection<GrantedAuthority> authorities;
@@ -24,7 +27,8 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 
     public static OAuth2UserPrincipal from(User user) {
         return new OAuth2UserPrincipal(
-            user.getEmail(),
+            user.getId(),
+            user.getName(),
             user.getRole(),
             Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getCode()))
         );
@@ -39,6 +43,10 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     @Override
@@ -79,9 +87,5 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
     }
 }

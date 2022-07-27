@@ -18,7 +18,7 @@ public abstract class OAuth2UserInfo {
      */
     public abstract OAuth2Provider getProvider();
 
-    public abstract String getEmail();
+    public abstract String getSubject();
 
     public abstract String getName();
 

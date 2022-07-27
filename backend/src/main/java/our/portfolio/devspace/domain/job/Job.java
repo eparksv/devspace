@@ -13,7 +13,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import our.portfolio.devspace.domain.user.User;
+import our.portfolio.devspace.domain.profile.entity.Profile;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,7 +22,7 @@ import our.portfolio.devspace.domain.user.User;
 public class Job {
 
     @OneToMany(mappedBy = "job")
-    private final List<User> users = new ArrayList<>();
+    private final List<Profile> profiles = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
