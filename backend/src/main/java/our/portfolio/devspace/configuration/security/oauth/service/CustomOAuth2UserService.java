@@ -12,7 +12,7 @@ import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2UserIn
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2UserInfoFactory;
 import our.portfolio.devspace.domain.user.entity.Role;
 import our.portfolio.devspace.domain.user.entity.User;
-import our.portfolio.devspace.repository.UserRepository;
+import our.portfolio.devspace.domain.user.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

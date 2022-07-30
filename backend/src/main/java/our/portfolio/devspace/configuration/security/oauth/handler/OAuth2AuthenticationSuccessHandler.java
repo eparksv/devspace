@@ -25,7 +25,7 @@ import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
 import our.portfolio.devspace.domain.user.entity.UserRefreshToken;
-import our.portfolio.devspace.repository.UserRefreshTokenRepository;
+import our.portfolio.devspace.domain.user.repository.UserRefreshTokenRepository;
 
 @Slf4j
 @Component
