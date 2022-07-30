@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import our.portfolio.devspace.domain.BaseTimeEntity;
-import our.portfolio.devspace.domain.job.Job;
+import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.user.entity.User;
 
 @Getter

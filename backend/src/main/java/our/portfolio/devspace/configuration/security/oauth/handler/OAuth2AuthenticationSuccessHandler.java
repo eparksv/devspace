@@ -21,7 +21,7 @@ import our.portfolio.devspace.common.utils.CookieUtils;
 import our.portfolio.devspace.configuration.security.oauth.domain.OAuth2UserPrincipal;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
 import our.portfolio.devspace.configuration.security.oauth.repository.HttpCookieOAuth2AuthorizationRequestRepository;
-import our.portfolio.devspace.domain.job.Job;
+import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
 import our.portfolio.devspace.domain.user.entity.UserRefreshToken;
