@@ -3,6 +3,7 @@ package our.portfolio.devspace.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,6 +37,7 @@ public class WebSecurityConfiguration {
             .csrf().disable()
             .headers().frameOptions().disable().and() // H2 콘솔 사용 설정
             .authorizeHttpRequests(authorize -> authorize
+                .antMatchers(HttpMethod.POST, "/api/profiles").hasRole("USER")
                 .anyRequest().permitAll()
             )
             .exceptionHandling()
