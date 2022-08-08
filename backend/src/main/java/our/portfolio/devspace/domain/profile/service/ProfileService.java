@@ -24,12 +24,10 @@ public class ProfileService {
         User user = userService.getUserById(userId);
         Job job = jobService.getJobById(dto.getJobId());
 
-        // 사용자의 이름을 요청된 값으로 변경한다.
-        user.modifyName(dto.getName());
-
-        // 이름 외 직군, 자기소개, 사용자 ID를 프로필로 추가한다.
+        // 이름, 직군, 자기소개, 사용자 ID를 프로필로 추가한다.
         Profile profile = Profile.builder()
             .user(user)
+            .name(dto.getName())
             .job(job)
             .introduction(dto.getIntroduction())
             .build();

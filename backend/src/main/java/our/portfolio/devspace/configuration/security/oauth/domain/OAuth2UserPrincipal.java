@@ -20,7 +20,6 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 
     @Getter
     private final Long id;
-    private final String username;
     private final Role role;
     private final Collection<GrantedAuthority> authorities;
     private Map<String, Object> attributes;
@@ -28,7 +27,6 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
     public static OAuth2UserPrincipal from(User user) {
         return new OAuth2UserPrincipal(
             user.getId(),
-            user.getName(),
             user.getRole(),
             Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getCode()))
         );
@@ -56,7 +54,7 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 
     @Override
     public String getName() {
-        return username;
+        return null;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return id.toString();
     }
 
     @Override

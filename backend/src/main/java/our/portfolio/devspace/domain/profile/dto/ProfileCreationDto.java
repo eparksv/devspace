@@ -27,6 +27,6 @@ public class ProfileCreationDto {
     }
 
     public static ProfileCreationDto from(Profile entity) {
-        return new ProfileCreationDto(entity.getUser().getName(), entity.getIntroduction(), entity.getJob().getId());
+        return new ProfileCreationDto(entity.getName(), entity.getIntroduction(), entity.getJob().getId());
     }
 }

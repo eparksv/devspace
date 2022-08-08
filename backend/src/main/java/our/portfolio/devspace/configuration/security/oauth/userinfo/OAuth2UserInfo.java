@@ -20,8 +20,6 @@ public abstract class OAuth2UserInfo {
 
     public abstract String getSubject();
 
-    public abstract String getName();
-
     public Map<String, Object> getAttributes() {
         return attributes;
     }

@@ -30,6 +30,9 @@ public class Profile extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false, length = 12)
+    private String name;
+
     @Column(columnDefinition = "TEXT")
     private String introduction;
 
@@ -41,9 +44,10 @@ public class Profile extends BaseTimeEntity {
     private String profile_bg_image;
 
     @Builder
-    public Profile(User user, String introduction, Job job, String profile_image,
+    public Profile(User user, String name, String introduction, Job job, String profile_image,
         String profile_bg_image) {
         this.user = user;
+        this.name = name;
         this.introduction = introduction;
         this.job = job;
         this.profile_image = profile_image;

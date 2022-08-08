@@ -36,9 +36,6 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OAuth2Provider provider;
 
-    @Column(nullable = false, length = 12)
-    private String name;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -48,14 +45,9 @@ public class User extends BaseTimeEntity {
     private Profile profile;
 
     @Builder
-    public User(String subject, OAuth2Provider provider, String name, Role role) {
+    public User(String subject, OAuth2Provider provider, Role role) {
         this.subject = subject;
         this.provider = provider;
-        this.name = name;
         this.role = role;
-    }
-
-    public void modifyName(String name) {
-        this.name = name;
     }
 }
