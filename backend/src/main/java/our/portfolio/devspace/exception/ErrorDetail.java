@@ -11,6 +11,7 @@ public enum ErrorDetail {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
     VALIDATION_FAILED(HttpStatus.UNPROCESSABLE_ENTITY, "Validation Failed"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User Not Found"),
+    PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Profile Not Found"),
     JOB_NOT_FOUND(HttpStatus.NOT_FOUND, "Job Not Found");
 
     private final HttpStatus status;
