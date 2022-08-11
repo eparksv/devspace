@@ -3,8 +3,6 @@ package our.portfolio.devspace.configuration.security.oauth.handler;
 import static our.portfolio.devspace.configuration.security.oauth.repository.HttpCookieOAuth2AuthorizationRequestRepository.REFRESH_TOKEN_PARAM_COOKIE_NAME;
 
 import java.io.IOException;
-import java.net.URI;
-import java.util.Arrays;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,9 +35,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     @Value("${security.oauth.default-redirect-uri}")
     private String defaultRedirectUri;
-
-    @Value("${security.oauth.authorized-redirect-uri}")
-    private String[] authorizedRedirectUris;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -99,15 +94,5 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         CookieUtils.deleteCookie(request, response, REFRESH_TOKEN_PARAM_COOKIE_NAME);
         CookieUtils.addCookie(response, REFRESH_TOKEN_PARAM_COOKIE_NAME, refreshToken, cookieMaxAge);
-    }
-
-    private boolean isAuthorizedRedirectUri(String uri) {
-        URI clientRedirectUri = URI.create(uri);
-        return Arrays.stream(authorizedRedirectUris)
-            .anyMatch(authorizedRedirectUri -> {
-                URI authorizedUri = URI.create(authorizedRedirectUri);
-                return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                    && authorizedUri.getPort() == clientRedirectUri.getPort();
-            });
     }
 }
