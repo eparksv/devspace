@@ -11,8 +11,6 @@ const Pages = () => {
 	const dispatch = useContext(ContextDispatch);
 
 	const query = router.query.id;
-
-	console.log(router);
 	let component;
 
 	useEffect(() => {
@@ -48,7 +46,6 @@ const Pages = () => {
 			console.log('test:', user);
 
 		default:
-			console.log('디폴트');
 			break;
 	}
 

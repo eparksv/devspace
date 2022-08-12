@@ -6,7 +6,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Tiptap_menu from './Tiptap_menu';
 
 function Tiptap_post() {
-	console.log('post start');
+	//console.log('post start');
 	const editor = useEditor({
 		extensions: [StarterKit, Image, Underline],
 	});

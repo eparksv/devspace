@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { StyledModalJob, StyledModalJob2, Wrap } from './Modal_style';
-import { ModalSignUp } from './ModalSignUp';
+import { StyledModalJob2, Wrap } from './Modal_style';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ModalJob } from './ModalJob';
 
@@ -82,8 +81,7 @@ export const ModalJob2 = ({
 
 	const mutation = useMutation(
 		async (data: object) => {
-			console.log(data);
-			console.log(`${token}`);
+			console.log('전송된 data', data);
 
 			await axios.post(`/post`, data, {
 				headers: {
@@ -92,7 +90,10 @@ export const ModalJob2 = ({
 			});
 		},
 		{
-			onSuccess: () => setOpen(false),
+			onSuccess: () => {
+				setOpen(false);
+				console.log('성공');
+			},
 			onError: (err) => console.log(err),
 		}
 	);
@@ -138,14 +139,13 @@ export const ModalJob2 = ({
 				<button
 					className='submit'
 					onClick={(e) => {
-						console.log(value);
+						//console.log('이전 모달에서 넘어온 값', value);
 						if (value && e.currentTarget.classList.contains('on')) {
-							console.log({
+							/*console.log('전송될 값', {
 								name: `${value.name}`,
 								introduction: `${value.text}`,
 								jobId: job,
-							});
-							mutation.mutate({
+							})*/ mutation.mutate({
 								name: `${value.name}`,
 								introduction: `${value.text}`,
 								jobId: 1, //job,
