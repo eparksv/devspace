@@ -1,10 +1,10 @@
-import { Html, Head, Main, NextScript } from "next/document";
-import { Global } from "@emotion/react";
+import { Html, Head, Main, NextScript } from 'next/document';
+import { Global } from '@emotion/react';
 
-import { GlobalStyles } from "@/styles/global";
+import { GlobalStyles } from '../styles/global';
 
 export default function Document() {
-  const setInitialTheme = `
+	const setInitialTheme = `
     var theme = localStorage.getItem("theme");
     var themeExistsInStorage = Boolean(theme !== null);
 
@@ -19,19 +19,17 @@ export default function Document() {
     document.documentElement.style.setProperty("--themeColor", textColor);
   `;
 
-    return (
-        <Html>
-            <Head>
+	return (
+		<Html>
+			<Head>
+				<script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
+				<Global styles={GlobalStyles} />
+			</Head>
 
-            <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
-            <Global styles={GlobalStyles} />
-            </Head>
-
-            <body>
-                <Main />
-                <NextScript />
-            </body>
-
-        </Html>
-    )
+			<body>
+				<Main />
+				<NextScript />
+			</body>
+		</Html>
+	);
 }
