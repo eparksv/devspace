@@ -10,16 +10,18 @@ import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
 import our.portfolio.devspace.domain.user.entity.User;
 import our.portfolio.devspace.domain.user.service.UserService;
+import our.portfolio.devspace.exception.CustomException;
+import our.portfolio.devspace.exception.ErrorDetail;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProfileService {
 
     private final UserService userService;
     private final JobService jobService;
     private final ProfileRepository profileRepository;
 
-    @Transactional
     public ProfileCreationDto createProfile(Long userId, ProfileCreationDto dto) {
         User user = userService.getUserById(userId);
         Job job = jobService.getJobById(dto.getJobId());
@@ -34,5 +36,11 @@ public class ProfileService {
 
         // 프로필을 저장하고 DTO로 변환한 후 리턴한다.
         return ProfileCreationDto.from(profileRepository.save(profile));
+    }
+
+    public Profile getProfileById(Long userId) {
+        return profileRepository.findById(userId).orElseThrow(() ->
+            new CustomException("User Id " + userId + "에 해당하는 사용자의 프로필이 없습니다.", ErrorDetail.PROFILE_NOT_FOUND)
+        );
     }
 }
