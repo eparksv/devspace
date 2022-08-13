@@ -1,0 +1,57 @@
+name: backend-dev-push
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - 'backend/**'
+jobs:
+  backend-dev-push:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{secrets.GH_ACCESS_TOKEN}}
+          submodules: true
+      -
+        name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      -
+        name: Build API Document
+        uses: gradle/gradle-build-action@v2
+        env:
+          SPRING_CONFIG_LOCATION: ../devspace-sub/application.yml
+        with:
+          build-root-directory: backend
+          arguments: clean openapi3
+      -
+        name: Delete Configuration file
+        run: rm devspace-sub/application.yml
+      -
+        name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          build-root-directory: backend
+          arguments: bootJar
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./backend
+          push: true
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/devspace-server:dev
