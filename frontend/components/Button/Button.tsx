@@ -31,6 +31,9 @@ export const Button = (props: Style) => {
 	return <Styled {...css}>{text}</Styled>;
 };
 
+const Styled = styled.button``;
+
+/*
 const Styled = styled.button`
 	display: ${(props) => props.display};
 	position: ${(props) => props.position};
@@ -51,3 +54,4 @@ const Styled = styled.button`
 	font-weight: ${(props) => props.fontWeight};
 	text-align: center;
 `;
+*/

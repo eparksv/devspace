@@ -22,6 +22,9 @@ function Modal({ children, wrap, css }: Props) {
 
 export default Modal;
 
+const Wrap = styled.div``;
+const StyledModal = styled.div``;
+/*
 const Wrap = styled.div`
 	position: fixed;
 	left: 0;
@@ -40,3 +43,4 @@ const StyledModal = styled.div`
 	height: ${(props) => props.height};
 	background: ${(props) => props.background};
 `;
+*/
