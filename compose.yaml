@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  client:
+    image: epark0120/devspace-client:dev
+    pull_policy: always
+    ports:
+      - "3000:3000"
+    command: cd app && npm start
+  server:
+    image: epark0120/devspace-server:dev
+    pull_policy: always
+    ports:
+      - "8080:8080"
+    secrets:
+      - source: server-configuration
+        target: application.yml
+    command: java -Dspring.config.location=/run/secrets/application.yml -jar app/app.jar
+secrets:
+  server-configuration:
+    file: ./devspace-sub/application.yml
