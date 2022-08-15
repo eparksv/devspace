@@ -145,7 +145,8 @@ export const ModalJob2 = ({
 								name: `${value.name}`,
 								introduction: `${value.text}`,
 								jobId: job,
-							})*/ mutation.mutate({
+							})*/
+							mutation.mutate({
 								name: `${value.name}`,
 								introduction: `${value.text}`,
 								jobId: 1, //job,

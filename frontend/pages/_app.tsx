@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, Dispatch } from 'react';
+/*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
+import React, { useReducer, Dispatch } from 'react';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import {
@@ -7,13 +8,15 @@ import {
 	QueryClientProvider,
 } from '@tanstack/react-query';
 
-type Action = {
-	type: 'TOKEN',
-	token: string
-}| {
-	type: 'JOB',
-	job: null | string;
-};
+type Action =
+	| {
+			type: 'TOKEN';
+			token: string;
+	  }
+	| {
+			type: 'JOB';
+			job: null | string;
+	  };
 
 type State = {
 	token?: string;

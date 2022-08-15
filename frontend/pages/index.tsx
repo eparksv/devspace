@@ -1,5 +1,5 @@
-import type { NextPage, GetServerSideProps } from 'next';
-import { useContext } from 'react';
+import React from 'react';
+import type { NextPage } from 'next';
 import Layout from '../component/common/Layout/Layout';
 import Main from '../component/main/Main.page';
 //import { fData } from '../firebase';

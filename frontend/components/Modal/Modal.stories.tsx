@@ -1,3 +1,4 @@
+import React from 'react';
 import Modal from './Modal';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Button } from '../Button/Button';

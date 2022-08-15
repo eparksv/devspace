@@ -1,7 +1,7 @@
 import Layout from '../component/common/Layout/Layout';
 import Develop from '../component/develop/Develop.page';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ContextDispatch, ContextUser } from './_app';
 import Main from '../component/main/Main.page';
 
@@ -18,7 +18,6 @@ const Pages = () => {
 			dispatch({ type: 'TOKEN', token: `${router.query.token}` });
 			dispatch({ type: 'JOB', job: `${router.query.job}` });
 			//console.log(user);
-
 			router.replace('/');
 		}
 	}, [query]);
@@ -27,9 +26,10 @@ const Pages = () => {
 		case '/':
 			component = <Main />;
 
+			break;
+
 		case 'develop':
 			component = <Develop />;
-
 			break;
 
 		case 'designer':
@@ -44,8 +44,6 @@ const Pages = () => {
 			//그 후 메인페이지로 이동
 
 			console.log('test:', user);
-
-		default:
 			break;
 	}
 
