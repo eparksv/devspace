@@ -6,7 +6,6 @@ services:
     pull_policy: always
     ports:
       - "3000:3000"
-    command: cd app && npm start
   server:
     image: epark0120/devspace-server:dev
     pull_policy: always
