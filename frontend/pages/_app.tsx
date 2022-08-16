@@ -16,11 +16,15 @@ type Action =
 	| {
 			type: 'JOB';
 			job: null | string;
+	  }
+	| {
+			type: 'USER';
+			id: string;
 	  };
 
 type State = {
 	token?: string;
-	user: { id: ''; job: null | string };
+	user: { id: string; job: null | string };
 };
 
 export const ContextUser = React.createContext<State>({
@@ -38,6 +42,8 @@ const reducer = (state: State, action: Action) => {
 			return { ...state, token: action.token };
 		case 'JOB':
 			return { ...state, user: { ...state.user, job: action.job } };
+		case 'USER':
+			return { ...state, user: { ...state.user, id: action.id } }; //로그인 후 회원프로필 저장.
 		default:
 			return state;
 	}

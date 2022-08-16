@@ -1,3 +1,4 @@
+//최대한 정리해도 필요함수가 6개. 이 페이지에 둘지, 아니면 함수만 모아두는 파일을 만들어서 export시킬지..
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalJob } from './ModalJob';
 import { StyledModalSignUp, Wrap } from './Modal_style';
@@ -16,7 +17,7 @@ export const ModalSignUp = ({ setOpen, setModal, token }: modalProps) => {
 
 	useEffect(() => {
 		setTimeout(() => ref.current.focus());
-	}, []);
+	}, []); //모달 컴포넌트의 키보드 초첨 함수.
 
 	const name = useRef<HTMLInputElement>(null);
 	const text = useRef<HTMLTextAreaElement>(null);
@@ -36,6 +37,7 @@ export const ModalSignUp = ({ setOpen, setModal, token }: modalProps) => {
 			};
 
 			setModal(
+				//props 드릴링이 3단계...면 괜찮지않을까??..
 				<ModalJob
 					setOpen={setOpen}
 					setModal={setModal}
@@ -131,7 +133,7 @@ export const ModalSignUp = ({ setOpen, setModal, token }: modalProps) => {
 			<StyledModalSignUp>
 				<h1>프로필 입력</h1>
 				<form onSubmit={postProfile}>
-					{/*feildset, legend */}
+					{/*feildset, legend.. 아니면 form태그 사용하지않고서.. */}
 					<div className='wrap-name'>
 						<input
 							type='text'
@@ -170,12 +172,16 @@ export const ModalSignUp = ({ setOpen, setModal, token }: modalProps) => {
 								checkPass();
 							}}
 						/>
-						<div className='p-wrap'>
+						<div className='wrap-p'>
 							<p>{testMessage}</p>
 							<p>{word}/255</p>
 						</div>
 					</div>
 
+					{/*onChange - set..()오 각 글자마다 컴포넌트 렌더링을 호출하는 대신 -> 매 글자변경마다 렌더링이 발생 / 대신 useSate 값을 props로 전달할 수 있어서 컴포넌트로 분리하여 제어할 수 있다(유지보수,가독성)
+						ref - ref.current로 value관리, submit 버튼을 클릭하면 ref.currnet의 value값을 객체로 만들어서 modalJob set(); 
+						-> 클릭시 한번의 렌더링 / 대신 코드의 의존성이 높아서 jsx와 ref 제어 함수를 분리할 수 없다 + ref.current는 null타입이 기본이어서 타입가드 코드가 필수. (코드 가독성이 떨어짐)
+					*/}
 					<input type='submit' value='다음' ref={submit} />
 				</form>
 

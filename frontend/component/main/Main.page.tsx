@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyledArticle, StyledSection, TextBar } from './Main_style';
 import EditIcon from '@mui/icons-material/Edit';
 import { ModalPost } from '../common/Modal/ModalPost';
@@ -12,8 +12,8 @@ const Main = (/*{ data }: any*/) => {
 	/*const [list, setList] = useState<
 		[] | firebase.default.firestore.DocumentData[]
 	>([]); */
-	const ref = useRef<HTMLElement>(null);
-	const context = useContext(ContextUser);
+
+	const context = useContext(ContextUser); // /ouath를 거쳐넘어온 main컴포넌트라면 ContextUser 객체 업데이트됨.
 
 	useEffect(() => {
 		if (context.user.job === '') {

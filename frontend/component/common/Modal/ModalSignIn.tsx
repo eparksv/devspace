@@ -16,12 +16,12 @@ export const ModalSignIn = ({ setOpen }: modalProps) => {
 
 	const withGoogle = () => {
 		router.push(
-			`http://localhost:8080/oauth2/authorization/google?.redirect_uri=http://localhost:3000/oauth/redirect/`
+			`http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth`
 		);
 	};
 	const withGithub = () => {
 		router.push(
-			'http://localhost:8080/oauth2/authorization/github?.redirect_uri=http://localhost:3000/oauth/redirect'
+			'http://localhost:8080/oauth2/authorization/github?redirect_uri=http://localhost:3000/oauth'
 		);
 	};
 

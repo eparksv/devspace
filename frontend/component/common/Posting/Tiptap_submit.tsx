@@ -15,6 +15,7 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 
 	const [loading, setLoading] = useState(false);
 
+	//부모 컴포넌트의 ref.curent의 값을 받는 함수.
 	const click = () => {
 		const { title, target } = getValue();
 		postSubmit(title, target);

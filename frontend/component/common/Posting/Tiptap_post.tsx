@@ -13,6 +13,7 @@ function Tiptap_post() {
 
 	return (
 		<>
+			{/*tiptap editor는 포커스마다 컴포넌트 렌더링이 되어서 editior사용 컴포넌트끼리 묶음*/}
 			<Tiptap_menu editor={editor} />
 			<EditorContent editor={editor} />
 		</>

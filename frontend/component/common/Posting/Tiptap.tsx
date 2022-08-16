@@ -30,7 +30,7 @@ const Tiptap = ({ setOpen }: Props) => {
 
 	const inputSizing = () => {
 		const num = title.current?.value.length;
-		num ? setInputSize(num * 2) : null;
+		num ? setInputSize(num * 1.5) : null;
 	};
 
 	const makeTag = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -45,6 +45,7 @@ const Tiptap = ({ setOpen }: Props) => {
 	return (
 		<>
 			<form onSubmit={(e) => e.preventDefault()}>
+				{/*fieldset, legend 태그 추가 */}
 				<div className='editor-top'>
 					<input
 						type='text'
@@ -76,7 +77,7 @@ const Tiptap = ({ setOpen }: Props) => {
 							</span>
 						);
 					})}
-					{tagList.length < 5 ? (
+					{tagList.length < 4 ? (
 						<input
 							type='text'
 							id='tag'
@@ -86,6 +87,7 @@ const Tiptap = ({ setOpen }: Props) => {
 						/>
 					) : null}
 				</div>
+
 				<Tiptap_submit getValue={getValue} setOpen={setOpen} />
 			</form>
 		</>

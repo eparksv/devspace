@@ -1,3 +1,7 @@
+//물어볼 부분 :
+//1. 하드코딩 스타일로 일일히 css기입? emotion의 props 이용해서 동적으로 css제어?
+//2. 하나의 style페이지에 모아둘지, 모달마다 style 페이지 만들어서 분산시킬지.
+
 import styled from '@emotion/styled';
 
 export const Wrap = styled.div`
@@ -359,7 +363,7 @@ export const StyledModalSignUp = styled.div`
 			textarea {
 				margin-top: 5px;
 			}
-			.p-wrap{
+			.wrap-p{
 				display:flex;
 				justify-content: space-between;
 				p{
