@@ -4,6 +4,7 @@ import axios from 'axios';
 import { StyledModalJob2, Wrap } from './Modal_style';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ModalJob } from './ModalJob';
+import ModalSignUpImage from './ModalSignUpImage';
 
 type modalProps = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -91,10 +92,13 @@ export const ModalJob2 = ({
 		},
 		{
 			onSuccess: () => {
-				setOpen(false);
+				if (setModal) setModal(<ModalSignUpImage />);
 				console.log('성공');
 			},
-			onError: (err) => console.log(err),
+			onError: (err) => {
+				console.log(err);
+				if (setModal) setModal(<ModalSignUpImage setOpen={setOpen} />);
+			},
 		}
 	);
 
