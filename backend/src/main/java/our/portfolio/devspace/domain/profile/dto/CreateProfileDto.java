@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
 @Getter
-public class ProfileCreationDto {
+public class CreateProfileDto {
 
     @NotNull(message = "이름을 입력하세요.")
     @Length(min = 2, max = 12, message = "이름은 12자 이하로 입력하세요.")
@@ -20,13 +20,13 @@ public class ProfileCreationDto {
     private final Integer jobId;
 
     @Builder
-    public ProfileCreationDto(String name, String introduction, Integer jobId) {
+    public CreateProfileDto(String name, String introduction, Integer jobId) {
         this.name = name;
         this.introduction = introduction;
         this.jobId = jobId;
     }
 
-    public static ProfileCreationDto from(Profile entity) {
-        return new ProfileCreationDto(entity.getName(), entity.getIntroduction(), entity.getJob().getId());
+    public static CreateProfileDto from(Profile entity) {
+        return new CreateProfileDto(entity.getName(), entity.getIntroduction(), entity.getJob().getId());
     }
 }

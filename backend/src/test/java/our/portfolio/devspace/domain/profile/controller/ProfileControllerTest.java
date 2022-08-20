@@ -30,7 +30,7 @@ import our.portfolio.devspace.common.CommonTestUtils;
 import our.portfolio.devspace.common.ControllerTestUtils;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
-import our.portfolio.devspace.domain.profile.dto.ProfileCreationDto;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileDto;
 import our.portfolio.devspace.domain.profile.service.ProfileService;
 
 @AutoConfigureRestDocs
@@ -51,14 +51,14 @@ class ProfileControllerTest {
     public void createProfile() throws Exception {
         // ** GIVEN **
         // Mock 객체인 ProfileService의 createProfile을 실행하면 requestDto를 반환한다.
-        given(profileService.createProfile(anyLong(), any(ProfileCreationDto.class))).willReturn(profileCreationDto());
+        given(profileService.createProfile(anyLong(), any(CreateProfileDto.class))).willReturn(profileCreationDto());
 
         // ** WHEN **
         ResultActions resultActions = profileCreationResultActions();
 
         // ** THEN **
         // HTTP Status Code 201, 응답 본문에는 ResponseEntity로 생성된 프로필 내용이 포함된다.
-        HttpResponseBody<ProfileCreationDto> body = new HttpResponseBody<>("프로필이 저장되었습니다.", profileCreationDto());
+        HttpResponseBody<CreateProfileDto> body = new HttpResponseBody<>("프로필이 저장되었습니다.", profileCreationDto());
         resultActions.andExpectAll(
             status().isCreated(),
             content().json(CommonTestUtils.valueToString(body)));
@@ -81,8 +81,8 @@ class ProfileControllerTest {
                 .build())));
     }
 
-    private ProfileCreationDto profileCreationDto() {
-        return ProfileCreationDto.builder()
+    private CreateProfileDto profileCreationDto() {
+        return CreateProfileDto.builder()
             .name("이름")
             .introduction("자기소개")
             .jobId(1)
@@ -99,10 +99,12 @@ class ProfileControllerTest {
     }
 
     private FieldDescriptors profileCreationDtoFieldDescriptors() {
-        ConstrainedFields constrainedFields = new ConstrainedFields(ProfileCreationDto.class);
+        ConstrainedFields constrainedFields = new ConstrainedFields(CreateProfileDto.class);
         return new FieldDescriptors(
             constrainedFields.withPath("name").description("사용자 이름").type(JsonFieldType.STRING),
             constrainedFields.withPath("introduction").description("자기 소개").type(JsonFieldType.STRING),
-            constrainedFields.withPath("jobId").description("직군 ID").type(JsonFieldType.NUMBER));
+            constrainedFields.withPath("jobId").description("직군 ID").type(JsonFieldType.NUMBER),
+            constrainedFields.withPath("referenceLink").description("링크").type(JsonFieldType.ARRAY)
+            );
     }
 }
