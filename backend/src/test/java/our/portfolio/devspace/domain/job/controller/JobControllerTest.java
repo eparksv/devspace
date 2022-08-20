@@ -87,8 +87,8 @@ class JobControllerTest {
         jobs.add(Job.builder().title("기획2").type(JobType.PLANNER).build());
         jobs.add(Job.builder().title("마케팅1").type(JobType.MARKETER).build());
         jobs.add(Job.builder().title("마케팅2").type(JobType.MARKETER).build());
-        jobs.add(Job.builder().title("기업1").type(JobType.COMPANY).build());
-        jobs.add(Job.builder().title("기업2").type(JobType.COMPANY).build());
+        jobs.add(Job.builder().title("기업1").type(JobType.STARTUP).build());
+        jobs.add(Job.builder().title("기업2").type(JobType.STARTUP).build());
         return ListJobsResponse.from(jobs);
     }
 
@@ -106,8 +106,8 @@ class JobControllerTest {
             fieldWithPath("marketers.[]").type(JsonFieldType.ARRAY).description("마케터 직군 목록"),
             fieldWithPath("marketers.[].id").type(JsonFieldType.NUMBER).description("마케터 직군 ID"),
             fieldWithPath("marketers.[].name").type(JsonFieldType.STRING).description("마케터 직군명"),
-            fieldWithPath("companies.[]").type(JsonFieldType.ARRAY).description("창업 직군 목록"),
-            fieldWithPath("companies.[].id").type(JsonFieldType.NUMBER).description("창업 직군 ID"),
-            fieldWithPath("companies.[].name").type(JsonFieldType.STRING).description("창업 직군명"));
+            fieldWithPath("startups.[]").type(JsonFieldType.ARRAY).description("창업 직군 목록"),
+            fieldWithPath("startups.[].id").type(JsonFieldType.NUMBER).description("창업 직군 ID"),
+            fieldWithPath("startups.[].name").type(JsonFieldType.STRING).description("창업 직군명"));
     }
 }
