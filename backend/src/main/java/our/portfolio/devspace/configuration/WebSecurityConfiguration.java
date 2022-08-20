@@ -38,6 +38,7 @@ public class WebSecurityConfiguration {
             .headers().frameOptions().disable().and() // H2 콘솔 사용 설정
             .authorizeHttpRequests(authorize -> authorize
                 .antMatchers(HttpMethod.POST, "/api/profiles").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/jobs").hasRole("USER")
                 .anyRequest().permitAll()
             )
             .exceptionHandling()
