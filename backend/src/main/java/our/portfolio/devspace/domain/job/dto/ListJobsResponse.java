@@ -19,15 +19,15 @@ public class ListJobsResponse {
     private final List<JobResponse> designers;
     private final List<JobResponse> planners;
     private final List<JobResponse> marketers;
-    private final List<JobResponse> companies;
+    private final List<JobResponse> startups;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public ListJobsResponse(List<JobResponse> developers, List<JobResponse> designers, List<JobResponse> planners, List<JobResponse> marketers, List<JobResponse> companies) {
+    public ListJobsResponse(List<JobResponse> developers, List<JobResponse> designers, List<JobResponse> planners, List<JobResponse> marketers, List<JobResponse> startups) {
         this.developers = developers;
         this.designers = designers;
         this.planners = planners;
         this.marketers = marketers;
-        this.companies = companies;
+        this.startups = startups;
     }
 
     public static ListJobsResponse from(List<Job> jobs) {
@@ -42,7 +42,7 @@ public class ListJobsResponse {
             .designers(groupedJobs.get(JobType.DESIGNER))
             .planners(groupedJobs.get(JobType.PLANNER))
             .marketers(groupedJobs.get(JobType.MARKETER))
-            .companies(groupedJobs.get(JobType.COMPANY))
+            .startups(groupedJobs.get(JobType.STARTUP))
             .build();
     }
 

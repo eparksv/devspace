@@ -5,5 +5,5 @@ public enum JobType {
     DESIGNER,
     PLANNER,
     MARKETER,
-    COMPANY
+    STARTUP
 }
