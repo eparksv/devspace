@@ -72,7 +72,9 @@ class PostControllerTest {
                 .summary("포스트 생성")
                 .tag("Post")
                 .requestSchema(schema("PostCreationRequest"))
-                .requestHeaders(ControllerTestUtils.authorizationHeader())
+                .requestHeaders(
+                    ControllerTestUtils.authorizationHeader(),
+                    ControllerTestUtils.contentTypeApplicationJsonHeader())
                 .requestFields(postCreationDescriptors())
                 .responseSchema(schema("PostCreationResponse"))
                 .responseFields(ControllerTestUtils.fieldDescriptorsWithMessage(

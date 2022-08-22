@@ -69,7 +69,9 @@ class ProfileControllerTest {
                 .summary("프로필 생성")
                 .tag("Profile")
                 .requestSchema(schema("ProfileCreationRequest"))
-                .requestHeaders(ControllerTestUtils.authorizationHeader())
+                .requestHeaders(
+                    ControllerTestUtils.authorizationHeader(),
+                    ControllerTestUtils.contentTypeApplicationJsonHeader())
                 .requestFields(profileCreationDtoFieldDescriptors())
                 .responseSchema(schema("ProfileCreationResponse"))
                 .responseFields(
