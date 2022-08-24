@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,8 +40,7 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Setter(AccessLevel.PACKAGE)
-    @OneToOne(mappedBy = "user")
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Profile profile;
 
     @Builder
