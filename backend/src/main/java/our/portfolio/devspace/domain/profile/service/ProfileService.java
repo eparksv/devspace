@@ -25,22 +25,22 @@ public class ProfileService {
 
     @Transactional
     public CreateProfileResponse createProfile(Long userId, CreateProfileRequest dto) {
+        // 이미 등록된 프로필이 있으면 예외를 던진다.
+        throwIfExists(userId);
+
+        // 연관관계 Entity를 찾아서 Profile Entity를 생성한다.
         User user = userService.getUserById(userId);
         Job job = jobService.getJobById(dto.getJobId());
+        Profile profile = dto.toEntity(user, job);
 
-        // 이름, 직군, 자기소개, 사용자 ID를 프로필로 추가한다.
-        Profile profile = Profile.builder()
-            .user(user)
-            .name(dto.getName())
-            .job(job)
-            .introduction(dto.getIntroduction())
-            .build();
         // 프로필을 저장하고 ID를 DTO로 변환한 후 리턴한다.
         return CreateProfileResponse.from(profileRepository.save(profile));
     }
 
-        // 프로필을 저장하고 DTO로 변환한 후 리턴한다.
-        return CreateProfileDto.from(profileRepository.save(profile));
+    private void throwIfExists(Long userId) {
+        if (profileRepository.existsById(userId)) {
+            throw new CustomException("이미 등록된 프로필이 있습니다.", ErrorDetail.PROFILE_ALREADY_EXISTS);
+        }
     }
 
     public Profile getProfileById(Long userId) {
