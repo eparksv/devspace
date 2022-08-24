@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.service.JobService;
-import our.portfolio.devspace.domain.profile.dto.CreateProfileDto;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
 import our.portfolio.devspace.domain.user.entity.User;
@@ -22,7 +23,8 @@ public class ProfileService {
     private final JobService jobService;
     private final ProfileRepository profileRepository;
 
-    public CreateProfileDto createProfile(Long userId, CreateProfileDto dto) {
+    @Transactional
+    public CreateProfileResponse createProfile(Long userId, CreateProfileRequest dto) {
         User user = userService.getUserById(userId);
         Job job = jobService.getJobById(dto.getJobId());
 
@@ -33,6 +35,9 @@ public class ProfileService {
             .job(job)
             .introduction(dto.getIntroduction())
             .build();
+        // 프로필을 저장하고 ID를 DTO로 변환한 후 리턴한다.
+        return CreateProfileResponse.from(profileRepository.save(profile));
+    }
 
         // 프로필을 저장하고 DTO로 변환한 후 리턴한다.
         return CreateProfileDto.from(profileRepository.save(profile));

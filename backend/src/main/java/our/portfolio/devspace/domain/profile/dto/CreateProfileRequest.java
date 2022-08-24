@@ -17,7 +17,7 @@ import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
 import our.portfolio.devspace.domain.user.entity.User;
 
 @Getter
-public class CreateProfileRequestDto {
+public class CreateProfileRequest {
 
     @NotNull(message = "이름을 입력하세요.")
     @Length(min = 2, max = 12, message = "이름은 2자 이상, 12자 이하로 입력하세요.")
@@ -41,7 +41,7 @@ public class CreateProfileRequestDto {
     private final List<ReferenceLinkDto> referenceLinks;
 
     @Builder
-    public CreateProfileRequestDto(String name, String introduction, Integer jobId, String company, String career, List<ReferenceLinkDto> referenceLinks) {
+    public CreateProfileRequest(String name, String introduction, Integer jobId, String company, String career, List<ReferenceLinkDto> referenceLinks) {
         this.name = name;
         this.introduction = introduction;
         this.jobId = jobId;
@@ -56,6 +56,8 @@ public class CreateProfileRequestDto {
             .name(this.name)
             .job(job)
             .introduction(this.introduction)
+            .company(this.company)
+            .career(this.career)
             .referenceLinks(createReferenceLink())
             .build();
     }
