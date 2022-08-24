@@ -12,7 +12,9 @@ public enum ErrorDetail {
     VALIDATION_FAILED(HttpStatus.UNPROCESSABLE_ENTITY, "Validation Failed"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User Not Found"),
     PROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Profile Not Found"),
-    JOB_NOT_FOUND(HttpStatus.NOT_FOUND, "Job Not Found");
+    JOB_NOT_FOUND(HttpStatus.NOT_FOUND, "Job Not Found"),
+
+    PROFILE_ALREADY_EXISTS(HttpStatus.CONFLICT, "Profile Already Exists");
 
     private final HttpStatus status;
     private final String description;
