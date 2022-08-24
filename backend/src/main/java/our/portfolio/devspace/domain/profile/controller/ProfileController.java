@@ -21,10 +21,10 @@ public class ProfileController {
 
     @PostMapping(value = "/api/profiles")
     public ResponseEntity<HttpResponseBody<CreateProfileResponse>> createProfile(@RequestBody @Valid CreateProfileRequest requestDto, Principal userPrincipal) {
-        CreateProfileResponse newProfile = profileService.createProfile(Long.parseLong(userPrincipal.getName()), requestDto);
+        CreateProfileResponse responseDto = profileService.createProfile(Long.parseLong(userPrincipal.getName()), requestDto);
 
         // HTTP Status Code: 201 Created, Response Body: { message, data: CreateProfileResponse}
-        HttpResponseBody<CreateProfileResponse> body = new HttpResponseBody<>("프로필이 저장되었습니다.", newProfile);
+        HttpResponseBody<CreateProfileResponse> body = new HttpResponseBody<>("프로필이 저장되었습니다.", responseDto);
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 }
