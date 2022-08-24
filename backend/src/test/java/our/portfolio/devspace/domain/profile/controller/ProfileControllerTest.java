@@ -15,13 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.epages.restdocs.apispec.ConstrainedFields;
 import com.epages.restdocs.apispec.FieldDescriptors;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,7 +30,9 @@ import our.portfolio.devspace.common.CommonTestUtils;
 import our.portfolio.devspace.common.ControllerTestUtils;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
-import our.portfolio.devspace.domain.profile.dto.CreateProfileDto;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
 import our.portfolio.devspace.domain.profile.service.ProfileService;
 
 @AutoConfigureRestDocs
@@ -51,14 +53,15 @@ class ProfileControllerTest {
     public void createProfile() throws Exception {
         // ** GIVEN **
         // Mock 객체인 ProfileService의 createProfile을 실행하면 requestDto를 반환한다.
-        given(profileService.createProfile(anyLong(), any(CreateProfileDto.class))).willReturn(profileCreationDto());
+        CreateProfileResponse responseDto = new CreateProfileResponse(1L);
+        given(profileService.createProfile(anyLong(), any(CreateProfileRequest.class))).willReturn(responseDto);
 
         // ** WHEN **
         ResultActions resultActions = profileCreationResultActions();
 
         // ** THEN **
         // HTTP Status Code 201, 응답 본문에는 ResponseEntity로 생성된 프로필 내용이 포함된다.
-        HttpResponseBody<CreateProfileDto> body = new HttpResponseBody<>("프로필이 저장되었습니다.", profileCreationDto());
+        HttpResponseBody<CreateProfileResponse> body = new HttpResponseBody<>("프로필이 저장되었습니다.", responseDto);
         resultActions.andExpectAll(
             status().isCreated(),
             content().json(CommonTestUtils.valueToString(body)));
@@ -72,20 +75,27 @@ class ProfileControllerTest {
                 .requestHeaders(
                     ControllerTestUtils.authorizationHeader(),
                     ControllerTestUtils.contentTypeApplicationJsonHeader())
-                .requestFields(profileCreationDtoFieldDescriptors())
+                .requestFields(profileCreationDescriptors())
                 .responseSchema(schema("ProfileCreationResponse"))
-                .responseFields(
-                    new FieldDescriptors(
-                        fieldWithPath("message").description("메시지").type(JsonFieldType.STRING))
-                        .andWithPrefix("data.", profileCreationDtoFieldDescriptors().getFieldDescriptors().toArray(new FieldDescriptor[0])))
+                .responseFields(ControllerTestUtils.fieldDescriptorsWithMessage(
+                    new FieldDescriptors(fieldWithPath("id").description("생성한 프로필 ID").type(JsonFieldType.NUMBER)))
+                )
                 .build())));
     }
 
-    private CreateProfileDto profileCreationDto() {
-        return CreateProfileDto.builder()
+    private CreateProfileRequest profileCreationDto() {
+        List<ReferenceLinkDto> referenceLinks = List.of(
+            new ReferenceLinkDto("Github", "http://www.github.com/"),
+            new ReferenceLinkDto("Google", "https://www.google.com/"));
+
+
+        return CreateProfileRequest.builder()
             .name("이름")
             .introduction("자기소개")
             .jobId(1)
+            .referenceLinks(referenceLinks)
+            .company("Devspace")
+            .career("1년")
             .build();
     }
 
@@ -98,13 +108,19 @@ class ProfileControllerTest {
                 .with(csrf()));
     }
 
-    private FieldDescriptors profileCreationDtoFieldDescriptors() {
-        ConstrainedFields constrainedFields = new ConstrainedFields(CreateProfileDto.class);
+    private FieldDescriptors profileCreationDescriptors() {
+        ConstrainedFields profileConstrainedFields = new ConstrainedFields(CreateProfileRequest.class);
+        ConstrainedFields linkConstrainedFields = new ConstrainedFields(ReferenceLinkDto.class);
+
         return new FieldDescriptors(
-            constrainedFields.withPath("name").description("사용자 이름").type(JsonFieldType.STRING),
-            constrainedFields.withPath("introduction").description("자기 소개").type(JsonFieldType.STRING),
-            constrainedFields.withPath("jobId").description("직군 ID").type(JsonFieldType.NUMBER),
-            constrainedFields.withPath("referenceLink").description("링크").type(JsonFieldType.ARRAY)
-            );
+            profileConstrainedFields.withPath("name").description("사용자 이름").type(JsonFieldType.STRING),
+            profileConstrainedFields.withPath("introduction").description("자기 소개").type(JsonFieldType.STRING),
+            profileConstrainedFields.withPath("jobId").description("직군 ID").type(JsonFieldType.NUMBER),
+            profileConstrainedFields.withPath("company").description("회사명").type(JsonFieldType.STRING),
+            profileConstrainedFields.withPath("career").description("경력 기간").type(JsonFieldType.STRING),
+            profileConstrainedFields.withPath("referenceLinks[]").description("링크 목록").type(JsonFieldType.ARRAY),
+            linkConstrainedFields.withPath("referenceLinks[].title").description("링크 이름").type(JsonFieldType.STRING),
+            linkConstrainedFields.withPath("referenceLinks[].url").description("링크 URL").type(JsonFieldType.STRING)
+        );
     }
 }
