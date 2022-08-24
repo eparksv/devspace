@@ -58,14 +58,14 @@ public class CreateProfileRequest {
             .introduction(this.introduction)
             .company(this.company)
             .career(this.career)
-            .referenceLinks(createReferenceLink())
+            .referenceLinks(createReferenceLinks())
             .build();
     }
 
-    private List<ReferenceLink> createReferenceLink() {
+    private List<ReferenceLink> createReferenceLinks() {
         return this.referenceLinks.stream()
             .map(link -> ReferenceLink.builder()
-                .description(link.title)
+                .title(link.title)
                 .url(link.url)
                 .build())
             .collect(Collectors.toList());

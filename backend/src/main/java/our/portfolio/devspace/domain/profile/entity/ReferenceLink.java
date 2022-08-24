@@ -30,14 +30,14 @@ public class ReferenceLink {
     private Profile profile;
 
     @Column(nullable = false, length = 10)
-    private String description;
+    private String title;
 
     @Column(nullable = false)
     private String url;
 
     @Builder
-    public ReferenceLink(String description, String url) {
-        this.description = description;
+    public ReferenceLink(String title, String url) {
+        this.title = title;
         this.url = url;
     }
 }
