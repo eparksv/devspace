@@ -44,8 +44,6 @@ public class ProfileService {
     }
 
     public Profile getProfileById(Long userId) {
-        return profileRepository.findById(userId).orElseThrow(() ->
-            new CustomException("User Id " + userId + "에 해당하는 사용자의 프로필이 없습니다.", ErrorDetail.PROFILE_NOT_FOUND)
-        );
+        return profileRepository.findByIdOrThrow(userId);
     }
 }
