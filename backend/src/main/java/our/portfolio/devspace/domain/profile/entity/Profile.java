@@ -74,7 +74,8 @@ public class Profile extends BaseTimeEntity {
         this.image = image;
         this.backgroundImage = backgroundImage;
 
-        // ReferenceLink Entity에 Profile 매핑
+        // Job, ReferenceLink Entity에 Profile 매핑
+        this.job.getProfiles().add(this);
         this.referenceLinks.forEach(referenceLink -> referenceLink.setProfile(this));
     }
 }
