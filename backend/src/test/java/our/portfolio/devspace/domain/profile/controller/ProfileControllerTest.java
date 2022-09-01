@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.epages.restdocs.apispec.ConstrainedFields;
 import com.epages.restdocs.apispec.FieldDescriptors;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
-import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import our.portfolio.devspace.common.CommonTestUtils;
 import our.portfolio.devspace.common.ControllerTestUtils;
+import our.portfolio.devspace.common.DtoFactory;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
@@ -49,6 +50,7 @@ class ProfileControllerTest {
     private ProfileService profileService;
 
     @Test
+    @DisplayName("프로필 생성 요청에 성공하면 HTTP status 201로 응답, 프로필 ID를 반환한다.")
     @WithMockUser(username = "1")
     public void createProfile() throws Exception {
         // ** GIVEN **
@@ -83,26 +85,10 @@ class ProfileControllerTest {
                 .build())));
     }
 
-    private CreateProfileRequest profileCreationDto() {
-        List<ReferenceLinkDto> referenceLinks = List.of(
-            new ReferenceLinkDto("Github", "http://www.github.com/"),
-            new ReferenceLinkDto("Google", "https://www.google.com/"));
-
-
-        return CreateProfileRequest.builder()
-            .name("이름")
-            .introduction("자기소개")
-            .jobId(1)
-            .referenceLinks(referenceLinks)
-            .company("Devspace")
-            .career("1년")
-            .build();
-    }
-
     private ResultActions profileCreationResultActions() throws Exception {
         return mockMvc.perform(
             post("/api/profiles")
-                .content(CommonTestUtils.valueToString(profileCreationDto()))
+                .content(CommonTestUtils.valueToString(DtoFactory.createProfileRequest()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf()));
