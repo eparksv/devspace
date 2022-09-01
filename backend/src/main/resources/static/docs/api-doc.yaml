@@ -1,1 +1,307 @@
-
+openapi: 3.0.1
+info:
+  title: DevSpace API
+  description: 데브스페이스 API
+  version: 0.1.0
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /api/jobs:
+    get:
+      tags:
+      - Job
+      summary: 직군 목록
+      description: 직군 목록
+      operationId: 직군 목록을 성공적으로 조회한다.
+      parameters:
+      - name: Authorization
+        in: header
+        description: Access Token
+        required: true
+        schema:
+          type: string
+        example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+              examples:
+                직군 목록을 성공적으로 조회한다.:
+                  value: "{\"message\":\"직군 목록이 조회되었습니다.\",\"data\":{\"developers\"\
+                    :[{\"id\":0,\"name\":\"개발1\"},{\"id\":0,\"name\":\"개발2\"}],\"\
+                    designers\":[{\"id\":0,\"name\":\"디자인1\"},{\"id\":0,\"name\":\"\
+                    디자인2\"}],\"planners\":[{\"id\":0,\"name\":\"기획1\"},{\"id\":0,\"\
+                    name\":\"기획2\"}],\"marketers\":[{\"id\":0,\"name\":\"마케팅1\"},{\"\
+                    id\":0,\"name\":\"마케팅2\"}],\"startups\":[{\"id\":0,\"name\":\"\
+                    기업1\"},{\"id\":0,\"name\":\"기업2\"}]}}"
+      security:
+      - bearerAuthJWT: []
+  /api/posts:
+    post:
+      tags:
+      - Post
+      summary: 포스트 생성
+      description: 포스트 생성
+      operationId: 포스트를 성공적으로 생성한다
+      parameters:
+      - name: Authorization
+        in: header
+        description: Access Token
+        required: true
+        schema:
+          type: string
+        example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+      - name: Content-Type
+        in: header
+        description: application/json
+        required: true
+        schema:
+          type: string
+        example: application/json;charset=UTF-8
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/PostCreationRequest'
+            examples:
+              포스트를 성공적으로 생성한다:
+                value: "{\"title\":\"제목\",\"content\":\"본문\",\"secret\":false,\"hashtags\"\
+                  :[\"#태그1\",\"#태그2\",\"#태그3\"]}"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCreationResponse'
+              examples:
+                포스트를 성공적으로 생성한다:
+                  value: "{\"message\":\"등록되었습니다.\",\"data\":{\"id\":1}}"
+      security:
+      - bearerAuthJWT: []
+  /api/profiles:
+    post:
+      tags:
+      - Profile
+      summary: 프로필 생성
+      description: 프로필 생성
+      operationId: 프로필을 성공적으로 생성한다
+      parameters:
+      - name: Authorization
+        in: header
+        description: Access Token
+        required: true
+        schema:
+          type: string
+        example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+      - name: Content-Type
+        in: header
+        description: application/json
+        required: true
+        schema:
+          type: string
+        example: application/json;charset=UTF-8
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ProfileCreationRequest'
+            examples:
+              프로필을 성공적으로 생성한다:
+                value: "{\"name\":\"이름\",\"introduction\":\"자기소개\",\"jobId\":1,\"\
+                  company\":\"Devspace\",\"career\":\"1년\",\"referenceLinks\":[{\"\
+                  title\":\"Github\",\"url\":\"http://www.github.com/\"},{\"title\"\
+                  :\"Google\",\"url\":\"https://www.google.com/\"}]}"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileCreationResponse'
+              examples:
+                프로필을 성공적으로 생성한다:
+                  value: "{\"message\":\"프로필이 저장되었습니다.\",\"data\":{\"id\":1}}"
+      security:
+      - bearerAuthJWT: []
+components:
+  schemas:
+    ProfileCreationRequest:
+      title: ProfileCreationRequest
+      required:
+      - introduction
+      - jobId
+      - name
+      type: object
+      properties:
+        referenceLinks:
+          type: array
+          description: 링크 목록
+          items:
+            type: object
+            properties:
+              title:
+                maxLength: 10
+                minLength: 0
+                type: string
+                description: 링크 이름
+              url:
+                type: string
+                description: 링크 URL
+        jobId:
+          type: number
+          description: 직군 ID
+        career:
+          maxLength: 30
+          minLength: 0
+          type: string
+          description: 경력 기간
+        name:
+          maxLength: 12
+          minLength: 2
+          type: string
+          description: 사용자 이름
+        company:
+          maxLength: 30
+          minLength: 0
+          type: string
+          description: 회사명
+        introduction:
+          maxLength: 255
+          minLength: 0
+          type: string
+          description: 자기 소개
+    PostCreationRequest:
+      title: PostCreationRequest
+      required:
+      - content
+      - secret
+      type: object
+      properties:
+        hashtags:
+          maxItems: 10
+          minItems: 0
+          type: array
+          description: 해시태그 목록
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+        secret:
+          type: boolean
+          description: 나만 보기 설정
+        title:
+          type: string
+          description: 포스트 제목
+        content:
+          maxLength: 16383
+          minLength: 0
+          type: string
+          description: 포스트 본문
+    PostCreationResponse:
+      title: PostCreationResponse
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: number
+              description: 생성한 포스트 ID
+        message:
+          type: string
+          description: 메시지
+    ListJobsResponse:
+      title: ListJobsResponse
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            designers:
+              type: array
+              description: 디자이너 직군 목록
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 디자이너 직군명
+                  id:
+                    type: number
+                    description: 디자이너 직군 ID
+            developers:
+              type: array
+              description: 개발자 직군 목록
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 개발자 직군명
+                  id:
+                    type: number
+                    description: 개발자 직군 ID
+            startups:
+              type: array
+              description: 창업 직군 목록
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 창업 직군명
+                  id:
+                    type: number
+                    description: 창업 직군 ID
+            marketers:
+              type: array
+              description: 마케터 직군 목록
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 마케터 직군명
+                  id:
+                    type: number
+                    description: 마케터 직군 ID
+            planners:
+              type: array
+              description: 기획자 직군 목록
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: 기획자 직군명
+                  id:
+                    type: number
+                    description: 기획자 직군 ID
+        message:
+          type: string
+          description: 메시지
+    ProfileCreationResponse:
+      title: ProfileCreationResponse
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: number
+              description: 생성한 프로필 ID
+        message:
+          type: string
+          description: 메시지
+  securitySchemes:
+    bearerAuthJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

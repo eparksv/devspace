@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.toList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class ListJobsResponse {
     private final List<JobResponse> marketers;
     private final List<JobResponse> startups;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     public ListJobsResponse(List<JobResponse> developers, List<JobResponse> designers, List<JobResponse> planners, List<JobResponse> marketers, List<JobResponse> startups) {
         this.developers = developers;
         this.designers = designers;
@@ -47,8 +46,8 @@ public class ListJobsResponse {
     }
 
     @Getter
-    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-    private static class JobResponse {
+    @RequiredArgsConstructor
+    public static class JobResponse {
 
         private final int id;
         private final String name;
