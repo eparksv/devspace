@@ -9,11 +9,11 @@ import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.post.service.HashtagService;
 
 @Mapper(uses = {EntityMapper.class, HashtagService.class})
-public abstract class PostMapper {
+public interface PostMapper {
 
-    public abstract PostCreationResponseDto toPostCreationResponseDto(Post post);
+    PostCreationResponseDto toPostCreationResponseDto(Post post);
 
     @Mapping(source = "userId", target = "profile", qualifiedBy = {IdToEntity.class})
-    @Mapping(source = "dto.hashtags", target = "hashtagsOfPost")
-    public abstract Post toEntity(Long userId, PostCreationRequestDto dto);
+    @Mapping(source = "dto.hashtags", target = "boundHashtags")
+    Post toEntity(Long userId, PostCreationRequestDto dto);
 }
