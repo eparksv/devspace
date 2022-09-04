@@ -44,19 +44,16 @@ public class Post extends BaseTimeEntity {
     private Boolean secret;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
-    private final List<PostHashtag> hashtagsOfPost = new ArrayList<>();
+    private final List<Hashtag> hashtags = new ArrayList<>();
 
     @Builder
-    public Post(String title, String content, Profile profile, Boolean secret, List<PostHashtag> hashtagsOfPost) {
+    public Post(String title, String content, Profile profile, Boolean secret, List<Hashtag> hashtags) {
         this.title = title;
         this.content = content;
         this.profile = profile;
         this.secret = secret;
-        addHashtags(hashtagsOfPost);
-    }
+        this.hashtags.addAll(hashtags);
 
-    private void addHashtags(List<PostHashtag> hashtagsOfPost) {
-        this.hashtagsOfPost.addAll(hashtagsOfPost);
-        this.hashtagsOfPost.forEach(hashtag -> hashtag.setPost(this));
+        this.hashtags.forEach(hashtag -> hashtag.setPost(this));
     }
 }
