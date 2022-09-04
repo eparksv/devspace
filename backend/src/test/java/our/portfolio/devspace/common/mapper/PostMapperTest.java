@@ -2,12 +2,9 @@ package our.portfolio.devspace.common.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,8 +17,6 @@ import our.portfolio.devspace.common.EntityFactory;
 import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
 import our.portfolio.devspace.domain.post.dto.PostCreationResponseDto;
 import our.portfolio.devspace.domain.post.entity.Post;
-import our.portfolio.devspace.domain.post.entity.PostHashtag;
-import our.portfolio.devspace.domain.post.service.HashtagService;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
 @Import({PostMapperImpl.class})
@@ -30,10 +25,6 @@ class PostMapperTest {
 
     @MockBean
     EntityMapper entityMapper;
-
-    @MockBean
-    HashtagService hashtagService;
-
     @Autowired
     PostMapperImpl postMapper;
 
@@ -58,12 +49,8 @@ class PostMapperTest {
         Long userId = 1L;
         PostCreationRequestDto requestDto = DtoFactory.postCreationRequestDto();
         Profile profile = EntityFactory.profileEntityWithId(DtoFactory.createProfileRequest(), 1L);
-        List<PostHashtag> postHashtags = requestDto.getHashtags().stream()
-            .map(EntityFactory::postHashtag)
-            .collect(Collectors.toList());
 
         given(entityMapper.resolve(anyLong(), any(Class.class))).willReturn(profile);
-        given(hashtagService.getHashtagsOfPost(anyList())).willReturn(postHashtags);
 
         // ** When **
         Post post = postMapper.toEntity(userId, requestDto);
@@ -73,9 +60,9 @@ class PostMapperTest {
         assertThat(post.getContent()).isEqualTo(requestDto.getContent());
         assertThat(post.getSecret()).isEqualTo(requestDto.getSecret());
         assertThat(post.getProfile()).isEqualTo(profile);
-        assertThat(post.getHashtagsOfPost()).allSatisfy(postHashtag -> {
-            assertThat(requestDto.getHashtags()).contains(postHashtag.getHashtag().getName());
-            assertThat(postHashtag.getPost()).isEqualTo(post);
+        assertThat(post.getHashtags()).allSatisfy(hashtag -> {
+            assertThat(requestDto.getHashtags()).contains(hashtag.getName());
+            assertThat(hashtag.getPost()).isEqualTo(post);
         });
     }
 }
