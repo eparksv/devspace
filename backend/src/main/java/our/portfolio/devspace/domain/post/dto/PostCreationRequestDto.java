@@ -7,9 +7,6 @@ import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
-import our.portfolio.devspace.domain.post.entity.Post;
-import our.portfolio.devspace.domain.post.entity.PostHashtag;
-import our.portfolio.devspace.domain.profile.entity.Profile;
 
 @Getter
 public class PostCreationRequestDto {
@@ -32,15 +29,5 @@ public class PostCreationRequestDto {
         this.content = content;
         this.secret = secret;
         this.hashtags = hashtags;
-    }
-
-    public Post toEntity(Profile profile, List<PostHashtag> hashtags) {
-        return Post.builder()
-            .profile(profile)
-            .title(this.title)
-            .content(this.content)
-            .secret(this.secret)
-            .hashtagsOfPost(hashtags)
-            .build();
     }
 }

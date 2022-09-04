@@ -11,11 +11,12 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static our.portfolio.devspace.common.DtoFactory.postCreationRequestDto;
 
 import com.epages.restdocs.apispec.ConstrainedFields;
 import com.epages.restdocs.apispec.FieldDescriptors;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
-import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -48,6 +49,7 @@ class PostControllerTest {
     PostService postService;
 
     @Test
+    @DisplayName("게시글 생성 요청에 성공하면 HTTP status 201로 응답, 게시글 ID를 반환한다.")
     @WithMockUser(username = "1")
     public void createPost() throws Exception {
         // ** Given **
@@ -90,15 +92,6 @@ class PostControllerTest {
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf())
         );
-    }
-
-    private PostCreationRequestDto postCreationRequestDto() {
-        return PostCreationRequestDto.builder()
-            .title("제목")
-            .content("본문")
-            .secret(false)
-            .hashtags(List.of("#태그1", "#태그2", "#태그3"))
-            .build();
     }
 
     private FieldDescriptors postCreationDescriptors() {

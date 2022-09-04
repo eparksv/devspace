@@ -1,7 +1,6 @@
 package our.portfolio.devspace.domain.profile.dto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,10 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
-import our.portfolio.devspace.domain.job.entity.Job;
-import our.portfolio.devspace.domain.profile.entity.Profile;
-import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
-import our.portfolio.devspace.domain.user.entity.User;
 
 @Getter
 public class CreateProfileRequest {
@@ -48,27 +43,6 @@ public class CreateProfileRequest {
         this.company = company;
         this.career = career;
         this.referenceLinks = referenceLinks;
-    }
-
-    public Profile toEntity(User user, Job job) {
-        return Profile.builder()
-            .user(user)
-            .name(this.name)
-            .job(job)
-            .introduction(this.introduction)
-            .company(this.company)
-            .career(this.career)
-            .referenceLinks(createReferenceLinks())
-            .build();
-    }
-
-    private List<ReferenceLink> createReferenceLinks() {
-        return this.referenceLinks.stream()
-            .map(link -> ReferenceLink.builder()
-                .title(link.title)
-                .url(link.url)
-                .build())
-            .collect(Collectors.toList());
     }
 
     @Getter
