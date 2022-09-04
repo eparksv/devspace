@@ -7,7 +7,6 @@ import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
 import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
-import our.portfolio.devspace.domain.post.entity.PostHashtag;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
@@ -54,9 +53,9 @@ public class EntityFactory {
             .content(dto.getContent())
             .secret(dto.getSecret())
             .profile(profileEntityWithId(DtoFactory.createProfileRequest(), 1L))
-            .hashtagsOfPost(
+            .hashtags(
                 dto.getHashtags().stream()
-                    .map(EntityFactory::postHashtag)
+                    .map(Hashtag::new)
                     .collect(Collectors.toList()))
             .build();
     }
@@ -64,9 +63,4 @@ public class EntityFactory {
     public static Post postEntityWithId(PostCreationRequestDto dto, Long id) throws IllegalAccessException {
         return (Post) CommonTestUtils.setIdField(postEntity(dto), id);
     }
-
-    public static PostHashtag postHashtag(String name) {
-        return new PostHashtag(new Hashtag(name));
-    }
-
 }
