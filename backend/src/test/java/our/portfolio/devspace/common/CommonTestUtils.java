@@ -6,7 +6,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 
 public class CommonTestUtils {
 
-    public static Object setIdField(Object object, Long id) throws IllegalAccessException {
+    public static Object setIdField(Object object, Number id) throws IllegalAccessException {
         FieldUtils.writeField(object, "id", id, true);
         return object;
     }
