@@ -23,6 +23,9 @@ jobs:
           java-version: 11
           distribution: adopt
       -
+        name: Create Api Spec File
+        run: touch backend/src/main/resources/static/docs/api-doc.yaml
+      -
         name: Build API Document
         uses: gradle/gradle-build-action@v2
         env:
