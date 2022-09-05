@@ -1,6 +1,8 @@
 package our.portfolio.devspace.common;
 
+import java.util.ArrayList;
 import java.util.List;
+import our.portfolio.devspace.domain.job.dto.JobResponse;
 import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
@@ -26,5 +28,13 @@ public class DtoFactory {
                 new ReferenceLinkDto("구글", "https://www.google.com"),
                 new ReferenceLinkDto("깃허브", "https://www.github.com")))
             .build();
+    }
+
+    public static List<JobResponse> jobResponses(int size) {
+        List<JobResponse> jobResponses = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            jobResponses.add(new JobResponse(i, "개발자" + i));
+        }
+        return jobResponses;
     }
 }

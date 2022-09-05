@@ -1,5 +1,9 @@
 package our.portfolio.devspace.common;
 
+import static our.portfolio.devspace.common.CommonTestUtils.setIdField;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2Provider;
 import our.portfolio.devspace.domain.job.entity.Job;
@@ -16,10 +20,10 @@ import our.portfolio.devspace.domain.user.entity.User;
 public class EntityFactory {
 
     public static Profile profileEntityWithId(CreateProfileRequest dto, Long id) throws IllegalAccessException {
-        return (Profile) CommonTestUtils.setIdField(profileEntity(dto), id);
+        return (Profile) setIdField(profileEntity(dto), id);
     }
 
-    public static Profile profileEntity(CreateProfileRequest dto) {
+    public static Profile profileEntity(CreateProfileRequest dto) throws IllegalAccessException {
         return Profile.builder()
             .company(dto.getCompany())
             .introduction(dto.getIntroduction())
@@ -30,13 +34,21 @@ public class EntityFactory {
                     .stream()
                     .map(link -> ReferenceLink.builder().title(link.getTitle()).url(link.getUrl()).build())
                     .collect(Collectors.toList()))
-            .job(jobEntity())
+            .job(jobEntityWithId("개발자", 1))
             .user(userEntity())
             .build();
     }
 
-    public static Job jobEntity() {
-        return new Job(JobType.DEVELOPER, "개발자");
+    public static List<Job> jobEntities(String title, int size) throws IllegalAccessException {
+        List<Job> jobEntities = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            jobEntities.add(jobEntityWithId(title + i, i));
+        }
+        return jobEntities;
+    }
+
+    public static Job jobEntityWithId(String title, Integer id) throws IllegalAccessException {
+        return (Job) setIdField(new Job(JobType.DEVELOPER, title), id);
     }
 
     public static User userEntity() {
@@ -61,6 +73,6 @@ public class EntityFactory {
     }
 
     public static Post postEntityWithId(PostCreationRequestDto dto, Long id) throws IllegalAccessException {
-        return (Post) CommonTestUtils.setIdField(postEntity(dto), id);
+        return (Post) setIdField(postEntity(dto), id);
     }
 }
