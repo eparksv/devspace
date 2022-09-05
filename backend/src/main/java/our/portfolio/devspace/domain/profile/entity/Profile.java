@@ -49,7 +49,7 @@ public class Profile extends BaseTimeEntity {
     @Column(length = 30)
     private String career;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 

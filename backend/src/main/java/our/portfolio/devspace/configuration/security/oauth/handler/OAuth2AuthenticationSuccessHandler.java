@@ -93,9 +93,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = getTargetUrl(request);
         String accessToken = tokenProvider.createAccessToken(principal);
         String refreshToken = saveRefreshToken(principal);
-        String job = profileRepository.findById(principal.getId())
+        Integer jobId = profileRepository.findById(principal.getId())
             .map(Profile::getJob)
-            .map(Job::getTitle).orElse("");
+            .map(Job::getId).orElse(null);
 
         addRefreshTokenCookie(request, response, refreshToken);
 
@@ -103,7 +103,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         return UriComponentsBuilder.fromUriString(targetUrl)
             .queryParam("token", accessToken)
             .queryParam("id", principal.getId())
-            .queryParam("job", job)
+            .queryParam("job", jobId)
             .build().toUriString();
     }
 
