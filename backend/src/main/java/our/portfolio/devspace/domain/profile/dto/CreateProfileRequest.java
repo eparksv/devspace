@@ -4,6 +4,8 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +18,7 @@ public class CreateProfileRequest {
 
     @NotNull(message = "이름을 입력하세요.")
     @Length(min = 2, max = 12, message = "이름은 2자 이상, 12자 이하로 입력하세요.")
+    @Pattern(regexp = "^[A-Z가-힣]+$", flags = Flag.CASE_INSENSITIVE)
     private final String name;
 
     @NotBlank(message = "자기소개를 입력하세요.")
@@ -26,9 +29,11 @@ public class CreateProfileRequest {
     private final Integer jobId;
 
     @Length(max = 30, message = "회사명은 30자 이하로 입력하세요.")
+    @Pattern(regexp = "^[A-Z가-힣0-9]+$", flags = Flag.CASE_INSENSITIVE)
     private final String company;
 
     @Length(max = 30, message = "경력 기간은 30자 이하로 입력하세요.")
+    @Pattern(regexp = "^[A-Z가-힣0-9]+$", flags = Flag.CASE_INSENSITIVE)
     private final String career;
 
     @Valid
@@ -49,9 +54,12 @@ public class CreateProfileRequest {
     @AllArgsConstructor
     public static class ReferenceLinkDto {
 
-        @Length(max = 10, message = "링크 이름은 10자 이하로 입력하세요.")
+        @NotNull(message = "링크 이름을 입력하세요.")
+        @Length(min = 1, max = 10, message = "링크 이름은 10자 이하로 입력하세요.")
+        @Pattern(regexp = "^[A-Z가-힣]+$", flags = Flag.CASE_INSENSITIVE)
         private String title;
 
+        @NotBlank
         @URL(regexp = "^(http|https):\\/\\/.*", message = "URL 형식이 유효하지 않습니다.")
         private String url;
     }

@@ -102,9 +102,9 @@ class ProfileControllerTest {
             profileConstrainedFields.withPath("name").description("사용자 이름").type(JsonFieldType.STRING),
             profileConstrainedFields.withPath("introduction").description("자기 소개").type(JsonFieldType.STRING),
             profileConstrainedFields.withPath("jobId").description("직군 ID").type(JsonFieldType.NUMBER),
-            profileConstrainedFields.withPath("company").description("회사명").type(JsonFieldType.STRING),
-            profileConstrainedFields.withPath("career").description("경력 기간").type(JsonFieldType.STRING),
-            profileConstrainedFields.withPath("referenceLinks[]").description("링크 목록").type(JsonFieldType.ARRAY),
+            profileConstrainedFields.withPath("company").description("회사명").type(JsonFieldType.STRING).optional(),
+            profileConstrainedFields.withPath("career").description("경력 기간").type(JsonFieldType.STRING).optional(),
+            profileConstrainedFields.withPath("referenceLinks[]").description("링크 목록").type(JsonFieldType.ARRAY).optional(),
             linkConstrainedFields.withPath("referenceLinks[].title").description("링크 이름").type(JsonFieldType.STRING),
             linkConstrainedFields.withPath("referenceLinks[].url").description("링크 URL").type(JsonFieldType.STRING)
         );
