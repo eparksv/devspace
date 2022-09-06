@@ -39,6 +39,7 @@ public class WebSecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
                 .antMatchers(HttpMethod.POST, "/api/profiles").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/jobs").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/api/posts").hasRole("USER")
                 .anyRequest().permitAll()
             )
             .exceptionHandling()
