@@ -52,9 +52,12 @@ public class CreateProfileRequest {
     @AllArgsConstructor
     public static class ReferenceLinkDto {
 
-        @Length(max = 10, message = "링크 이름은 10자 이하로 입력하세요.")
+        @NotNull(message = "링크 이름을 입력하세요.")
+        @Length(min = 1, max = 10, message = "링크 이름은 10자 이하로 입력하세요.")
+        @Pattern(regexp = "^[A-Z가-힣]+$", flags = Flag.CASE_INSENSITIVE)
         private String title;
 
+        @NotBlank
         @URL(regexp = "^(http|https):\\/\\/.*", message = "URL 형식이 유효하지 않습니다.")
         private String url;
     }
