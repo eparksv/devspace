@@ -29,9 +29,11 @@ public class CreateProfileRequest {
     private final Integer jobId;
 
     @Length(max = 30, message = "회사명은 30자 이하로 입력하세요.")
+    @Pattern(regexp = "^[A-Z가-힣0-9]+$", flags = Flag.CASE_INSENSITIVE)
     private final String company;
 
     @Length(max = 30, message = "경력 기간은 30자 이하로 입력하세요.")
+    @Pattern(regexp = "^[A-Z가-힣0-9]+$", flags = Flag.CASE_INSENSITIVE)
     private final String career;
 
     @Valid
