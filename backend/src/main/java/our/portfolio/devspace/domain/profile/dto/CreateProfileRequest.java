@@ -4,6 +4,8 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +18,7 @@ public class CreateProfileRequest {
 
     @NotNull(message = "이름을 입력하세요.")
     @Length(min = 2, max = 12, message = "이름은 2자 이상, 12자 이하로 입력하세요.")
+    @Pattern(regexp = "^[A-Z가-힣]+$", flags = Flag.CASE_INSENSITIVE)
     private final String name;
 
     @NotBlank(message = "자기소개를 입력하세요.")
