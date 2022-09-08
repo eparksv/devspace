@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2Provider;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
-import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
+import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
@@ -59,7 +59,7 @@ public class EntityFactory {
             .build();
     }
 
-    public static Post postEntity(PostCreationRequestDto dto) throws IllegalAccessException {
+    public static Post postEntity(CreatePostRequest dto) throws IllegalAccessException {
         return Post.builder()
             .title(dto.getTitle())
             .content(dto.getContent())
@@ -72,7 +72,7 @@ public class EntityFactory {
             .build();
     }
 
-    public static Post postEntityWithId(PostCreationRequestDto dto, Long id) throws IllegalAccessException {
+    public static Post postEntityWithId(CreatePostRequest dto, Long id) throws IllegalAccessException {
         return (Post) setIdField(postEntity(dto), id);
     }
 }

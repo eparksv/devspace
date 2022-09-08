@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostCreationResponseDto {
+public class CreatePostResponse {
 
     private final Long id;
 }

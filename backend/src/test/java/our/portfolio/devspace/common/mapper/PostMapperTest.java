@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import our.portfolio.devspace.common.DtoFactory;
 import our.portfolio.devspace.common.EntityFactory;
-import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
-import our.portfolio.devspace.domain.post.dto.PostCreationResponseDto;
+import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
+import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
@@ -33,10 +33,10 @@ class PostMapperTest {
     public void toPostCreationResponseDto() throws IllegalAccessException {
         // ** Given **
         Long postId = 1L;
-        Post post = EntityFactory.postEntityWithId(DtoFactory.postCreationRequestDto(), postId);
+        Post post = EntityFactory.postEntityWithId(DtoFactory.createPostRequest(), postId);
 
         // ** When **
-        PostCreationResponseDto responseDto = postMapper.toPostCreationResponseDto(post);
+        CreatePostResponse responseDto = postMapper.toCreatePostResponse(post);
 
         // ** Then **
         assertThat(responseDto.getId()).isEqualTo(1L);
@@ -47,7 +47,7 @@ class PostMapperTest {
     public void toEntity() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        PostCreationRequestDto requestDto = DtoFactory.postCreationRequestDto();
+        CreatePostRequest requestDto = DtoFactory.createPostRequest();
         Profile profile = EntityFactory.profileEntityWithId(DtoFactory.createProfileRequest(), 1L);
 
         given(entityMapper.resolve(anyLong(), any(Class.class))).willReturn(profile);
