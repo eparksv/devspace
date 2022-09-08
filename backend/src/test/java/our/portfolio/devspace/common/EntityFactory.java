@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2Provider;
+import our.portfolio.devspace.domain.category.entity.Category;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
@@ -64,6 +65,7 @@ public class EntityFactory {
             .title(dto.getTitle())
             .content(dto.getContent())
             .secret(dto.getSecret())
+            .category(categoryEntityWithId(dto.getCategoryId()))
             .profile(profileEntityWithId(DtoFactory.createProfileRequest(), 1L))
             .hashtags(
                 dto.getHashtags().stream()
@@ -74,5 +76,9 @@ public class EntityFactory {
 
     public static Post postEntityWithId(CreatePostRequest dto, Long id) throws IllegalAccessException {
         return (Post) setIdField(postEntity(dto), id);
+    }
+
+    public static Category categoryEntityWithId(Integer id) throws IllegalAccessException {
+        return (Category) setIdField(new Category("개발"), id);
     }
 }

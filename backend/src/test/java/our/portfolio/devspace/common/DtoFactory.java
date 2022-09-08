@@ -13,6 +13,7 @@ public class DtoFactory {
             .title("제목")
             .content("본문")
             .secret(false)
+            .categoryId(1)
             .hashtags(List.of("#태그1", "#태그2", "#태그3"))
             .build();
     }
