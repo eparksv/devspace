@@ -16,6 +16,7 @@ public interface PostMapper {
     CreatePostResponse toCreatePostResponse(Post post);
 
     @Mapping(source = "userId", target = "profile", qualifiedBy = {IdToEntity.class})
+    @Mapping(source = "dto.categoryId", target = "category", qualifiedBy = {IdToEntity.class})
     Post toEntity(Long userId, CreatePostRequest dto);
 
     default List<Hashtag> toHashtag(List<String> hashtagNames) {
