@@ -29,4 +29,8 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private final List<Post> posts = new ArrayList<>();
+
+    public Category(String title) {
+        this.title = title;
+    }
 }
