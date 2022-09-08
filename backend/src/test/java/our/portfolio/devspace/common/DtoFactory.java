@@ -3,16 +3,17 @@ package our.portfolio.devspace.common;
 import java.util.ArrayList;
 import java.util.List;
 import our.portfolio.devspace.domain.job.dto.JobResponse;
-import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
+import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
 
 public class DtoFactory {
-    public static PostCreationRequestDto postCreationRequestDto() {
-        return PostCreationRequestDto.builder()
+    public static CreatePostRequest createPostRequest() {
+        return CreatePostRequest.builder()
             .title("제목")
             .content("본문")
             .secret(false)
+            .categoryId(1)
             .hashtags(List.of("#태그1", "#태그2", "#태그3"))
             .build();
     }

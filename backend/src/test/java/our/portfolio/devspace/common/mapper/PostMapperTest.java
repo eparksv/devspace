@@ -2,7 +2,6 @@ package our.portfolio.devspace.common.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +13,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import our.portfolio.devspace.common.DtoFactory;
 import our.portfolio.devspace.common.EntityFactory;
-import our.portfolio.devspace.domain.post.dto.PostCreationRequestDto;
-import our.portfolio.devspace.domain.post.dto.PostCreationResponseDto;
+import our.portfolio.devspace.domain.category.entity.Category;
+import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
+import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
@@ -26,17 +26,17 @@ class PostMapperTest {
     @MockBean
     EntityMapper entityMapper;
     @Autowired
-    PostMapperImpl postMapper;
+    PostMapper postMapper;
 
     @Test
     @DisplayName("게시글 Entity를 게시글 생성 응답 DTO로 매핑하여 반환한다.")
     public void toPostCreationResponseDto() throws IllegalAccessException {
         // ** Given **
         Long postId = 1L;
-        Post post = EntityFactory.postEntityWithId(DtoFactory.postCreationRequestDto(), postId);
+        Post post = EntityFactory.postEntityWithId(DtoFactory.createPostRequest(), postId);
 
         // ** When **
-        PostCreationResponseDto responseDto = postMapper.toPostCreationResponseDto(post);
+        CreatePostResponse responseDto = postMapper.toCreatePostResponse(post);
 
         // ** Then **
         assertThat(responseDto.getId()).isEqualTo(1L);
@@ -47,10 +47,16 @@ class PostMapperTest {
     public void toEntity() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        PostCreationRequestDto requestDto = DtoFactory.postCreationRequestDto();
+        CreatePostRequest requestDto = DtoFactory.createPostRequest();
         Profile profile = EntityFactory.profileEntityWithId(DtoFactory.createProfileRequest(), 1L);
+        Category category = EntityFactory.categoryEntityWithId(requestDto.getCategoryId());
 
-        given(entityMapper.resolve(anyLong(), any(Class.class))).willReturn(profile);
+        given(entityMapper.resolve(any(Number.class), any(Class.class))).willAnswer(invocation -> {
+            Class<Object> classType = invocation.getArgument(1);
+            if (classType.equals(Profile.class)) return profile;
+            if (classType.equals(Category.class)) return category;
+            return null;
+        });
 
         // ** When **
         Post post = postMapper.toEntity(userId, requestDto);

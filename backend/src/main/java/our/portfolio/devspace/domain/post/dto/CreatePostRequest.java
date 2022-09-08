@@ -9,7 +9,7 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-public class PostCreationRequestDto {
+public class CreatePostRequest {
 
     private final String title;
 
@@ -23,11 +23,15 @@ public class PostCreationRequestDto {
     @Size(max = 10)
     private final List<String> hashtags;
 
+    @NotNull
+    private final Integer categoryId;
+
     @Builder
-    public PostCreationRequestDto(String title, String content, Boolean secret, List<String> hashtags) {
+    public CreatePostRequest(String title, String content, Boolean secret, List<String> hashtags, Integer categoryId) {
         this.title = title;
         this.content = content;
         this.secret = secret;
         this.hashtags = hashtags;
+        this.categoryId = categoryId;
     }
 }
