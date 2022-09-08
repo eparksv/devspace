@@ -100,6 +100,8 @@ class PostControllerTest {
             postCreationDtoField.withPath("title").description("포스트 제목").type(JsonFieldType.STRING),
             postCreationDtoField.withPath("content").description("포스트 본문").type(JsonFieldType.STRING),
             postCreationDtoField.withPath("secret").description("나만 보기 설정").type(JsonFieldType.BOOLEAN),
-            postCreationDtoField.withPath("hashtags").description("해시태그 목록").type(JsonFieldType.ARRAY));
+            postCreationDtoField.withPath("hashtags").description("해시태그 목록").type(JsonFieldType.ARRAY),
+            postCreationDtoField.withPath("categoryId").description("카테고리 ID").type(JsonFieldType.NUMBER)
+            );
     }
 }
