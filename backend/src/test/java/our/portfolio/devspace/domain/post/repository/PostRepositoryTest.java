@@ -17,12 +17,6 @@ import our.portfolio.devspace.domain.user.repository.UserRepository;
 class PostRepositoryTest {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    JobRepository jobRepository;
-
-    @Autowired
     PostRepository postRepository;
 
     @Test
@@ -38,6 +32,21 @@ class PostRepositoryTest {
         // ** Then **
         assertThat(posts.size()).isEqualTo(20);
         assertThat(posts.get(0).getId()).isLessThan(id);
+        assertThat(posts).allMatch(post -> !post.getSecret());
+        assertThat(posts).isSortedAccordingTo(Comparator.comparingLong(Post::getId).reversed());
+    }
+
+    @Test
+    @DisplayName("포스팅의 secret이 false인 포스팅을 PK 내림차순으로 20개 찾는다.")
+    void findFirst20BySecret() {
+        // ** Given **
+        Sort sort = Sort.by("id").descending();
+
+        // ** When **
+        List<Post> posts = postRepository.findFirst20BySecret(false, sort);
+
+        // ** Then **
+        assertThat(posts.size()).isEqualTo(20);
         assertThat(posts).allMatch(post -> !post.getSecret());
         assertThat(posts).isSortedAccordingTo(Comparator.comparingLong(Post::getId).reversed());
     }
