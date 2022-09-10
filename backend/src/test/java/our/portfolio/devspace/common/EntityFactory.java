@@ -60,6 +60,14 @@ public class EntityFactory {
             .build();
     }
 
+    public static List<Post> postEntities(int size) throws IllegalAccessException {
+        List<Post> posts = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            posts.add(postEntity(DtoFactory.createPostRequest(i)));
+        }
+        return posts;
+    }
+
     public static Post postEntity(CreatePostRequest dto) throws IllegalAccessException {
         return Post.builder()
             .title(dto.getTitle())

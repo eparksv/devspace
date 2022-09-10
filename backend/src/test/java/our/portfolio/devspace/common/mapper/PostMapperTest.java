@@ -4,28 +4,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import our.portfolio.devspace.common.DtoFactory;
 import our.portfolio.devspace.common.EntityFactory;
 import our.portfolio.devspace.domain.category.entity.Category;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
+import our.portfolio.devspace.domain.post.dto.PostPreviewResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
-@Import({PostMapperImpl.class})
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 class PostMapperTest {
 
-    @MockBean
+    @Mock
+    ProfileMapper profileMapper;
+
+    @Mock
     EntityMapper entityMapper;
-    @Autowired
+    @InjectMocks
     PostMapper postMapper;
 
     @Test
@@ -33,7 +36,7 @@ class PostMapperTest {
     public void toPostCreationResponseDto() throws IllegalAccessException {
         // ** Given **
         Long postId = 1L;
-        Post post = EntityFactory.postEntityWithId(DtoFactory.createPostRequest(), postId);
+        Post post = EntityFactory.postEntityWithId(DtoFactory.createPostRequest(1), postId);
 
         // ** When **
         CreatePostResponse responseDto = postMapper.toCreatePostResponse(post);
@@ -47,7 +50,7 @@ class PostMapperTest {
     public void toEntity() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        CreatePostRequest requestDto = DtoFactory.createPostRequest();
+        CreatePostRequest requestDto = DtoFactory.createPostRequest(1);
         Profile profile = EntityFactory.profileEntityWithId(DtoFactory.createProfileRequest(), 1L);
         Category category = EntityFactory.categoryEntityWithId(requestDto.getCategoryId());
 

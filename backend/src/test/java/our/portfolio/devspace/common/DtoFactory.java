@@ -8,13 +8,14 @@ import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
 
 public class DtoFactory {
-    public static CreatePostRequest createPostRequest() {
+
+    public static CreatePostRequest createPostRequest(int index) {
         return CreatePostRequest.builder()
-            .title("제목")
-            .content("본문")
+            .title("제목" + index)
+            .content("본문" + index)
             .secret(false)
-            .categoryId(1)
-            .hashtags(List.of("#태그1", "#태그2", "#태그3"))
+            .categoryId(index)
+            .hashtags(List.of("태그1", "태그2", "태그3"))
             .build();
     }
 

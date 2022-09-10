@@ -87,7 +87,7 @@ class PostControllerTest {
     private ResultActions postCreationResultActions() throws Exception {
         return mockMvc.perform(
             post("/api/posts")
-                .content(CommonTestUtils.valueToString(createPostRequest()))
+                .content(CommonTestUtils.valueToString(createPostRequest(1)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf())
