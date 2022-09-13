@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import our.portfolio.devspace.common.mapper.EntityMapper.IdToEntity;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
+import our.portfolio.devspace.domain.profile.dto.SimpleProfileResponse;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
 @Mapper(uses = {EntityMapper.class})
@@ -15,4 +16,7 @@ public interface ProfileMapper {
     Profile toEntity(Long userId, CreateProfileRequest dto);
 
     CreateProfileResponse toCreateProfileResponse(Profile profile);
+
+    @Mapping(source = "job.title", target = "job")
+    SimpleProfileResponse toSimpleProfileResponse(Profile profile);
 }
