@@ -16,7 +16,6 @@ import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
-import our.portfolio.devspace.utils.DtoFactory;
 import our.portfolio.devspace.utils.EntityFactory;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
 
@@ -37,7 +36,7 @@ class ProfileServiceTest {
     void shouldReturnProfileIdWhenCreateProfile() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        CreateProfileRequest requestDto = DtoFactory.createProfileRequest(new DummyProfile(1L));
+        CreateProfileRequest requestDto = new DummyProfile(1L).createProfileRequest();
 
         given(profileMapper.toEntity(anyLong(), any(CreateProfileRequest.class))).willReturn(EntityFactory.profileEntity(new DummyProfile()));
         given(profileMapper.toCreateProfileResponse(any(Profile.class))).willReturn(new CreateProfileResponse(userId));

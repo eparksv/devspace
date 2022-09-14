@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
 import our.portfolio.devspace.domain.profile.dto.SimpleProfileResponse;
 
@@ -33,6 +34,17 @@ public class DummyProfile {
             .job(profile.getJob().getTitle())
             .company(profile.getCompany())
             .name(profile.getName())
+            .build();
+    }
+
+    public CreateProfileRequest createProfileRequest() {
+        return CreateProfileRequest.builder()
+            .company(this.company)
+            .introduction(this.introduction)
+            .jobId(this.job.getId())
+            .career(this.career)
+            .name(this.name)
+            .referenceLinks(this.referenceLinks)
             .build();
     }
 }
