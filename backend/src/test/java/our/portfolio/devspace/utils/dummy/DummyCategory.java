@@ -1,7 +1,10 @@
 package our.portfolio.devspace.utils.dummy;
 
+import static our.portfolio.devspace.utils.EntityFactory.setIdField;
+
 import lombok.Getter;
 import lombok.Setter;
+import our.portfolio.devspace.domain.category.entity.Category;
 
 @Setter
 @Getter
@@ -12,5 +15,15 @@ public class DummyCategory {
 
     public DummyCategory(Integer id) {
         this.id = id;
+    }
+
+    public Category categoryEntity() throws IllegalAccessException {
+        Category entity = new Category(this.title);
+
+        if (this.id != null) {
+            setIdField(entity, this.id);
+        }
+
+        return entity;
     }
 }

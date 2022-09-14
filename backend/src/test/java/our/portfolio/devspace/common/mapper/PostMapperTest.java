@@ -50,7 +50,7 @@ class PostMapperTest {
         Long userId = 1L;
         CreatePostRequest requestDto = new DummyPost().createPostRequest();
         Profile profile = EntityFactory.profileEntity(new DummyProfile(1L));
-        Category category = EntityFactory.categoryEntity(new DummyCategory(requestDto.getCategoryId()));
+        Category category = new DummyCategory(requestDto.getCategoryId()).categoryEntity();
 
         given(entityMapper.resolve(any(Number.class), any(Class.class))).willAnswer(invocation -> {
             Class<Object> classType = invocation.getArgument(1);

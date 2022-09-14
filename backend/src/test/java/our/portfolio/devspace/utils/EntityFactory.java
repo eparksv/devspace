@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import our.portfolio.devspace.domain.category.entity.Category;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.post.entity.Hashtag;
@@ -12,7 +11,6 @@ import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
 import our.portfolio.devspace.domain.user.entity.User;
-import our.portfolio.devspace.utils.dummy.DummyCategory;
 import our.portfolio.devspace.utils.dummy.DummyJob;
 import our.portfolio.devspace.utils.dummy.DummyPost;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
@@ -20,7 +18,7 @@ import our.portfolio.devspace.utils.dummy.DummyUser;
 
 public class EntityFactory {
 
-    private static void setIdField(Object object, Number id) throws IllegalAccessException {
+    public static void setIdField(Object object, Number id) throws IllegalAccessException {
         FieldUtils.writeField(object, "id", id, true);
     }
 
@@ -107,23 +105,13 @@ public class EntityFactory {
             .title(post.getTitle())
             .content(post.getContent())
             .secret(post.isSecret())
-            .category(categoryEntity(post.getCategory()))
+            .category(post.getCategory().categoryEntity())
             .profile(profileEntity(post.getProfile()))
             .hashtags(hashtags)
             .build();
 
         if (post.getId() != null) {
             setIdField(entity, post.getId());
-        }
-
-        return entity;
-    }
-
-    public static Category categoryEntity(DummyCategory category) throws IllegalAccessException {
-        Category entity = new Category(category.getTitle());
-
-        if (category.getId() != null) {
-            setIdField(entity, category.getId());
         }
 
         return entity;
