@@ -11,7 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static our.portfolio.devspace.common.DtoFactory.createPostRequest;
+import static our.portfolio.devspace.utils.DtoFactory.createPostRequest;
 
 import com.epages.restdocs.apispec.ConstrainedFields;
 import com.epages.restdocs.apispec.FieldDescriptors;
@@ -27,13 +27,14 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import our.portfolio.devspace.common.CommonTestUtils;
-import our.portfolio.devspace.common.ControllerTestUtils;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.service.PostService;
+import our.portfolio.devspace.utils.CommonTestUtils;
+import our.portfolio.devspace.utils.ControllerTestUtils;
+import our.portfolio.devspace.utils.dummy.DummyPost;
 
 @AutoConfigureRestDocs
 @WebMvcTest(PostController.class)
@@ -87,7 +88,7 @@ class PostControllerTest {
     private ResultActions postCreationResultActions() throws Exception {
         return mockMvc.perform(
             post("/api/posts")
-                .content(CommonTestUtils.valueToString(createPostRequest(1)))
+                .content(CommonTestUtils.valueToString(createPostRequest(new DummyPost(1L))))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf())

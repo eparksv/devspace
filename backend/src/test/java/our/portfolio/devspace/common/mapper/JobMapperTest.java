@@ -8,9 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import our.portfolio.devspace.common.EntityFactory;
 import our.portfolio.devspace.domain.job.dto.JobResponse;
 import our.portfolio.devspace.domain.job.entity.Job;
+import our.portfolio.devspace.domain.job.entity.JobType;
+import our.portfolio.devspace.utils.EntityFactory;
 
 @ExtendWith(SpringExtension.class)
 @Import(JobMapperImpl.class)
@@ -22,14 +23,12 @@ class JobMapperTest {
     @Test
     void toListJobsResponse() throws IllegalAccessException {
         // ** Given **
-        int size = 3;
-        List<Job> jobs = EntityFactory.jobEntities("개발자", size);
+        List<Job> jobs = EntityFactory.jobEntities(JobType.DEVELOPER);
 
         // ** When **
         List<JobResponse> responseDto = jobMapper.toJobResponses(jobs);
 
         // ** Then **
-        assertThat(responseDto.size()).isEqualTo(size);
         assertThat(responseDto).usingRecursiveComparison().isEqualTo(jobs);
     }
 }

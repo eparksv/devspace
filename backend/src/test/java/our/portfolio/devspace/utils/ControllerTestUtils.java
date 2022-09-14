@@ -1,4 +1,4 @@
-package our.portfolio.devspace.common;
+package our.portfolio.devspace.utils;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.headerWithName;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;

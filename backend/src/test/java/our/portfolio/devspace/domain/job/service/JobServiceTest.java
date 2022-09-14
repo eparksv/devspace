@@ -7,18 +7,19 @@ import static org.mockito.BDDMockito.given;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import our.portfolio.devspace.common.DtoFactory;
-import our.portfolio.devspace.common.EntityFactory;
 import our.portfolio.devspace.common.mapper.JobMapper;
 import our.portfolio.devspace.domain.job.dto.JobResponse;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.job.repository.JobRepository;
+import our.portfolio.devspace.utils.DtoFactory;
+import our.portfolio.devspace.utils.EntityFactory;
 
 @ExtendWith(MockitoExtension.class)
 class JobServiceTest {
@@ -32,15 +33,18 @@ class JobServiceTest {
     @InjectMocks
     JobService jobService;
 
-    @Test
-    @DisplayName("type에 해당하는 직군 목록을 반환한다.")
-    void listJobs() throws IllegalAccessException {
+    @ParameterizedTest(name = "{0}에 해당하는 직군 목록을 반환한다.")
+    @ValueSource(strings = {"developer", "designer", "marketer", "planner", "startup"})
+    @DisplayName("직군 목록을 반환한다.")
+    void listJobs(String type) throws IllegalAccessException {
         // ** Given **
-        String type = "developer";
-        List<Job> jobs = EntityFactory.jobEntities("개발자", 3);
+        List<Job> jobs = EntityFactory.jobEntities(JobType.valueOf(type.toUpperCase()));
 
-        given(jobRepository.findAllByType(any(JobType.class))).willReturn(jobs);
-        given(jobMapper.toJobResponses(anyList())).willReturn(DtoFactory.jobResponses(3));
+        given(jobRepository.findAllByType(any(JobType.class))).will(invocation -> EntityFactory.jobEntities(invocation.getArgument(0)));
+        given(jobMapper.toJobResponses(anyList())).will(invocation -> {
+            List<Job> jobsArgument = invocation.getArgument(0);
+            return DtoFactory.jobResponses(jobsArgument.get(0).getType());
+        });
 
         // ** When **
         List<JobResponse> responseDto = jobService.listJobs(type);

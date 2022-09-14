@@ -26,15 +26,16 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import our.portfolio.devspace.common.CommonTestUtils;
-import our.portfolio.devspace.common.ControllerTestUtils;
-import our.portfolio.devspace.common.DtoFactory;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
 import our.portfolio.devspace.domain.profile.service.ProfileService;
+import our.portfolio.devspace.utils.CommonTestUtils;
+import our.portfolio.devspace.utils.ControllerTestUtils;
+import our.portfolio.devspace.utils.DtoFactory;
+import our.portfolio.devspace.utils.dummy.DummyProfile;
 
 @AutoConfigureRestDocs
 @WebMvcTest(ProfileController.class)
@@ -88,7 +89,7 @@ class ProfileControllerTest {
     private ResultActions profileCreationResultActions() throws Exception {
         return mockMvc.perform(
             post("/api/profiles")
-                .content(CommonTestUtils.valueToString(DtoFactory.createProfileRequest()))
+                .content(CommonTestUtils.valueToString(DtoFactory.createProfileRequest(new DummyProfile(1L))))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf()));

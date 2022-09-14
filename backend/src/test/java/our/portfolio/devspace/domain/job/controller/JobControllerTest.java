@@ -25,13 +25,14 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import our.portfolio.devspace.common.CommonTestUtils;
-import our.portfolio.devspace.common.ControllerTestUtils;
-import our.portfolio.devspace.common.DtoFactory;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.jwt.JwtTokenProvider;
 import our.portfolio.devspace.domain.job.dto.JobResponse;
+import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.job.service.JobService;
+import our.portfolio.devspace.utils.CommonTestUtils;
+import our.portfolio.devspace.utils.ControllerTestUtils;
+import our.portfolio.devspace.utils.DtoFactory;
 
 @AutoConfigureRestDocs
 @WebMvcTest(JobController.class)
@@ -50,7 +51,7 @@ class JobControllerTest {
     @WithMockUser(username = "1")
     void listJobs() throws Exception {
         // ** Given **
-        List<JobResponse> responseDto = DtoFactory.jobResponses(3);
+        List<JobResponse> responseDto = DtoFactory.jobResponses(JobType.DEVELOPER);
         given(jobService.listJobs(anyString())).willReturn(responseDto);
 
         // ** When **
