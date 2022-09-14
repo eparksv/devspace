@@ -23,7 +23,7 @@ public class PostPreviewResponse {
     private final int commentCount;
 
     @Builder
-    public PostPreviewResponse(int id, SimpleProfileResponse profile, LocalDateTime createdDate, List<String> hashtags, String title, String content, int likeCount,
+    public PostPreviewResponse(long id, SimpleProfileResponse profile, LocalDateTime createdDate, List<String> hashtags, String title, String content, int likeCount,
         int commentCount) {
         this.id = id;
         this.profile = profile;

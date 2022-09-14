@@ -7,10 +7,11 @@ import org.mapstruct.Mapping;
 import our.portfolio.devspace.common.mapper.EntityMapper.IdToEntity;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
+import our.portfolio.devspace.domain.post.dto.PostPreviewResponse;
 import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
 
-@Mapper(uses = EntityMapper.class)
+@Mapper(uses = {EntityMapper.class, ProfileMapper.class})
 public interface PostMapper {
 
     CreatePostResponse toCreatePostResponse(Post post);
@@ -22,4 +23,10 @@ public interface PostMapper {
     default List<Hashtag> toHashtag(List<String> hashtagNames) {
         return hashtagNames.stream().map(Hashtag::new).collect(Collectors.toList());
     }
+
+    default List<String> toHashtagNames(List<Hashtag> hashtags) {
+        return hashtags.stream().map(Hashtag::getName).collect(Collectors.toList());
+    }
+
+    List<PostPreviewResponse> toPostPreviewResponses(List<Post> posts);
 }
