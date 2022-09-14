@@ -2,7 +2,6 @@ package our.portfolio.devspace.utils;
 
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
-import our.portfolio.devspace.domain.profile.dto.SimpleProfileResponse;
 import our.portfolio.devspace.utils.dummy.DummyPost;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
 
@@ -26,15 +25,6 @@ public class DtoFactory {
             .career(profile.getCareer())
             .name(profile.getName())
             .referenceLinks(profile.getReferenceLinks())
-            .build();
-    }
-
-    public static SimpleProfileResponse simpleProfileResponse(DummyProfile profile) {
-        return SimpleProfileResponse.builder()
-            .id(profile.getId())
-            .job(profile.getJob().getTitle())
-            .company(profile.getCompany())
-            .name(profile.getName())
             .build();
     }
 }

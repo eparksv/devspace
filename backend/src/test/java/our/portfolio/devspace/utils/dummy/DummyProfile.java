@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
+import our.portfolio.devspace.domain.profile.dto.SimpleProfileResponse;
 
 @Setter
 @Getter
@@ -26,4 +27,12 @@ public class DummyProfile {
         this.id = id;
     }
 
+    public static SimpleProfileResponse simpleProfileResponse(DummyProfile profile) {
+        return SimpleProfileResponse.builder()
+            .id(profile.getId())
+            .job(profile.getJob().getTitle())
+            .company(profile.getCompany())
+            .name(profile.getName())
+            .build();
+    }
 }
