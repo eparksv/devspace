@@ -15,7 +15,6 @@ import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
-import our.portfolio.devspace.utils.DtoFactory;
 import our.portfolio.devspace.utils.EntityFactory;
 import our.portfolio.devspace.utils.dummy.DummyCategory;
 import our.portfolio.devspace.utils.dummy.DummyPost;
@@ -49,7 +48,7 @@ class PostMapperTest {
     public void toEntity() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        CreatePostRequest requestDto = DtoFactory.createPostRequest(new DummyPost());
+        CreatePostRequest requestDto = new DummyPost().createPostRequest();
         Profile profile = EntityFactory.profileEntity(new DummyProfile(1L));
         Category category = EntityFactory.categoryEntity(new DummyCategory(requestDto.getCategoryId()));
 

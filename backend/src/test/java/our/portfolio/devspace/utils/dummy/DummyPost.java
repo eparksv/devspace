@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 
 @Setter
 @Getter
@@ -20,5 +21,15 @@ public class DummyPost {
 
     public DummyPost(Long id) {
         this.id = id;
+    }
+
+    public CreatePostRequest createPostRequest() {
+        return CreatePostRequest.builder()
+            .title(this.title)
+            .content(this.content)
+            .secret(this.secret)
+            .categoryId(this.category.getId())
+            .hashtags(this.hashtags)
+            .build();
     }
 }
