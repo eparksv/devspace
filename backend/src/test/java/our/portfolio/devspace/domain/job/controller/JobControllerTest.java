@@ -32,7 +32,7 @@ import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.job.service.JobService;
 import our.portfolio.devspace.utils.CommonTestUtils;
 import our.portfolio.devspace.utils.ControllerTestUtils;
-import our.portfolio.devspace.utils.DtoFactory;
+import our.portfolio.devspace.utils.dummy.DummyJob;
 
 @AutoConfigureRestDocs
 @WebMvcTest(JobController.class)
@@ -51,7 +51,7 @@ class JobControllerTest {
     @WithMockUser(username = "1")
     void listJobs() throws Exception {
         // ** Given **
-        List<JobResponse> responseDto = DtoFactory.jobResponses(JobType.DEVELOPER);
+        List<JobResponse> responseDto = DummyJob.jobResponses(JobType.DEVELOPER);
         given(jobService.listJobs(anyString())).willReturn(responseDto);
 
         // ** When **

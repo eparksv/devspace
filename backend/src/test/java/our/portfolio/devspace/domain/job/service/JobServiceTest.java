@@ -18,8 +18,8 @@ import our.portfolio.devspace.domain.job.dto.JobResponse;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.job.repository.JobRepository;
-import our.portfolio.devspace.utils.DtoFactory;
 import our.portfolio.devspace.utils.EntityFactory;
+import our.portfolio.devspace.utils.dummy.DummyJob;
 
 @ExtendWith(MockitoExtension.class)
 class JobServiceTest {
@@ -43,7 +43,7 @@ class JobServiceTest {
         given(jobRepository.findAllByType(any(JobType.class))).will(invocation -> EntityFactory.jobEntities(invocation.getArgument(0)));
         given(jobMapper.toJobResponses(anyList())).will(invocation -> {
             List<Job> jobsArgument = invocation.getArgument(0);
-            return DtoFactory.jobResponses(jobsArgument.get(0).getType());
+            return DummyJob.jobResponses(jobsArgument.get(0).getType());
         });
 
         // ** When **
