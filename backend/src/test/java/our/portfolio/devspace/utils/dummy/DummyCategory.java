@@ -1,6 +1,6 @@
 package our.portfolio.devspace.utils.dummy;
 
-import static our.portfolio.devspace.utils.EntityFactory.setIdField;
+import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
 import lombok.Getter;
 import lombok.Setter;
