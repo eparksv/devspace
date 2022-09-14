@@ -16,7 +16,7 @@ import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.post.repository.PostRepository;
-import our.portfolio.devspace.utils.dummy.DummyPost;
+import our.portfolio.devspace.utils.factory.PostFactory;
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceTest {
@@ -35,11 +35,11 @@ class PostServiceTest {
     void shouldReturnPostIdWhenCreatePost() throws IllegalAccessException {
         // ** Given **
         Long postId = 1L;
-        CreatePostRequest requestDto = new DummyPost(1L).createPostRequest();
+        CreatePostRequest requestDto = new PostFactory(1L).createPostRequest();
 
-        given(postMapper.toEntity(anyLong(), any(CreatePostRequest.class))).willReturn(new DummyPost(1L).postEntity());
+        given(postMapper.toEntity(anyLong(), any(CreatePostRequest.class))).willReturn(new PostFactory(1L).postEntity());
         given(postMapper.toCreatePostResponse(any(Post.class))).willReturn(new CreatePostResponse(postId));
-        given(postRepository.save(any(Post.class))).willReturn(new DummyPost(postId).postEntity());
+        given(postRepository.save(any(Post.class))).willReturn(new PostFactory(postId).postEntity());
 
         // ** When **
         CreatePostResponse responseDto = postService.createPost(1L, requestDto);

@@ -1,4 +1,4 @@
-package our.portfolio.devspace.utils.dummy;
+package our.portfolio.devspace.utils.factory;
 
 import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
@@ -16,7 +16,7 @@ import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DummyProfile {
+public class ProfileFactory {
 
     private Long id;
     private String company = "데브스페이스";
@@ -27,13 +27,13 @@ public class DummyProfile {
         new ReferenceLinkDto("구글", "https://www.google.com"),
         new ReferenceLinkDto("깃허브", "https://www.github.com")
     );
-    private DummyJob job = new DummyJob(1);
+    private JobFactory job = new JobFactory(1);
 
-    public DummyProfile(Long id) {
+    public ProfileFactory(Long id) {
         this.id = id;
     }
 
-    public static SimpleProfileResponse simpleProfileResponse(DummyProfile profile) {
+    public static SimpleProfileResponse simpleProfileResponse(ProfileFactory profile) {
         return SimpleProfileResponse.builder()
             .id(profile.getId())
             .job(profile.getJob().getTitle())
@@ -66,7 +66,7 @@ public class DummyProfile {
             .career(this.career)
             .referenceLinks(referenceLinks)
             .job(this.job.jobEntity())
-            .user(new DummyUser(1L).userEntity())
+            .user(new UserFactory(1L).userEntity())
             .build();
 
         if (this.id != null) {

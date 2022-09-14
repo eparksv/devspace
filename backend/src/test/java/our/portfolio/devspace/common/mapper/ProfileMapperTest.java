@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.profile.dto.SimpleProfileResponse;
 import our.portfolio.devspace.domain.profile.entity.Profile;
-import our.portfolio.devspace.utils.dummy.DummyProfile;
+import our.portfolio.devspace.utils.factory.ProfileFactory;
 
 @ExtendWith(MockitoExtension.class)
 class ProfileMapperTest {
@@ -20,7 +20,7 @@ class ProfileMapperTest {
     @Test
     void toSimpleProfileResponse() throws IllegalAccessException {
         // ** Given **
-        Profile profile = new DummyProfile(1L).profileEntity();
+        Profile profile = new ProfileFactory(1L).profileEntity();
 
         // ** When **
         SimpleProfileResponse responseDto = profileMapper.toSimpleProfileResponse(profile);

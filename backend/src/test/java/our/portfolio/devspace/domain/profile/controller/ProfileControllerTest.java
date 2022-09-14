@@ -34,7 +34,7 @@ import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
 import our.portfolio.devspace.domain.profile.service.ProfileService;
 import our.portfolio.devspace.utils.CommonTestUtils;
 import our.portfolio.devspace.utils.ControllerTestUtils;
-import our.portfolio.devspace.utils.dummy.DummyProfile;
+import our.portfolio.devspace.utils.factory.ProfileFactory;
 
 @AutoConfigureRestDocs
 @WebMvcTest(ProfileController.class)
@@ -88,7 +88,7 @@ class ProfileControllerTest {
     private ResultActions profileCreationResultActions() throws Exception {
         return mockMvc.perform(
             post("/api/profiles")
-                .content(CommonTestUtils.valueToString(new DummyProfile(1L).createProfileRequest()))
+                .content(CommonTestUtils.valueToString(new ProfileFactory(1L).createProfileRequest()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf()));

@@ -1,4 +1,4 @@
-package our.portfolio.devspace.utils.dummy;
+package our.portfolio.devspace.utils.factory;
 
 import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
@@ -12,14 +12,14 @@ import our.portfolio.devspace.domain.user.entity.User;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DummyUser {
+public class UserFactory {
 
     private Long id;
     private Role role = Role.USER;
     private String subject = "12345";
     private OAuth2Provider provider = OAuth2Provider.GOOGLE;
 
-    public DummyUser(Long id) {
+    public UserFactory(Long id) {
         this.id = id;
     }
 

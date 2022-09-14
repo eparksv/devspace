@@ -1,4 +1,4 @@
-package our.portfolio.devspace.utils.dummy;
+package our.portfolio.devspace.utils.factory;
 
 import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
@@ -15,17 +15,17 @@ import our.portfolio.devspace.domain.post.entity.Post;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DummyPost {
+public class PostFactory {
 
     private Long id;
     private String title = "제목";
     private String content = "내용";
     private List<String> hashtags = List.of("태그1", "태그2", "태그3");
     private boolean secret = false;
-    private DummyCategory category = new DummyCategory(1);
-    private DummyProfile profile = new DummyProfile(1L);
+    private CategoryFactory category = new CategoryFactory(1);
+    private ProfileFactory profile = new ProfileFactory(1L);
 
-    public DummyPost(Long id) {
+    public PostFactory(Long id) {
         this.id = id;
     }
 
@@ -33,12 +33,12 @@ public class DummyPost {
         List<Post> posts = new ArrayList<>();
 
         for (long i = 1; i <= size; i++) {
-            DummyPost post = new DummyPost(i);
+            PostFactory post = new PostFactory(i);
             post.setTitle(post.getTitle() + i);
             post.setContent(post.getContent() + i);
             post.setSecret(i % 2 != 0);
             post.setHashtags(List.of("태그" + i, "태그" + i + 1, "태그" + i + 2));
-            post.setProfile(new DummyProfile(i));
+            post.setProfile(new ProfileFactory(i));
             posts.add(post.postEntity());
         }
 

@@ -16,7 +16,7 @@ import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileResponse;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.repository.ProfileRepository;
-import our.portfolio.devspace.utils.dummy.DummyProfile;
+import our.portfolio.devspace.utils.factory.ProfileFactory;
 
 @ExtendWith(MockitoExtension.class)
 class ProfileServiceTest {
@@ -35,11 +35,11 @@ class ProfileServiceTest {
     void shouldReturnProfileIdWhenCreateProfile() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        CreateProfileRequest requestDto = new DummyProfile(1L).createProfileRequest();
+        CreateProfileRequest requestDto = new ProfileFactory(1L).createProfileRequest();
 
-        given(profileMapper.toEntity(anyLong(), any(CreateProfileRequest.class))).willReturn(new DummyProfile().profileEntity());
+        given(profileMapper.toEntity(anyLong(), any(CreateProfileRequest.class))).willReturn(new ProfileFactory().profileEntity());
         given(profileMapper.toCreateProfileResponse(any(Profile.class))).willReturn(new CreateProfileResponse(userId));
-        given(profileRepository.save(any(Profile.class))).willReturn(new DummyProfile(userId).profileEntity());
+        given(profileRepository.save(any(Profile.class))).willReturn(new ProfileFactory(userId).profileEntity());
 
         // ** When **
         CreateProfileResponse responseDto = profileService.createProfile(userId, requestDto);

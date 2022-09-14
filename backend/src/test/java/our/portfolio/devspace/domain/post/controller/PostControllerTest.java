@@ -33,7 +33,7 @@ import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.service.PostService;
 import our.portfolio.devspace.utils.CommonTestUtils;
 import our.portfolio.devspace.utils.ControllerTestUtils;
-import our.portfolio.devspace.utils.dummy.DummyPost;
+import our.portfolio.devspace.utils.factory.PostFactory;
 
 @AutoConfigureRestDocs
 @WebMvcTest(PostController.class)
@@ -87,7 +87,7 @@ class PostControllerTest {
     private ResultActions postCreationResultActions() throws Exception {
         return mockMvc.perform(
             post("/api/posts")
-                .content(CommonTestUtils.valueToString(new DummyPost(1L).createPostRequest()))
+                .content(CommonTestUtils.valueToString(new PostFactory(1L).createPostRequest()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", ControllerTestUtils.authorizationToken())
                 .with(csrf())

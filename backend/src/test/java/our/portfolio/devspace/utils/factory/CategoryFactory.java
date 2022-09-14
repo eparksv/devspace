@@ -1,4 +1,4 @@
-package our.portfolio.devspace.utils.dummy;
+package our.portfolio.devspace.utils.factory;
 
 import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
@@ -8,12 +8,12 @@ import our.portfolio.devspace.domain.category.entity.Category;
 
 @Setter
 @Getter
-public class DummyCategory {
+public class CategoryFactory {
 
     private Integer id;
     private String title = "카테고리";
 
-    public DummyCategory(Integer id) {
+    public CategoryFactory(Integer id) {
         this.id = id;
     }
 

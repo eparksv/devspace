@@ -1,4 +1,4 @@
-package our.portfolio.devspace.utils.dummy;
+package our.portfolio.devspace.utils.factory;
 
 import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
@@ -14,13 +14,13 @@ import our.portfolio.devspace.domain.job.entity.JobType;
 @Setter
 @Getter
 @NoArgsConstructor
-public class DummyJob {
+public class JobFactory {
 
     private Integer id;
     private JobType type = JobType.DEVELOPER;
     private String title = "개발자";
 
-    public DummyJob(Integer id) {
+    public JobFactory(Integer id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class DummyJob {
         List<JobResponse> jobResponses = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            DummyJob job = new DummyJob(i);
+            JobFactory job = new JobFactory(i);
             job.setType(type);
             job.setTitle(type.toString() + i);
             jobResponses.add(new JobResponse(i, job.getTitle()));
@@ -41,7 +41,7 @@ public class DummyJob {
         List<Job> entities = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            DummyJob job = new DummyJob(i);
+            JobFactory job = new JobFactory(i);
             job.setType(type);
             job.setTitle(type.toString() + i);
             entities.add(job.jobEntity());

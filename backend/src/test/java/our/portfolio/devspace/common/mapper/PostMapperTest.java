@@ -15,9 +15,9 @@ import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
-import our.portfolio.devspace.utils.dummy.DummyCategory;
-import our.portfolio.devspace.utils.dummy.DummyPost;
-import our.portfolio.devspace.utils.dummy.DummyProfile;
+import our.portfolio.devspace.utils.factory.CategoryFactory;
+import our.portfolio.devspace.utils.factory.PostFactory;
+import our.portfolio.devspace.utils.factory.ProfileFactory;
 
 @ExtendWith(MockitoExtension.class)
 class PostMapperTest {
@@ -33,7 +33,7 @@ class PostMapperTest {
     public void toPostCreationResponseDto() throws IllegalAccessException {
         // ** Given **
         long postId = 1L;
-        Post post = new DummyPost(postId).postEntity();
+        Post post = new PostFactory(postId).postEntity();
 
         // ** When **
         CreatePostResponse responseDto = postMapper.toCreatePostResponse(post);
@@ -47,9 +47,9 @@ class PostMapperTest {
     public void toEntity() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        CreatePostRequest requestDto = new DummyPost().createPostRequest();
-        Profile profile = new DummyProfile(1L).profileEntity();
-        Category category = new DummyCategory(requestDto.getCategoryId()).categoryEntity();
+        CreatePostRequest requestDto = new PostFactory().createPostRequest();
+        Profile profile = new ProfileFactory(1L).profileEntity();
+        Category category = new CategoryFactory(requestDto.getCategoryId()).categoryEntity();
 
         given(entityMapper.resolve(any(Number.class), any(Class.class))).willAnswer(invocation -> {
             Class<Object> classType = invocation.getArgument(1);
