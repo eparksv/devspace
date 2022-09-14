@@ -3,6 +3,7 @@ package our.portfolio.devspace.utils.dummy;
 import static our.portfolio.devspace.utils.EntityFactory.profileEntity;
 import static our.portfolio.devspace.utils.EntityFactory.setIdField;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
@@ -27,6 +28,22 @@ public class DummyPost {
 
     public DummyPost(Long id) {
         this.id = id;
+    }
+
+    public static List<Post> postEntities(int size) throws IllegalAccessException {
+        List<Post> posts = new ArrayList<>();
+
+        for (long i = 1; i <= size; i++) {
+            DummyPost post = new DummyPost(i);
+            post.setTitle(post.getTitle() + i);
+            post.setContent(post.getContent() + i);
+            post.setSecret(i % 2 != 0);
+            post.setHashtags(List.of("태그" + i, "태그" + i + 1, "태그" + i + 2));
+            post.setProfile(new DummyProfile(i));
+            posts.add(post.postEntity());
+        }
+
+        return posts;
     }
 
     public Post postEntity() throws IllegalAccessException {

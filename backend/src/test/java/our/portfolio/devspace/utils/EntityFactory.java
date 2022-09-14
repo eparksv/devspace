@@ -6,12 +6,10 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
-import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
 import our.portfolio.devspace.domain.user.entity.User;
 import our.portfolio.devspace.utils.dummy.DummyJob;
-import our.portfolio.devspace.utils.dummy.DummyPost;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
 import our.portfolio.devspace.utils.dummy.DummyUser;
 
@@ -79,21 +77,5 @@ public class EntityFactory {
         }
 
         return entity;
-    }
-
-    public static List<Post> postEntities(int size) throws IllegalAccessException {
-        List<Post> posts = new ArrayList<>();
-
-        for (long i = 1; i <= size; i++) {
-            DummyPost post = new DummyPost(i);
-            post.setTitle(post.getTitle() + i);
-            post.setContent(post.getContent() + i);
-            post.setSecret(i % 2 != 0);
-            post.setHashtags(List.of("태그" + i, "태그" + i + 1, "태그" + i + 2));
-            post.setProfile(new DummyProfile(i));
-            posts.add(post.postEntity());
-        }
-
-        return posts;
     }
 }
