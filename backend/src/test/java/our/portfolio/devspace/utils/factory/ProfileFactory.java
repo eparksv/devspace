@@ -33,12 +33,12 @@ public class ProfileFactory {
         this.id = id;
     }
 
-    public static SimpleProfileResponse simpleProfileResponse(ProfileFactory profile) {
+    public SimpleProfileResponse simpleProfileResponse() {
         return SimpleProfileResponse.builder()
-            .id(profile.getId())
-            .job(profile.getJob().getTitle())
-            .company(profile.getCompany())
-            .name(profile.getName())
+            .id(this.id)
+            .job(this.job.getTitle())
+            .company(this.company)
+            .name(this.name)
             .build();
     }
 
