@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
-import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
@@ -92,28 +91,9 @@ public class EntityFactory {
             post.setSecret(i % 2 != 0);
             post.setHashtags(List.of("태그" + i, "태그" + i + 1, "태그" + i + 2));
             post.setProfile(new DummyProfile(i));
-            posts.add(postEntity(post));
+            posts.add(post.postEntity());
         }
 
         return posts;
-    }
-
-    public static Post postEntity(DummyPost post) throws IllegalAccessException {
-        List<Hashtag> hashtags = post.getHashtags().stream().map(Hashtag::new).collect(Collectors.toList());
-
-        Post entity = Post.builder()
-            .title(post.getTitle())
-            .content(post.getContent())
-            .secret(post.isSecret())
-            .category(post.getCategory().categoryEntity())
-            .profile(profileEntity(post.getProfile()))
-            .hashtags(hashtags)
-            .build();
-
-        if (post.getId() != null) {
-            setIdField(entity, post.getId());
-        }
-
-        return entity;
     }
 }

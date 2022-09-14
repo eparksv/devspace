@@ -1,10 +1,16 @@
 package our.portfolio.devspace.utils.dummy;
 
+import static our.portfolio.devspace.utils.EntityFactory.profileEntity;
+import static our.portfolio.devspace.utils.EntityFactory.setIdField;
+
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
+import our.portfolio.devspace.domain.post.entity.Hashtag;
+import our.portfolio.devspace.domain.post.entity.Post;
 
 @Setter
 @Getter
@@ -21,6 +27,25 @@ public class DummyPost {
 
     public DummyPost(Long id) {
         this.id = id;
+    }
+
+    public Post postEntity() throws IllegalAccessException {
+        List<Hashtag> hashtags = this.hashtags.stream().map(Hashtag::new).collect(Collectors.toList());
+
+        Post entity = Post.builder()
+            .title(this.title)
+            .content(this.content)
+            .secret(this.secret)
+            .category(this.category.categoryEntity())
+            .profile(profileEntity(this.profile))
+            .hashtags(hashtags)
+            .build();
+
+        if (this.id != null) {
+            setIdField(entity, this.id);
+        }
+
+        return entity;
     }
 
     public CreatePostRequest createPostRequest() {

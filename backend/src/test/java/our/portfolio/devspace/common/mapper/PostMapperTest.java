@@ -34,7 +34,7 @@ class PostMapperTest {
     public void toPostCreationResponseDto() throws IllegalAccessException {
         // ** Given **
         long postId = 1L;
-        Post post = EntityFactory.postEntity(new DummyPost(postId));
+        Post post = new DummyPost(postId).postEntity();
 
         // ** When **
         CreatePostResponse responseDto = postMapper.toCreatePostResponse(post);
