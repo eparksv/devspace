@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,8 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import our.portfolio.devspace.domain.category.entity.Category;
+import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
+import our.portfolio.devspace.domain.post.dto.PostPreviewResponse;
+import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.utils.factory.CategoryFactory;
@@ -24,6 +29,9 @@ class PostMapperTest {
 
     @Mock
     EntityMapper entityMapper;
+
+    @Mock
+    ProfileMapper profileMapper;
 
     @InjectMocks
     PostMapperImpl postMapper;
@@ -74,5 +82,32 @@ class PostMapperTest {
             assertThat(requestDto.getHashtags()).contains(hashtag.getName());
             assertThat(hashtag.getPost()).isEqualTo(post);
         });
+    }
+
+    @Test
+    @DisplayName("Post List를 PostPreviewResponse List로 매핑하여 반환한다.")
+    void toPostPreviewResponses() throws IllegalAccessException {
+        // ** Given **
+        List<Post> posts = PostFactory.postEntities(5);
+        // ProfileMapper의 toSimpleProfileResponse(Profile)를 실행하면 Profile의 ID가 매핑된 SimpleProfileResponse를 반환한다.
+        given(profileMapper.toSimpleProfileResponse(any(Profile.class)))
+            .will(invocation -> {
+                Profile profile = invocation.getArgument(0);
+                return new ProfileFactory(profile.getId()).simpleProfileResponse();
+            });
+
+        // ** When **
+        List<PostPreviewResponse> postPreviewResponses = postMapper.toPostPreviewResponses(posts);
+
+        // ** Then **
+        assertThat(postPreviewResponses)
+            .usingRecursiveComparison()
+            .ignoringFields("likeCount", "commentCount") // TODO 좋아요, 댓글 기능 구현 후 검증
+            .withEqualsForFields((dto, entity) -> dto.equals(((Job) entity).getTitle()), "profile.job")
+            .withEqualsForFields((dtos, entities) -> {
+                List<String> hashtagNames = ((List<Hashtag>) entities).stream().map(Hashtag::getName).collect(Collectors.toList());
+                return hashtagNames.containsAll((List<String>) dtos);
+            }, "hashtags")
+            .isEqualTo(posts);
     }
 }
