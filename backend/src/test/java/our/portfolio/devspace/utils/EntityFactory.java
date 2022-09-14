@@ -8,7 +8,6 @@ import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
-import our.portfolio.devspace.domain.user.entity.User;
 import our.portfolio.devspace.utils.dummy.DummyJob;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
 import our.portfolio.devspace.utils.dummy.DummyUser;
@@ -32,7 +31,7 @@ public class EntityFactory {
             .career(profile.getCareer())
             .referenceLinks(referenceLinks)
             .job(jobEntity(profile.getJob()))
-            .user(userEntity(new DummyUser(1L)))
+            .user(new DummyUser(1L).userEntity())
             .build();
 
         if (profile.getId() != null) {
@@ -60,20 +59,6 @@ public class EntityFactory {
 
         if (job.getId() != null) {
             setIdField(entity, job.getId());
-        }
-
-        return entity;
-    }
-
-    public static User userEntity(DummyUser user) throws IllegalAccessException {
-        User entity = User.builder()
-            .role(user.getRole())
-            .subject(user.getSubject())
-            .provider(user.getProvider())
-            .build();
-
-        if (user.getId() != null) {
-            setIdField(entity, user.getId());
         }
 
         return entity;
