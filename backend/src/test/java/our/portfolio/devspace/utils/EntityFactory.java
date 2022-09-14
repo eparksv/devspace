@@ -1,14 +1,10 @@
 package our.portfolio.devspace.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import our.portfolio.devspace.domain.job.entity.Job;
-import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
-import our.portfolio.devspace.utils.dummy.DummyJob;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
 import our.portfolio.devspace.utils.dummy.DummyUser;
 
@@ -30,35 +26,12 @@ public class EntityFactory {
             .name(profile.getName())
             .career(profile.getCareer())
             .referenceLinks(referenceLinks)
-            .job(jobEntity(profile.getJob()))
+            .job(profile.getJob().jobEntity())
             .user(new DummyUser(1L).userEntity())
             .build();
 
         if (profile.getId() != null) {
             setIdField(entity, profile.getId());
-        }
-
-        return entity;
-    }
-
-    public static List<Job> jobEntities(JobType type) throws IllegalAccessException {
-        List<Job> entities = new ArrayList<>();
-
-        for (int i = 1; i <= 10; i++) {
-            DummyJob job = new DummyJob(i);
-            job.setType(type);
-            job.setTitle(type.toString() + i);
-            entities.add(jobEntity(job));
-        }
-
-        return entities;
-    }
-
-    public static Job jobEntity(DummyJob job) throws IllegalAccessException {
-        Job entity = new Job(job.getType(), job.getTitle());
-
-        if (job.getId() != null) {
-            setIdField(entity, job.getId());
         }
 
         return entity;

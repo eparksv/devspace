@@ -18,7 +18,6 @@ import our.portfolio.devspace.domain.job.dto.JobResponse;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
 import our.portfolio.devspace.domain.job.repository.JobRepository;
-import our.portfolio.devspace.utils.EntityFactory;
 import our.portfolio.devspace.utils.dummy.DummyJob;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,9 +37,9 @@ class JobServiceTest {
     @DisplayName("직군 목록을 반환한다.")
     void listJobs(String type) throws IllegalAccessException {
         // ** Given **
-        List<Job> jobs = EntityFactory.jobEntities(JobType.valueOf(type.toUpperCase()));
+        List<Job> jobs = DummyJob.jobEntities(JobType.valueOf(type.toUpperCase()));
 
-        given(jobRepository.findAllByType(any(JobType.class))).will(invocation -> EntityFactory.jobEntities(invocation.getArgument(0)));
+        given(jobRepository.findAllByType(any(JobType.class))).will(invocation -> DummyJob.jobEntities(invocation.getArgument(0)));
         given(jobMapper.toJobResponses(anyList())).will(invocation -> {
             List<Job> jobsArgument = invocation.getArgument(0);
             return DummyJob.jobResponses(jobsArgument.get(0).getType());

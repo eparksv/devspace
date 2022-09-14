@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import our.portfolio.devspace.domain.job.dto.JobResponse;
 import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.job.entity.JobType;
-import our.portfolio.devspace.utils.EntityFactory;
+import our.portfolio.devspace.utils.dummy.DummyJob;
 
 @ExtendWith(SpringExtension.class)
 @Import(JobMapperImpl.class)
@@ -23,7 +23,7 @@ class JobMapperTest {
     @Test
     void toListJobsResponse() throws IllegalAccessException {
         // ** Given **
-        List<Job> jobs = EntityFactory.jobEntities(JobType.DEVELOPER);
+        List<Job> jobs = DummyJob.jobEntities(JobType.DEVELOPER);
 
         // ** When **
         List<JobResponse> responseDto = jobMapper.toJobResponses(jobs);
