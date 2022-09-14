@@ -15,7 +15,6 @@ import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
-import our.portfolio.devspace.utils.EntityFactory;
 import our.portfolio.devspace.utils.dummy.DummyCategory;
 import our.portfolio.devspace.utils.dummy.DummyPost;
 import our.portfolio.devspace.utils.dummy.DummyProfile;
@@ -49,7 +48,7 @@ class PostMapperTest {
         // ** Given **
         Long userId = 1L;
         CreatePostRequest requestDto = new DummyPost().createPostRequest();
-        Profile profile = EntityFactory.profileEntity(new DummyProfile(1L));
+        Profile profile = new DummyProfile(1L).profileEntity();
         Category category = new DummyCategory(requestDto.getCategoryId()).categoryEntity();
 
         given(entityMapper.resolve(any(Number.class), any(Class.class))).willAnswer(invocation -> {

@@ -1,12 +1,17 @@
 package our.portfolio.devspace.utils.dummy;
 
+import static our.portfolio.devspace.utils.EntityFactory.setIdField;
+
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest;
 import our.portfolio.devspace.domain.profile.dto.CreateProfileRequest.ReferenceLinkDto;
 import our.portfolio.devspace.domain.profile.dto.SimpleProfileResponse;
+import our.portfolio.devspace.domain.profile.entity.Profile;
+import our.portfolio.devspace.domain.profile.entity.ReferenceLink;
 
 @Setter
 @Getter
@@ -46,5 +51,28 @@ public class DummyProfile {
             .name(this.name)
             .referenceLinks(this.referenceLinks)
             .build();
+    }
+
+    public Profile profileEntity() throws IllegalAccessException {
+        List<ReferenceLink> referenceLinks = this.referenceLinks
+            .stream()
+            .map(referenceLinkDto -> new ReferenceLink(referenceLinkDto.getTitle(), referenceLinkDto.getUrl()))
+            .collect(Collectors.toList());
+
+        Profile entity = Profile.builder()
+            .company(this.company)
+            .introduction(this.introduction)
+            .name(this.name)
+            .career(this.career)
+            .referenceLinks(referenceLinks)
+            .job(this.job.jobEntity())
+            .user(new DummyUser(1L).userEntity())
+            .build();
+
+        if (this.id != null) {
+            setIdField(entity, this.id);
+        }
+
+        return entity;
     }
 }

@@ -1,6 +1,5 @@
 package our.portfolio.devspace.utils.dummy;
 
-import static our.portfolio.devspace.utils.EntityFactory.profileEntity;
 import static our.portfolio.devspace.utils.EntityFactory.setIdField;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class DummyPost {
             .content(this.content)
             .secret(this.secret)
             .category(this.category.categoryEntity())
-            .profile(profileEntity(this.profile))
+            .profile(this.profile.profileEntity())
             .hashtags(hashtags)
             .build();
 

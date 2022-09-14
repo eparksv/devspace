@@ -11,7 +11,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static our.portfolio.devspace.utils.DtoFactory.createPostRequest;
 
 import com.epages.restdocs.apispec.ConstrainedFields;
 import com.epages.restdocs.apispec.FieldDescriptors;
@@ -103,6 +102,6 @@ class PostControllerTest {
             postCreationDtoField.withPath("secret").description("나만 보기 설정").type(JsonFieldType.BOOLEAN),
             postCreationDtoField.withPath("hashtags").description("해시태그 목록").type(JsonFieldType.ARRAY),
             postCreationDtoField.withPath("categoryId").description("카테고리 ID").type(JsonFieldType.NUMBER)
-            );
+        );
     }
 }
