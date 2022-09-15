@@ -1,39 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { StyledModalJob, Wrap } from './Modal_style';
 import { ModalSignUp } from './ModalSignUp';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModalJob2 from './ModalJob2';
+import { ContextUser } from '@/pages/_app';
 
 type modalProps = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setModal?: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-	value?: { name: string; text: string | undefined };
-	token?: string;
+	value: { name: string; text: string; [propName: string]: any };
 };
 
-export const ModalJob = ({ setOpen, setModal, value, token }: modalProps) => {
+export const ModalJob = ({ setOpen, setModal, value }: modalProps) => {
 	const jobs = ['개발자', '디자이너', '기획자', '마케터', '창업'];
+	const jobType = ['developer', 'designer', 'marketer', 'planner', 'startup'];
 
-	const [job, setJob] = useState<string>();
-
-	const mutation = useMutation(
-		async (data: object) => {
-			console.log(data);
-			console.log(`${token}`);
-
-			await axios.post(`/post`, data, {
-				headers: {
-					authorization: `Bearer ${token}`,
-				},
-			});
-		},
-		{
-			onSuccess: () => setOpen(false),
-			onError: (err) => console.log(err),
-		}
-	);
+	const [type, setType] = useState<string>();
 
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -68,7 +52,7 @@ export const ModalJob = ({ setOpen, setModal, value, token }: modalProps) => {
 							aria-label={j + ` 직군 선택`}
 							onClick={() => {
 								select(idx);
-								setJob(j);
+								setType(jobType[idx]);
 							}}>
 							{j}
 						</button>
@@ -83,9 +67,8 @@ export const ModalJob = ({ setOpen, setModal, value, token }: modalProps) => {
 								<ModalJob2
 									setOpen={setOpen}
 									setModal={setModal}
-									token={token}
 									value={value}
-									jobNumber={job}
+									type={type}
 								/>
 							);
 					}}>

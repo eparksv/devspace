@@ -58,7 +58,7 @@ export const StyledModalSignIn = styled.div`
 		font: 400 14px/1.5 'Pretendard';
 		text-align: center;
 		color: #ffffff;
-		width: 80%;
+		width: 65%;
 		margin: 35px auto 80px;
 	}
 	button {
@@ -221,39 +221,47 @@ export const StyledModalPost = styled.div`
 			border: none;
 		}
 	}
-	.tag {
-		width: 100%;
-		margin: 30px 10px 0 10px;
-		font: 700 16px/1.5 'Pretendard';
-		.tag-value {
-			padding: 6px 8px;
-			background: #cdd3ef;
-			margin: 0 5px;
-			border-radius: 24px;
-			font: 400 14px/1.5 'arial';
-			&:nth-of-type(1) {
-				margin-left: 25px;
+	.tags {
+		display: flex;
+		.tag-wrap {
+			display: inline-block;
+		}
+		.tag {
+			margin: 0px 10px 0 10px;
+			font: 700 16px/1.5 'Pretendard';
+			.tag-value {
+				padding: 6px 8px;
+				background: #cdd3ef;
+				margin: 0 5px;
+				border-radius: 24px;
+				font: 400 14px/1.5 'arial';
+				&:nth-of-type(1) {
+					margin-left: 25px;
+				}
+			}
+			.tag-close {
+				color: #8e8e8e;
+				border: none;
+				background: none;
+				font-size: 14px;
+				margin: 0 0 0 3px;
+				padding: 0;
+				vertical-align: middle;
+				> svg {
+					width: 20px;
+					height: auto;
+				}
+			}
+			> input[type='text'] {
+				min-width: 20px;
+				border: none;
+				padding: 0 0 0 10px;
+				font: 400 14px/1.5 'arial';
+				background: #cdd3ef;
 			}
 		}
-		.tag-close {
-			color: #8e8e8e;
-			border: none;
-			background: none;
-			font-size: 14px;
-			margin: 0 0 0 3px;
-			padding: 0;
-			vertical-align: middle;
-			> svg {
-				width: 20px;
-				height: auto;
-			}
-		}
-		> input[type='text'] {
-			min-width: 80px;
-			border: none;
-			margin: 0 10px;
-			padding: 0 0 0 10px;
-			font: 400 14px/1.5 'arial';
+		.add-tag {
+			height: 30px;
 		}
 	}
 	.close {
@@ -292,6 +300,15 @@ export const StyledModalSignUp = styled.div`
 			resize: none;
 			padding: 10px;
 		}
+		.wrap-p{
+			display:flex;
+			justify-content: space-between;
+			p{
+			position: relative;
+			font: 400 12px/0 'Pretendard';
+			margin: 10px;
+			}
+		}
 		.wrap-name {
 			width: 100%;
 			position: relative;
@@ -315,24 +332,24 @@ export const StyledModalSignUp = styled.div`
 			&.pass {
 				p,
 				svg {
-					color: green;
+					color: #88E25D;
 				}
 				input {
-					border-color: green;
+					border-color: #88E25D;
 					&:focus {
-						outline: 1px solid green;
+						outline: 1px solid #88E25D;
 					}
 				}
 			}
 			&.nopass {
 				p,
 				svg {
-					color: orange;
+					color: #FF5C00;
 				}
 				input {
-					border-color: orange;
+					border-color: #FF5C00;
 					&:focus {
-						outline: 1px solid orange;
+						outline: 1px solid #FF5C00;
 					}
 				}
 			}
@@ -342,44 +359,36 @@ export const StyledModalSignUp = styled.div`
 			&.pass {
 				p,
 				svg {
-					color: green;
+					color: #88E25D;
 				}
 				textarea {
-					border-color: green;
+					border-color: #88E25D;
 					&:focus {
-						outline: 1px solid green;
+						outline: 1px solid #88E25D;
 					}
 				}
 			}
 			&.nopass {
 				p,
 				svg {
-					color: orange;
+					color: #FF5C00;
 				}
 				textarea {
-					border-color: orange;
+					border-color: #FF5C00;
 					&:focus {
-						outline: 1px solid orange;
+						outline: 1px solid #FF5C00;
 					}
 				}
 			}
 			textarea {
 				margin-top: 5px;
 			}
-			.wrap-p{
-				display:flex;
-				justify-content: space-between;
-				p{
-				position: relative;
-				font: 400 12px/0 'Pretendard';
-				margin: 10px;
-				}
-			}
+			
 		}
 
 		input[type='submit'] {
 			color: #fff;
-			background: #3A4DB7;
+			background: #212c6a;
 			margin: 0.5rem auto;
 			border: none;
 			opacity: 0.5;
@@ -387,7 +396,7 @@ export const StyledModalSignUp = styled.div`
 			&.on{
 				opacity: 1;
 				&:hover{
-					background: #212c6a;
+					background: #3A4DB7;
 				}
 			}
 		}
@@ -421,29 +430,36 @@ export const StyledModalJob = styled.div`
 	h1 {
 		font: 700 20px/1.5 'Pretendard';
 		color: #424242;
-		margin-bottom: 1.5rem;
+		margin-bottom: 8px;
 		text-align: center;
 	}
 
 	p {
 		position: relative;
+		width:100%;
+		padding: 0 32px;
+		font: 400 14px/1.5 'Pretendard';
+		margin-bottom: 19px;
 	}
 
 	button {
 		display: block;
 		position: relative;
-		margin: 0 auto;
+		margin: 8px auto;
+		padding: 0 16px;
 		color: #424242;
 		background: none;
 		width: 90%;
-		height: 2rem;
-		font: bold 24px/1.2 'Pretendard';
-		border: none;
+		height: 48px;
+		font: bold 16px/1.5 'Pretendard';
+		text-align:left;
+		border: 1px solid #DBDBDB;
 		border-radius: 8px;
 		cursor: pointer;
 		&:hover,
 		&.job-on {
 			background: #cdd3ef;
+			border:none;
 		}
 	}
 	.close,
@@ -454,6 +470,7 @@ export const StyledModalJob = styled.div`
 		height: 24px;
 		color: #5b5b5b;
 		font: 400 20px/1 'arial';
+		border:none;
 		cursor: pointer;
 		&:hover {
 			background: none;
@@ -472,100 +489,107 @@ export const StyledModalJob = styled.div`
 	}
 	.next {
 		position: relative;
-		margin: 0.5rem auto;
+		margin: 16px auto;
 		color: #fff;
 		opacity: 0.5;
 		font: 700 14px/21px 'Pretendard';
-		background: #3a4db7;
+		background: #212C6A;
+		border:none;
+		text-align:center;
 		&:hover{
-			background: #3a4db7;
+			background: #212C6A;
 		}
 		&.on{
 			opacity: 1;
 			&:hover{
-				background: #212C6A;
+				background: #3A4DB7;
 			}
 	}
 `;
 
 export const StyledModalJob2 = styled.div`
-	position: fixed;
-	width: 320px;
-	background: #fff;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	border-radius: 24px;
+position: fixed;
+width: 320px;
+background: #fff;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+border-radius: 24px;
 
-	h1 {
-		font: 700 20px/1.5 'Pretendard';
-		color: #424242;
-		margin-bottom: 1.5rem;
-		text-align: center;
+h1 {
+	font: 700 20px/1.5 'Pretendard';
+	color: #424242;
+	margin-bottom: 8px;
+	text-align: center;
+}
+
+p {
+	position: relative;
+	width:100%;
+	padding: 0 32px;
+	font: 400 14px/1.5 'Pretendard';
+	margin-bottom: 19px;
+}
+
+button {
+	display: block;
+	position: relative;
+	margin: 8px auto;
+	color: #424242;
+	background: none;
+	width: 90%;
+	height: 48px;
+	font: bold 16px/1.5 'Pretendard';
+	text-align:left;
+	border: 1px solid #DBDBDB;
+	border-radius: 8px;
+	cursor: pointer;
+	&:hover,
+	&.job-on {
+		background: #cdd3ef;
+		border:none;
 	}
-
-	p {
-		position: relative;
-	}
-
-	button {
-		display: block;
-		position: relative;
-		margin: 4px auto;
-		width: 90%;
-		height: 2rem;
-		font: bold 24px/1.2 'Pretendard';
-		color: #424242;
+}
+.close,
+.prev {
+	position: absolute;
+	top: 17px;
+	width: 24px;
+	height: 24px;
+	color: #5b5b5b;
+	font: 400 20px/1 'arial';
+	border:none;
+	cursor: pointer;
+	&:hover {
 		background: none;
-		border: 1px solid #dbdbdb;
-		border-radius: 8px;
-		cursor: pointer;
-		&:hover,
-		&.job-on {
-			background: #cdd3ef;
-		}
+		color: #808dd7;
 	}
-	.close,
-	.prev {
-		position: absolute;
-		top: 17px;
-		width: 24px;
-		height: 24px;
-		color: #5b5b5b;
-		font: 400 20px/1 'arial';
-		border: none;
-		cursor: pointer;
-		&:hover {
-			background: none;
-			color: #808dd7;
-		}
+}
+.close {
+	right: 16px;
+}
+.prev {
+	left: 0.5rem;
+	width: 32px;
+	svg {
+		font: 400 24px/1 'arial';
 	}
-	.close {
-		right: 16px;
-	}
-	.prev {
-		left: 0.5rem;
-		width: 32px;
-		svg {
-			font: 400 24px/1 'arial';
-		}
-	}
-	.submit {
-		position: relative;
-		margin: 0.5rem auto;
-		color: #fff;
-		opacity: 0.5;
-		font: 700 14px/21px 'Pretendard';
-		background: #3a4db7;	
+}
+.next {
+	position: relative;
+	margin: 16px auto;
+	color: #fff;
+	opacity: 0.5;
+	font: 700 14px/21px 'Pretendard';
+	background: #212C6A;
+	border:none;
+	text-align:center;
+	&.on{
+		opacity: 1;
 		&:hover{
-			background: #3a4db7;
+			background: #3A4DB7;
 		}
-		&.on{
-			opacity: 1;
-			&:hover{
-				background: #212C6A;
-			}
-	}
+}
 `;
 
 export const StyledModalAlert = styled.div``;
@@ -578,6 +602,8 @@ export const StyledModalImage = styled.div`
 	width: 288px;
 	height: 288px;
 	background: url(./images/Astronaut.svg) no-repeat center/cover;
+	opacity: 1;
+	transition: 1s;
 
 	p {
 		width: 100%;
@@ -589,3 +615,162 @@ export const StyledModalImage = styled.div`
 		-webkit-text-fill-color: transparent;
 	}
 `;
+
+export const StyledModalTest = styled.div`
+	position: fixed;
+	width: 604px;
+	background: #fff;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 24px;
+
+	.wrap {
+		display: block;
+		width: 100%;
+		max-height: 450px;
+		overflow-y: auto;
+
+		.test1 {
+			width: 100%;
+			min-height: 450px;
+		}
+		.comment-list {
+			width: 100%;
+			min-height: 300px;
+			padding-top: 5vmin;
+			.comment {
+				display: flex;
+				justify-content: center;
+				margin-bottom: 5vmin;
+
+				.profile-image {
+					min-width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					background: gray;
+				}
+				.text {
+					width: 60%;
+					border-radius: 16px;
+					background: #dddd;
+					font: 400 14px/1.5 'Pretendard';
+				}
+			}
+		}
+	}
+
+	.close {
+		position: fixed;
+		top: 10px;
+		right: 30px;
+	}
+`;
+
+export const StyledModalCompany = styled.div`
+	position: fixed;
+	width: 320px;
+	background: #fff;
+	border-radius: 24px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	h1 {
+		font: 700 20px/1.5 'Pretendard';
+		color: #424242;
+		text-align: center;
+	}
+	.company-name,
+	.career {
+		width: 90%;
+		margin: 1rem auto 0;
+		input {
+			width: 100%;
+			font: 400 14px/21px 'Pretendard';
+			color: #5b5b5b;
+			border-radius: 8px;
+			border: 1px solid #5b5b5b;
+			resize: none;
+			padding: 10px;
+		}
+		svg {
+			position: absolute;
+			top: 30%;
+			right: 10%;
+			width: 0.7rem;
+			height: 0.7rem;
+			transform: translateY(-25%);
+		}
+		.wrap-p {
+			display: flex;
+			justify-content: space-between;
+			p {
+				position: relative;
+				font: 400 12px/0 'Pretendard';
+				margin: 10px;
+			}
+		}
+			p {
+				position: relative;
+				font: 400 12px/1.5 'Pretendard';
+				text-align: left;
+				min-height: 16px;
+				margin: 5px 10px;
+			}
+			&.pass {
+				p,
+				svg {
+					color: #88e25d;
+				}
+				input {
+					border-color: #88e25d;
+					&:focus {
+						outline: 1px solid #88e25d;
+					}
+				}
+			}
+			&.nopass {
+				p,
+				svg {
+					color: #ff5c00;
+				}
+				input {
+					border-color: #ff5c00;
+					&:focus {
+						outline: 1px solid #ff5c00;
+					}
+				}
+			}
+		}
+
+		.next {
+			color: #fff;
+			background: #212c6a;
+			margin: 0.5rem auto;
+			border: none;
+			opacity: 0.5;
+			cursor: pointer;
+			&.on {
+				opacity: 1;
+				&:hover {
+					background: #3a4db7;
+				}
+			}
+		}
+	}
+	.close {
+		position: absolute;
+		top: 15px;
+		right: 0.7rem;
+		font: 600 20px/30px 'Pretendard';
+		color: #5b5b5b;
+		border: none;
+		background: none;
+		cursor: pointer;
+		&:hover {
+			color: #808dd7;
+		}
+	}
+`;
+
+export const StyledModalAddLink2 = styled.div``;

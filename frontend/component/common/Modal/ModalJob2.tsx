@@ -1,85 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { StyledModalJob2, Wrap } from './Modal_style';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ModalJob } from './ModalJob';
-import ModalSignUpImage from './ModalSignUpImage';
+import ModalCampany from './ModalCampany';
+import { ContextUser } from '@/pages/_app';
 
 type modalProps = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setModal?: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-	value?: { name: string; text: string | undefined };
-	token?: string;
-	jobNumber: string | undefined;
+	value: { name: string; text: string; [propName: string]: any };
+	type: string | undefined;
 };
 
-export const ModalJob2 = ({
-	setOpen,
-	setModal,
-	value,
-	token,
-	jobNumber,
-}: modalProps) => {
+export const ModalJob2 = ({ setOpen, setModal, value, type }: modalProps) => {
 	//나중에 드롭다운으로 메뉴 더 생길수도.
 
-	const [jobs, setJobs] = useState<string[]>([]);
-	const [job, setJob] = useState<string>();
+	const { token } = useContext(ContextUser);
+
+	const [jobs, setJobs] = useState([]);
+	const [job, setJob] = useState<number>();
 
 	useEffect(() => {
-		if (!job)
-			switch (jobNumber) {
-				case '개발자': {
-					setJobs([
-						'풀스택개발자',
-						'프론트엔드',
-						'백엔드',
-						'미들티어개발자',
-						'퍼블리셔',
-						'모바일개발자',
-						'그래픽개발자',
-						'데이터사이언티스트',
-					]);
-					break;
-				}
-				case '디자이너': {
-					setJobs([
-						'UIUX디자이너',
-						'편진디자이너',
-						'제품디자이너',
-						'그래픽디자이너',
-						'브랜드디자이너',
-						'영상디자이너',
-						'웹디자이너',
-					]);
-					break;
-				}
-				case '기획자': {
-					setJobs([
-						'프로젝트관리자',
-						'전략기획자',
-						'서비스기획자',
-						'콘텐츠기획자',
-						'일반기획자',
-					]);
-					break;
-				}
-				case '마케터': {
-					setJobs([
-						'콘텐츠마케터',
-						'브랜드마케터',
-						'퍼포먼스마케터',
-						'일반마케터',
-					]);
-					break;
-				}
-				case '창업': {
-					setJobs(['대표', 'CEO', '스타트업']);
-					break;
-				}
+		(async () => {
+			try {
+				const res = await axios.get(`http://localhost:8080/api/jobs/${type}`, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				const data = res.data.data;
+				//console.log(data);
+				setJobs(data);
+			} catch (e) {
+				console.log(e);
+				alert('죄송합니다. 잠시후 다시 시도해주세요');
 			}
+		})();
 	}, []);
 
+	/*
 	const mutation = useMutation(
 		async (data: object) => {
 			console.log('전송된 data', data);
@@ -101,6 +62,7 @@ export const ModalJob2 = ({
 			},
 		}
 	);
+	*/
 
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -118,55 +80,54 @@ export const ModalJob2 = ({
 				b.classList.remove('job-on');
 			});
 			buttons[idx].classList.add('job-on');
-			ref.current.querySelector('.submit')?.classList.add('on');
+			ref.current.querySelector('.next')?.classList.add('on');
 		}
 	};
 
 	return (
 		<Wrap ref={ref} tabIndex={0}>
 			<StyledModalJob2>
-				<h1>{jobNumber}</h1>
+				<h1>{type}</h1>
 
-				{jobs.map((j, idx) => {
+				{jobs.map((j: { id: number; title: string }, idx) => {
 					return (
 						<button
 							className='job-button'
 							key={idx}
-							aria-label={j + ` 직군 선택`}
+							aria-label={j.title + ` 직군 선택`}
 							onClick={() => {
 								select(idx);
-								setJob(j);
+								setJob(j.id);
 							}}>
-							{j}
+							{j.title}
 						</button>
 					);
 				})}
 
 				<button
-					className='submit'
+					className='next'
 					onClick={(e) => {
-						//console.log('이전 모달에서 넘어온 값', value);
-						if (value && e.currentTarget.classList.contains('on')) {
-							/*console.log('전송될 값', {
-								name: `${value.name}`,
-								introduction: `${value.text}`,
-								jobId: job,
-							})*/
-							mutation.mutate({
-								name: `${value.name}`,
-								introduction: `${value.text}`,
-								jobId: 1, //job,
-							});
-						}
+						value.jobId = job;
+						//console.log('job2 value', value);
+						if (setModal && e.currentTarget.classList.contains('on'))
+							setModal(
+								<ModalCampany
+									setOpen={setOpen}
+									setModal={setModal}
+									value={value}
+								/>
+							);
 					}}>
-					가입완료
+					다음
 				</button>
 
 				<button
 					className='prev'
 					onClick={() => {
 						if (setModal)
-							setModal(<ModalJob setOpen={setOpen} setModal={setModal} />);
+							setModal(
+								<ModalJob setOpen={setOpen} setModal={setModal} value={value} />
+							);
 					}}
 					arira-label='이전 단계로'>
 					<ArrowBackIcon />

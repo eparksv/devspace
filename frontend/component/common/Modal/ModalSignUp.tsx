@@ -8,11 +8,10 @@ import ErrorIcon from '@mui/icons-material/Error';
 type modalProps = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	setModal: React.Dispatch<React.SetStateAction<React.ReactNode>>;
-	value?: { name: string; text: string | undefined };
-	token?: string;
+	value?: { name: string; text: string; [propName: string]: any };
 };
 
-export const ModalSignUp = ({ setOpen, setModal, token }: modalProps) => {
+export const ModalSignUp = ({ setOpen, setModal }: modalProps) => {
 	const ref = useRef<any>(null);
 
 	useEffect(() => {
@@ -38,12 +37,7 @@ export const ModalSignUp = ({ setOpen, setModal, token }: modalProps) => {
 
 			setModal(
 				//props 드릴링이 3단계...면 괜찮지않을까??..
-				<ModalJob
-					setOpen={setOpen}
-					setModal={setModal}
-					value={value}
-					token={token}
-				/>
+				<ModalJob setOpen={setOpen} setModal={setModal} value={value} />
 			);
 		}
 	};

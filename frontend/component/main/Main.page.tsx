@@ -18,13 +18,7 @@ const Main = (/*{ data }: any*/) => {
 	useEffect(() => {
 		if (context.user.job === '') {
 			setOpen(true);
-			setModal(
-				<ModalSignUp
-					setOpen={setOpen}
-					setModal={setModal}
-					token={`${context.token}`}
-				/>
-			);
+			setModal(<ModalSignUp setOpen={setOpen} setModal={setModal} />);
 		}
 	}, []);
 

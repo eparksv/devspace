@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import dayjs from 'dayjs';
+import { ContextUser } from '@/pages/_app';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
 import Tiptap_loading from './Tiptap_loading';
 
 type Props = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	getValue: () => {
 		title: string | undefined;
-		target: HTMLInputElement | null;
+		target: HTMLDivElement | null;
+		hashtags: string[];
 	};
 };
 
@@ -14,52 +17,78 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 	console.log('submit start');
 
 	const [loading, setLoading] = useState(false);
+	const { token } = useContext(ContextUser);
 
 	//부모 컴포넌트의 ref.curent의 값을 받는 함수.
 	const click = () => {
-		const { title, target } = getValue();
-		postSubmit(title, target);
+		const { title, target, hashtags } = getValue();
+		postSubmit(title, target, hashtags);
 	};
 
-	const postSubmit = async (
+	const { mutate } = useMutation(
+		async (data: object) => {
+			axios.post(`posts`, data, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+		},
+		{
+			onError: (e) => {
+				console.log(e);
+				console.log('실패');
+			},
+			onSuccess: () => {
+				setLoading(false);
+				setOpen(false);
+				console.log('성공');
+			},
+		}
+	);
+
+	const postSubmit = (
 		title: string | undefined,
-		target: HTMLInputElement | null
+		target: HTMLDivElement | null,
+		hashtags: string[]
 	) => {
 		console.log('전송!!!');
 
-		const standard = dayjs('2022-07-28');
-		const date = dayjs();
-		const dateFormat = date.format('YY/MM/DD HH:mm:ss');
-
 		if (target !== null) {
-			let content: string | undefined;
-			let preText: string | undefined;
 			const targetEle = target;
+			const content = target.querySelector('.ProseMirror')?.innerHTML;
 			const imgs = targetEle.querySelectorAll('img');
 
-			setLoading(true);
-
-			content = target.querySelector('.ProseMirror')?.innerHTML;
-			//??꼭 필요할까? content만 저장하고 post읽을때 content에서 inneertext 처리하면 pretext는 저장 안해도 될거같은데?
-			//preText = target.querySelector('.ProseMirror')?.innerText;
-			//console.log(preText);
-
-			const post = {
-				userId: 'dummy',
-				postOrder: `${date.diff(standard)}`, //파이어베이스용 코드.. 파베DB 정렬기준.
-				postCreated: dateFormat, //dayjs
-				postTitle: title,
-				postContent: content,
-				preText: preText,
-				liked: 0,
-				commented: [],
+			const data = {
+				title: '제목',
+				content: content,
+				secret: false,
+				hashtags: hashtags, //빈 배열 가능 []
+				categoryId: 1,
 			};
 
-			console.log(post);
+			console.log('data전송', data);
+			setLoading(true);
+			//mutate(data);
+
+			const test = async () => {
+				try {
+					const res = await axios.post(`posts`, data, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					});
+					console.log(res.data);
+				} catch (e) {
+					console.log(e);
+				}
+			};
+			test();
+
+			//content = target.querySelector('.ProseMirror')?.innerHTML; //??
 
 			//나중에 지울 코드. 테스트용
-			setTimeout(() => setLoading(false), 2500);
-			setTimeout(() => setOpen(false), 2600);
+			//setTimeout(() => setLoading(false), 2500);
+			//setTimeout(() => setOpen(false), 2600);
 		}
 	};
 	return (

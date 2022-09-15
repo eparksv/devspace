@@ -1,8 +1,8 @@
 import React, { KeyboardEvent, useRef, useState } from 'react';
-import { Cancel } from '@mui/icons-material';
 import { WrapEditor } from '../Modal/Modal_style';
 import Tiptap_submit from './Tiptap_submit';
 import Tiptap_post from './Tiptap_post';
+import Tiptap_tag from './Tiptap_tag';
 
 type Props = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,35 +11,32 @@ type Props = {
 const Tiptap = ({ setOpen }: Props) => {
 	console.log('tiiptap start');
 
-	const getValue = () => {
-		console.log('val');
-		const titleValue = title.current?.value;
-		const targetCurrent = ref.current;
-		return {
-			title: titleValue,
-			target: targetCurrent,
-		};
-	};
-
 	const title = useRef<HTMLInputElement>(null);
-	const ref = useRef<HTMLInputElement>(null);
-	const tag = useRef<HTMLInputElement>(null);
+	const ref = useRef<HTMLDivElement>(null);
+	const tags = useRef<HTMLDivElement>(null);
+	const protect = useRef<HTMLDivElement>(null);
 
 	const [inputSize, setInputSize] = useState<number>();
-	const [tagList, setTaglist] = useState<string[]>([]);
 
 	const inputSizing = () => {
 		const num = title.current?.value.length;
 		num ? setInputSize(num * 1.5) : null;
 	};
 
-	const makeTag = (e: KeyboardEvent<HTMLInputElement>) => {
-		if (e.key == '#') e.preventDefault();
-		if ((e.key === 'Enter' || e.key === ' ') && tag.current) {
-			e.preventDefault();
-			setTaglist([...tagList, tag.current.value]);
-			tag.current.value = '';
-		}
+	const getValue = () => {
+		const titleValue = title.current?.value;
+		const targetCurrent = ref.current; //innerHTML뽑기
+		const taglist = tags.current ? tags.current.querySelectorAll('input') : [];
+		const hashtags: string[] = [];
+		taglist.forEach((h, idx) => {
+			hashtags.push(h.value);
+		});
+		console.log('hashs', hashtags);
+		return {
+			title: titleValue,
+			target: targetCurrent,
+			hashtags: hashtags,
+		};
 	};
 
 	return (
@@ -61,31 +58,13 @@ const Tiptap = ({ setOpen }: Props) => {
 				</WrapEditor>
 
 				{/*컴포넌트로 */}
-				<div className='tag'>
-					<label htmlFor='tag'>태그</label>
-					{tagList.map((t, idx) => {
-						return (
-							<span
-								className='tag-value'
-								onClick={() => {}}
-								key={idx}
-								tabIndex={0}>
-								{` #` + t}
-								<button className='tag-close' onClick={() => {}} tabIndex={0}>
-									<Cancel />
-								</button>
-							</span>
-						);
-					})}
-					{tagList.length < 4 ? (
-						<input
-							type='text'
-							id='tag'
-							onKeyDown={makeTag}
-							ref={tag}
-							placeholder='태그 입력'
-						/>
-					) : null}
+				<div className='tags' ref={tags}>
+					<Tiptap_tag />
+				</div>
+
+				<div className='link'>링크</div>
+				<div className='protect' ref={protect}>
+					공개여부
 				</div>
 
 				<Tiptap_submit getValue={getValue} setOpen={setOpen} />
