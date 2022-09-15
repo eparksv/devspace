@@ -9,7 +9,6 @@ import Aside from '../Aside/Aside';
 type childType = {
 	children: React.ReactNode;
 };
-
 function Layout({ children }: childType) {
 	return (
 		<StyledLayout>
@@ -21,13 +20,15 @@ function Layout({ children }: childType) {
 			<Header />
 			<main>
 				<Categoty />
-				<Inner>{children}</Inner>
-				<Aside />
+				<Inner>
+					<div className='wrap'>
+						{children}
+						<Aside />
+					</div>
+				</Inner>
 			</main>
-			<></>
 			<Footer />
 		</StyledLayout>
 	);
 }
-
 export default Layout;
