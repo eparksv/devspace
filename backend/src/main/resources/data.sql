@@ -33,12 +33,12 @@ VALUES ('DEVELOPER', '풀스택개발자'),
        ('STARTUP', '기술관리자'),
        ('STARTUP', '관리자');
 
-INSERT INTO category (title)
-VALUES ('개발'),
-       ('디자인'),
-       ('마케팅'),
-       ('기획'),
-       ('창업');
+INSERT INTO category (title, type)
+VALUES ('개발', 'DEVELOP'),
+       ('디자인', 'DESIGN'),
+       ('마케팅', 'MARKETING'),
+       ('기획', 'PLANNING'),
+       ('창업', 'STARTUP');
 
 -- Users dummy data
 insert into users (id, subject, provider, role, created_date, modified_date) values (1, 81679, 'GITHUB', 'USER', '2022-09-07 11:14:10', '2022-09-07 11:14:10');
