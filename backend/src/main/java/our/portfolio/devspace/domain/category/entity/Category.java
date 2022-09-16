@@ -26,10 +26,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 10)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private CategoryType type;
 

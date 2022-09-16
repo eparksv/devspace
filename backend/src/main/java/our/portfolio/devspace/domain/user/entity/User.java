@@ -32,10 +32,11 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 6)
     @Enumerated(EnumType.STRING)
     private OAuth2Provider provider;
 
+    @Column(nullable = false, length = 5)
     @Enumerated(EnumType.STRING)
     private Role role;
 

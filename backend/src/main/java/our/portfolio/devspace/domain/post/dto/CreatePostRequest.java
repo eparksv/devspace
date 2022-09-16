@@ -20,7 +20,7 @@ public class CreatePostRequest {
     @NotNull
     private final Boolean secret;
 
-    @Size(max = 10)
+    @Size(max = 3)
     private final List<String> hashtags;
 
     @NotNull
