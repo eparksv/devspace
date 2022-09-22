@@ -2,6 +2,7 @@ package our.portfolio.devspace.utils.factory;
 
 import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
+import our.portfolio.devspace.domain.post.dto.PostPreviewResponse;
 import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
 
@@ -71,6 +73,36 @@ public class PostFactory {
             .secret(this.secret)
             .categoryId(this.category.getId())
             .hashtags(this.hashtags)
+            .build();
+    }
+
+    public static List<PostPreviewResponse> postPreviewResponses(int size) {
+        List<PostPreviewResponse> postPreviewResponses = new ArrayList<>();
+
+        for (long i = 1; i <= size; i++) {
+            PostFactory post = new PostFactory(i);
+            post.setTitle(post.getTitle() + i);
+            post.setContent(post.getContent() + i);
+            post.setSecret(i % 2 != 0);
+            post.setHashtags(List.of("태그" + i, "태그" + i + 1, "태그" + i + 2));
+            post.setCategory(new CategoryFactory((int) i));
+            post.setProfile(new ProfileFactory(i));
+            postPreviewResponses.add(post.postPreviewResponse());
+        }
+
+        return postPreviewResponses;
+    }
+
+    public PostPreviewResponse postPreviewResponse() {
+        return PostPreviewResponse.builder()
+            .id(this.id)
+            .title(this.title)
+            .content(this.content)
+            .createdDate(LocalDateTime.now())
+            .hashtags(this.hashtags)
+            .commentCount(0)
+            .likeCount(0)
+            .profile(this.profile.simpleProfileResponse())
             .build();
     }
 }
