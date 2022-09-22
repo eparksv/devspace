@@ -12,6 +12,7 @@ type modalProps = {
 };
 
 export const ModalSignUp = ({ setOpen, setModal }: modalProps) => {
+	console.log('st');
 	const ref = useRef<any>(null);
 
 	useEffect(() => {

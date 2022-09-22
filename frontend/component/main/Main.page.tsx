@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyledArticle, StyledSection, TextBar } from './Main_style';
+import { StyledSection, TextBar } from './Main_style';
 import EditIcon from '@mui/icons-material/Edit';
 import { ModalPost } from '../common/Modal/ModalPost';
 import { ContextUser } from '../../pages/_app';
 import { ModalSignUp } from '../common/Modal/ModalSignUp';
+import ModalSignUp2 from '../common/reModal/ModalSignUp2';
+import ModalCompany from '../common/reModal/ModalCompany';
 
 const Main = (/*{ data }: any*/) => {
 	const [open, setOpen] = useState(false);
 	const [modal, setModal] = useState<boolean | React.ReactNode>(false);
+	const [test, setTest] = useState<boolean | React.ReactNode>(false);
 
 	/*const [list, setList] = useState<
 		[] | firebase.default.firestore.DocumentData[]
@@ -68,7 +71,17 @@ const Main = (/*{ data }: any*/) => {
 					프로필 설정 테스트
 				</button>
 
-				{open && modal}
+				<button
+					onClick={() => {
+						setOpen(true);
+						setTest(<ModalCompany setOpen={setOpen} setTest={setTest} />);
+					}}>
+					회원가입 모달 리팩토링
+				</button>
+
+				{/*모달을 제어하는 컴포넌트로 분리할까? (하위 컴포넌트만 리렌더링 되도록)*/}
+				{/*open && modal*/}
+				{open && test}
 			</StyledSection>
 		</>
 	);

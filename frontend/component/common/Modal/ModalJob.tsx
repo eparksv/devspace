@@ -14,6 +14,7 @@ type modalProps = {
 };
 
 export const ModalJob = ({ setOpen, setModal, value }: modalProps) => {
+	console.log('job1');
 	const jobs = ['개발자', '디자이너', '기획자', '마케터', '창업'];
 	const jobType = ['developer', 'designer', 'marketer', 'planner', 'startup'];
 
