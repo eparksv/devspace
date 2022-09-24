@@ -12,7 +12,7 @@ import our.portfolio.devspace.domain.post.repository.PostRepository;
 @RequiredArgsConstructor
 public abstract class PostPaginationService {
 
-    public static final int PAGE_SIZE = 20;
+    public static final int PAGE_SIZE = 10;
     protected final PostRepository postRepository;
     private final PostMapper postMapper;
 

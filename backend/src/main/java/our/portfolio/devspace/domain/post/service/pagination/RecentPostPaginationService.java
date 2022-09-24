@@ -24,9 +24,9 @@ public class RecentPostPaginationService extends PostPaginationService {
         List<Post> posts;
 
         if (query.getCursor() == null) {
-            posts = postRepository.findFirst21BySecret(false, query.getSort());
+            posts = postRepository.findFirst11BySecret(false, query.getSort());
         } else {
-            posts = postRepository.findFirst21ByIdLessThanAndSecret(query.getCursor(), false, query.getSort());
+            posts = postRepository.findFirst11ByIdLessThanAndSecret(query.getCursor(), false, query.getSort());
         }
 
         if (posts.size() == 0) {
