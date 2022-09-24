@@ -14,7 +14,7 @@ public class PostPreviewResponse {
     private final long id;
     private final SimpleProfileResponse profile;
 
-    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime createdDate;
     private final List<String> hashtags;
     private final String title;
