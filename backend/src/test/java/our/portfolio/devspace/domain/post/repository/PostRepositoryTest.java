@@ -18,33 +18,33 @@ class PostRepositoryTest {
     PostRepository postRepository;
 
     @Test
-    @DisplayName("포스팅의 PK가 id보다 작고 secret이 false인 포스팅을 PK 내림차순으로 20개 찾는다.")
-    void findFirst21ByIdLessThan() {
+    @DisplayName("포스팅의 PK가 id보다 작고 secret이 false인 포스팅을 PK 내림차순으로 11개 찾는다.")
+    void findFirst11ByIdLessThan() {
         // ** Given **
         Long id = 50L;
         Sort sort = Sort.by("id").descending();
 
         // ** When **
-        List<Post> posts = postRepository.findFirst21ByIdLessThanAndSecret(id, false, sort);
+        List<Post> posts = postRepository.findFirst11ByIdLessThanAndSecret(id, false, sort);
 
         // ** Then **
-        assertThat(posts.size()).isEqualTo(21);
+        assertThat(posts.size()).isEqualTo(11);
         assertThat(posts.get(0).getId()).isLessThan(id);
         assertThat(posts).allMatch(post -> !post.getSecret());
         assertThat(posts).isSortedAccordingTo(Comparator.comparingLong(Post::getId).reversed());
     }
 
     @Test
-    @DisplayName("포스팅의 secret이 false인 포스팅을 PK 내림차순으로 20개 찾는다.")
-    void findFirst21BySecret() {
+    @DisplayName("포스팅의 secret이 false인 포스팅을 PK 내림차순으로 11개 찾는다.")
+    void findFirst11BySecret() {
         // ** Given **
         Sort sort = Sort.by("id").descending();
 
         // ** When **
-        List<Post> posts = postRepository.findFirst21BySecret(false, sort);
+        List<Post> posts = postRepository.findFirst11BySecret(false, sort);
 
         // ** Then **
-        assertThat(posts.size()).isEqualTo(21);
+        assertThat(posts.size()).isEqualTo(11);
         assertThat(posts).allMatch(post -> !post.getSecret());
         assertThat(posts).isSortedAccordingTo(Comparator.comparingLong(Post::getId).reversed());
     }

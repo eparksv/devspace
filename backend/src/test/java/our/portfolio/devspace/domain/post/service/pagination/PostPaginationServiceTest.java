@@ -36,7 +36,7 @@ class PostPaginationServiceTest {
     void createResponseShouldReturnGetPostsResponseWith() throws IllegalAccessException {
         // ** Given **
         GetPostsQuery query = new GetPostsQuery();
-        List<Post> posts = PostFactory.postEntities(10);
+        List<Post> posts = PostFactory.postEntities(5);
         given(mapper.toPostPreviewResponses(anyList())).will(invocation -> {
             List<Post> postsParam = invocation.getArgument(0);
             return PostFactory.postPreviewResponses(postsParam.size());
@@ -56,7 +56,7 @@ class PostPaginationServiceTest {
     void createResponse() throws IllegalAccessException {
         // ** Given **
         GetPostsQuery query = new GetPostsQuery();
-        List<Post> posts = PostFactory.postEntities(21);
+        List<Post> posts = PostFactory.postEntities(11);
         given(mapper.toPostPreviewResponses(anyList())).will(invocation -> {
             List<Post> postsParam = invocation.getArgument(0);
             return PostFactory.postPreviewResponses(postsParam.size());
