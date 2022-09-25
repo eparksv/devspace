@@ -16,7 +16,7 @@ public class GetPostsQuery {
     private Long cursor; // 현재 보고 있는 마지막 포스팅의 key: 모든 Filter에서 다음 페이지 스크롤 시 사용
     private String keyword; // 검색 단어: PostFilter.CONTENT,CATEGORY,HASHTAG에서 사용
     private Sort sort = Sort.by("id").descending(); // 정렬: 기본 정렬은 최신순, Filter.CONTENT,CATEGORY,HASHTAG에서 인기순 정렬로 변경 가능
-    private Filter filter = Filter.NONE; // 필터: 기본 필터는 Filter.NONE
+    private PostFilter filter = PostFilter.NONE; // 필터: 기본 필터는 Filter.NONE
 
     public String getNextCursorQueryString(List<Post> posts) {
         return "cursor=" + posts.get(PostPaginationService.PAGE_SIZE - 1).getId();
@@ -24,11 +24,13 @@ public class GetPostsQuery {
 
     public String getSortQueryString() {
         String sortString;
+
         if (this.sort.toString().contains("id")) {
             sortString = PostSort.RECENT.toString().toLowerCase();
         } else {
             sortString = PostSort.POPULAR.toString().toLowerCase();
         }
+
         return "sort=" + sortString;
     }
 
@@ -46,7 +48,7 @@ public class GetPostsQuery {
 
     @AllArgsConstructor
     @Getter
-    public enum Filter {
+    public enum PostFilter {
         NONE(RecentPostPaginationService.class.getSimpleName());
         /* TODO 각 기능 구현 시 주석 해제
         FOLLOW(), 팔로우한 사용자의 포스팅
