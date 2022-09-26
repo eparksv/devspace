@@ -49,7 +49,7 @@ class RecentPostPaginationServiceTest {
     @DisplayName("createNextRequestUriIfHasNext(): 다음 페이지가 없으면 null을 반환한다.")
     void createNextRequestUriReturnNull() throws IllegalAccessException {
         // ** Given **
-        List<Post> posts = PostFactory.postEntities(20);
+        List<Post> posts = PostFactory.postEntities(10);
         GetPostsQuery query = new GetPostsQuery();
 
         // ** When **
