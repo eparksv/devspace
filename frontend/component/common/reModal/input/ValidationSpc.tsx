@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
 import { StyledValidationSpc } from './ValidationStyle';
-
-type ValidationProps = {
-	name: string;
-	maxLength: number;
-};
+import { ValidationProps } from '../ModalTypes';
 
 function ValidationSpc({ name, maxLength }: ValidationProps) {
 	const ref = useRef<HTMLInputElement>(null);
