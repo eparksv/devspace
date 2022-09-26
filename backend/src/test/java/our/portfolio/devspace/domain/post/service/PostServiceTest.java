@@ -16,6 +16,7 @@ import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.post.repository.PostRepository;
+import our.portfolio.devspace.utils.CommonTestUtils;
 import our.portfolio.devspace.utils.factory.PostFactory;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,32 +37,20 @@ class PostServiceTest {
         // ** Given **
         Long postId = 1L;
         CreatePostRequest requestDto = new PostFactory(1L).createPostRequest();
+        Post post = new PostFactory().postEntity();
 
-        given(postMapper.toEntity(anyLong(), any(CreatePostRequest.class))).willReturn(new PostFactory(1L).postEntity());
+        given(postMapper.toEntity(anyLong(), any(CreatePostRequest.class))).willReturn(post);
         given(postMapper.toCreatePostResponse(any(Post.class))).willReturn(new CreatePostResponse(postId));
-        given(postRepository.save(any(Post.class))).willReturn(new PostFactory(postId).postEntity());
+        given(postRepository.save(post)).will(invocation -> {
+            CommonTestUtils.setIdField(invocation.getArgument(0), postId);
+            return post;
+        });
 
         // ** When **
         CreatePostResponse responseDto = postService.createPost(1L, requestDto);
 
         // ** Then **
         assertThat(responseDto.getId()).isEqualTo(postId);
+        assertThat(post.getRanking()).isEqualTo(postId);
     }
-
-/*    @Test
-    void shouldReturnPostsWhenGetRecentPosts() throws IllegalAccessException {
-        // ** Given **
-        List<Post> posts = EntityFactory.postEntities(5);
-
-        List<PostPreviewResponse> postPreviews = List.of(
-
-        );
-
-
-        // ** When **
-        GetPostsResponse responseDto = postService.getRecentPosts();
-
-        // ** Then **
-        assertThat(responseDto.getCount()).isEqualTo(posts.size());
-    }*/
 }
