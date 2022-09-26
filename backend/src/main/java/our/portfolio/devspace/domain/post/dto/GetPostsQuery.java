@@ -34,14 +34,13 @@ public class GetPostsQuery {
         return "sort=" + sortString;
     }
 
-    /* TODO 인기순 정렬 방법이 정해지면 작성
     public void setSort(PostSort sort) {
         if (sort.equals(PostSort.POPULAR)) {
-
+            this.sort = Sort.by("ranking");
         }
-    }*/
+    }
 
-    enum PostSort {
+    public enum PostSort {
         RECENT,
         POPULAR
     }
