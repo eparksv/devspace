@@ -18,8 +18,8 @@ public class JobService {
     private final JobMapper jobMapper;
     private final JobRepository jobRepository;
 
-    public List<JobResponse> listJobs(String type) {
-        return jobMapper.toJobResponses(jobRepository.findAllByType(JobType.valueOf(type.toUpperCase())));
+    public List<JobResponse> listJobs(JobType type) {
+        return jobMapper.toJobResponses(jobRepository.findAllByType(type));
     }
 
     public Job getJobById(Integer id) {

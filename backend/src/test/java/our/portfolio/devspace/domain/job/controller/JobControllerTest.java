@@ -4,6 +4,7 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.epages.restdocs.apispec.Schema.schema;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -52,7 +53,7 @@ class JobControllerTest {
     void listJobs() throws Exception {
         // ** Given **
         List<JobResponse> responseDto = JobFactory.jobResponses(JobType.DEVELOPER);
-        given(jobService.listJobs(anyString())).willReturn(responseDto);
+        given(jobService.listJobs(JobType.DEVELOPER)).willReturn(responseDto);
 
         // ** When **
         ResultActions resultActions = mockMvc.perform(get("/api/jobs/{type}", "developer")
