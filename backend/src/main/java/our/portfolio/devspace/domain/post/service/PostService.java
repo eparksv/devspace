@@ -20,7 +20,9 @@ public class PostService {
     public CreatePostResponse createPost(Long userId, CreatePostRequest dto) {
         Post post = postMapper.toEntity(userId, dto);
 
-        // 저장된 Post를 DTO로 변환하여 반환한다.
-        return postMapper.toCreatePostResponse(postRepository.save(post));
+        postRepository.save(post);
+        post.setCurrentRankingAsLast();
+
+        return postMapper.toCreatePostResponse(post);
     }
 }

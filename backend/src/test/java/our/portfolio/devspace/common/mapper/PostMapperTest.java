@@ -4,36 +4,44 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import our.portfolio.devspace.common.DtoFactory;
-import our.portfolio.devspace.common.EntityFactory;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import our.portfolio.devspace.domain.category.entity.Category;
+import our.portfolio.devspace.domain.job.entity.Job;
 import our.portfolio.devspace.domain.post.dto.CreatePostRequest;
 import our.portfolio.devspace.domain.post.dto.CreatePostResponse;
+import our.portfolio.devspace.domain.post.dto.PostPreviewResponse;
+import our.portfolio.devspace.domain.post.entity.Hashtag;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.profile.entity.Profile;
+import our.portfolio.devspace.utils.factory.CategoryFactory;
+import our.portfolio.devspace.utils.factory.PostFactory;
+import our.portfolio.devspace.utils.factory.ProfileFactory;
 
-@Import({PostMapperImpl.class})
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 class PostMapperTest {
 
-    @MockBean
+    @Mock
     EntityMapper entityMapper;
-    @Autowired
-    PostMapper postMapper;
+
+    @Mock
+    ProfileMapper profileMapper;
+
+    @InjectMocks
+    PostMapperImpl postMapper;
 
     @Test
     @DisplayName("게시글 Entity를 게시글 생성 응답 DTO로 매핑하여 반환한다.")
     public void toPostCreationResponseDto() throws IllegalAccessException {
         // ** Given **
-        Long postId = 1L;
-        Post post = EntityFactory.postEntityWithId(DtoFactory.createPostRequest(), postId);
+        long postId = 1L;
+        Post post = new PostFactory(postId).postEntity();
 
         // ** When **
         CreatePostResponse responseDto = postMapper.toCreatePostResponse(post);
@@ -47,14 +55,18 @@ class PostMapperTest {
     public void toEntity() throws IllegalAccessException {
         // ** Given **
         Long userId = 1L;
-        CreatePostRequest requestDto = DtoFactory.createPostRequest();
-        Profile profile = EntityFactory.profileEntityWithId(DtoFactory.createProfileRequest(), 1L);
-        Category category = EntityFactory.categoryEntityWithId(requestDto.getCategoryId());
+        CreatePostRequest requestDto = new PostFactory().createPostRequest();
+        Profile profile = new ProfileFactory(1L).profileEntity();
+        Category category = new CategoryFactory(requestDto.getCategoryId()).categoryEntity();
 
         given(entityMapper.resolve(any(Number.class), any(Class.class))).willAnswer(invocation -> {
             Class<Object> classType = invocation.getArgument(1);
-            if (classType.equals(Profile.class)) return profile;
-            if (classType.equals(Category.class)) return category;
+            if (classType.equals(Profile.class)) {
+                return profile;
+            }
+            if (classType.equals(Category.class)) {
+                return category;
+            }
             return null;
         });
 
@@ -70,5 +82,32 @@ class PostMapperTest {
             assertThat(requestDto.getHashtags()).contains(hashtag.getName());
             assertThat(hashtag.getPost()).isEqualTo(post);
         });
+    }
+
+    @Test
+    @DisplayName("Post List를 PostPreviewResponse List로 매핑하여 반환한다.")
+    void toPostPreviewResponses() throws IllegalAccessException {
+        // ** Given **
+        List<Post> posts = PostFactory.postEntities(5);
+        // ProfileMapper의 toSimpleProfileResponse(Profile)를 실행하면 Profile의 ID가 매핑된 SimpleProfileResponse를 반환한다.
+        given(profileMapper.toSimpleProfileResponse(any(Profile.class)))
+            .will(invocation -> {
+                Profile profile = invocation.getArgument(0);
+                return new ProfileFactory(profile.getId()).simpleProfileResponse();
+            });
+
+        // ** When **
+        List<PostPreviewResponse> postPreviewResponses = postMapper.toPostPreviewResponses(posts);
+
+        // ** Then **
+        assertThat(postPreviewResponses)
+            .usingRecursiveComparison()
+            .ignoringFields("likeCount", "commentCount") // TODO 좋아요, 댓글 기능 구현 후 검증
+            .withEqualsForFields((dto, entity) -> dto.equals(((Job) entity).getTitle()), "profile.job")
+            .withEqualsForFields((dtos, entities) -> {
+                List<String> hashtagNames = ((List<Hashtag>) entities).stream().map(Hashtag::getName).collect(Collectors.toList());
+                return hashtagNames.containsAll((List<String>) dtos);
+            }, "hashtags")
+            .isEqualTo(posts);
     }
 }

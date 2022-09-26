@@ -32,6 +32,9 @@ public class Post extends BaseTimeEntity {
     private Long id;
 
     @Column
+    private Long ranking;
+
+    @Column
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
@@ -62,5 +65,9 @@ public class Post extends BaseTimeEntity {
 
         this.category.getPosts().add(this);
         this.hashtags.forEach(hashtag -> hashtag.setPost(this));
+    }
+
+    public void setCurrentRankingAsLast() {
+        this.ranking = this.id;
     }
 }
