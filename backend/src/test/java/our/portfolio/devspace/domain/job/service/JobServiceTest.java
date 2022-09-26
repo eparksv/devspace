@@ -35,9 +35,10 @@ class JobServiceTest {
     @ParameterizedTest(name = "{0}에 해당하는 직군 목록을 반환한다.")
     @ValueSource(strings = {"developer", "designer", "marketer", "planner", "startup"})
     @DisplayName("직군 목록을 반환한다.")
-    void listJobs(String type) throws IllegalAccessException {
+    void listJobs(String typeString) throws IllegalAccessException {
         // ** Given **
-        List<Job> jobs = JobFactory.jobEntities(JobType.valueOf(type.toUpperCase()));
+        JobType type = JobType.valueOf(typeString.toUpperCase());
+        List<Job> jobs = JobFactory.jobEntities(type);
 
         given(jobRepository.findAllByType(any(JobType.class))).will(invocation -> JobFactory.jobEntities(invocation.getArgument(0)));
         given(jobMapper.toJobResponses(anyList())).will(invocation -> {
