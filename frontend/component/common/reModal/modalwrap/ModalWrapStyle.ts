@@ -86,3 +86,11 @@ export const StyledModalWrap = styled.div`
 		}
 	}
 `;
+
+export const StyledDiv = styled.div`
+	width: 284px;
+	height: 32px;
+	border: 1px solid #dbdbdb;
+	border-radius: 8px;
+	margin: 8px auto 0;
+`;

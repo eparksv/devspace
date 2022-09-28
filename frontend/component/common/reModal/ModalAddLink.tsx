@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import ButtonSkip from './button/ButtonSkip';
-import { ModalProps } from './ModalTypes';
+import { ModalProps, Value } from './ModalTypes';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModalWrap from './modalwrap/ModalWrap';
 import ModalWriteLink from './ModalWriteLink';
 import ButtonAdd from './button/ButtonAdd';
 import ModalCompany from './ModalCompany';
 import { StyledButtonSubmit } from './button/ButtonStyle';
+import { StyledDiv } from './modalwrap/ModalWrapStyle';
 
 type Obj = {
 	url: string;
 	title: string;
 };
 export interface Props extends ModalProps {
+	value: Value;
 	linkList: Obj[];
+	type: string | undefined;
 }
 
-function ModalAddLink({ setOpen, setTest, linkList }: Props) {
+function ModalAddLink({ setOpen, setTest, linkList, value, type }: Props) {
 	const [link, setList] = useState<Obj[]>([]);
 
 	useEffect(() => {
-		console.log('link', link);
-		console.log('linkList', linkList);
 		if (linkList) setList(linkList);
-		console.log('now', link);
 	});
 
 	return (
@@ -33,13 +33,21 @@ function ModalAddLink({ setOpen, setTest, linkList }: Props) {
 
 			{link?.map((l, idx) => {
 				return (
-					<div key={idx} className={'list'}>
+					<StyledDiv key={idx} className={'list'}>
 						{l.url}
-					</div>
+					</StyledDiv>
 				);
 			})}
 
-			<ButtonAdd setOpen={setOpen} setTest={setTest} linkList={link} />
+			{link.length == 5 ? null : (
+				<ButtonAdd
+					setOpen={setOpen}
+					setTest={setTest}
+					linkList={link}
+					value={value}
+					type={type}
+				/>
+			)}
 
 			<StyledButtonSubmit
 				className='submit'
@@ -50,6 +58,8 @@ function ModalAddLink({ setOpen, setTest, linkList }: Props) {
 								setOpen={setOpen}
 								setTest={setTest}
 								linkList={[]}
+								value={value}
+								type={type}
 							/>
 						);
 					}
@@ -63,7 +73,14 @@ function ModalAddLink({ setOpen, setTest, linkList }: Props) {
 				className='prev'
 				onClick={() => {
 					if (setTest)
-						setTest(<ModalCompany setOpen={setOpen} setTest={setTest} />);
+						setTest(
+							<ModalCompany
+								setOpen={setOpen}
+								setTest={setTest}
+								value={value}
+								type={type}
+							/>
+						);
 				}}>
 				<ArrowBackIcon />
 			</button>

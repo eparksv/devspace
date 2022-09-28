@@ -16,3 +16,7 @@ export type ValidationProps = {
 	name: string;
 	maxLength: number;
 };
+
+export type Value = {
+	[propName: string]: any;
+};

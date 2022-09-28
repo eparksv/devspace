@@ -4,7 +4,7 @@ import { ModalProps } from '../ModalTypes';
 import ModalWriteLink from '../ModalWriteLink';
 import { StyledButtonAdd } from './ButtonStyle';
 
-function ButtonAdd({ setOpen, setTest, linkList }: Props) {
+function ButtonAdd({ setOpen, setTest, linkList, value, type }: Props) {
 	return (
 		<StyledButtonAdd
 			onClick={() => {
@@ -14,6 +14,8 @@ function ButtonAdd({ setOpen, setTest, linkList }: Props) {
 							setOpen={setOpen}
 							setTest={setTest}
 							linkList={linkList}
+							value={value}
+							type={type}
 						/>
 					);
 			}}>
