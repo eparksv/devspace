@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ModalAddLink, { Props } from '../ModalAddLink';
-import { ModalProps } from '../ModalTypes';
+import { Value } from '../ModalTypes';
 import { StyledButtonAdd } from './ButtonStyle';
 
 interface Newprops extends Props {
@@ -8,9 +8,18 @@ interface Newprops extends Props {
 		url: string;
 		title: string;
 	};
+	value: Value;
+	type: string | undefined;
 }
 
-function ButtonFinishAdd({ setOpen, setTest, linkList, getValue }: Newprops) {
+function ButtonFinishAdd({
+	setOpen,
+	setTest,
+	linkList,
+	getValue,
+	value,
+	type,
+}: Newprops) {
 	return (
 		<StyledButtonAdd
 			onClick={() => {
@@ -22,6 +31,8 @@ function ButtonFinishAdd({ setOpen, setTest, linkList, getValue }: Newprops) {
 							setOpen={setOpen}
 							setTest={setTest}
 							linkList={linkList}
+							value={value}
+							type={type}
 						/>
 					);
 				}

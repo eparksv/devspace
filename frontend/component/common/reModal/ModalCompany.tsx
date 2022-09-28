@@ -1,12 +1,18 @@
 import React from 'react';
 import ButtonSkip from './button/ButtonSkip';
 import ValidationSpc from './input/ValidationSpc';
-import { ModalProps } from './ModalTypes';
+import { ModalProps, Value } from './ModalTypes';
 import ModalWrap from './modalwrap/ModalWrap';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModalAddLink from './ModalAddLink';
-import ModalSignUp2 from './ModalSignUp2';
-function ModalCompany({ setOpen, setTest }: ModalProps) {
+import ModalJob2 from './ModalJob2';
+
+interface Props extends ModalProps {
+	value: Value;
+	type: string | undefined;
+}
+
+function ModalCompany({ setOpen, setTest, value, type }: Props) {
 	return (
 		<ModalWrap>
 			<h1>회사 입력</h1>
@@ -19,7 +25,15 @@ function ModalCompany({ setOpen, setTest }: ModalProps) {
 				className='next next-company'
 				onClick={() => {
 					if (setTest)
-						setTest(<ModalAddLink setOpen={setOpen} setTest={setTest} />);
+						setTest(
+							<ModalAddLink
+								setOpen={setOpen}
+								setTest={setTest}
+								value={value}
+								linkList={[{ url: '', title: '' }]}
+								type={type}
+							/>
+						);
 				}}>
 				다음
 			</button>
@@ -30,7 +44,14 @@ function ModalCompany({ setOpen, setTest }: ModalProps) {
 				className='prev'
 				onClick={() => {
 					if (setTest)
-						setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
+						setTest(
+							<ModalJob2
+								setOpen={setOpen}
+								setTest={setTest}
+								value={value}
+								type={type}
+							/>
+						);
 				}}>
 				<ArrowBackIcon />
 			</button>

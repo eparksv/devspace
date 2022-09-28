@@ -74,7 +74,7 @@ const Main = (/*{ data }: any*/) => {
 				<button
 					onClick={() => {
 						setOpen(true);
-						setTest(<ModalCompany setOpen={setOpen} setTest={setTest} />);
+						setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
 					}}>
 					회원가입 모달 리팩토링
 				</button>
