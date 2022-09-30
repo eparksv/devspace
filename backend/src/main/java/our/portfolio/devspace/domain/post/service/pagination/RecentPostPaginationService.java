@@ -8,8 +8,6 @@ import our.portfolio.devspace.domain.post.dto.GetPostsQuery;
 import our.portfolio.devspace.domain.post.dto.GetPostsResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.post.repository.PostRepository;
-import our.portfolio.devspace.exception.CustomException;
-import our.portfolio.devspace.exception.ErrorDetail;
 
 @Transactional
 @Service
@@ -23,15 +21,13 @@ public class RecentPostPaginationService extends PostPaginationService {
     public GetPostsResponse getPosts(GetPostsQuery query) {
         List<Post> posts;
 
-        if (query.getCursor() == null) {
+        if (isFirstPage(query)) {
             posts = postRepository.findFirst11BySecret(false, query.getSort());
         } else {
             posts = postRepository.findFirst11ByIdLessThanAndSecret(query.getCursor(), false, query.getSort());
         }
 
-        if (posts.size() == 0) {
-            throw new CustomException("포스팅이 존재하지 않습니다.", ErrorDetail.POSTS_NOT_FOUND);
-        }
+        postsExistOrThrow(posts);
 
         return createResponse(query, posts);
     }

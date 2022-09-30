@@ -8,6 +8,8 @@ import our.portfolio.devspace.domain.post.dto.GetPostsResponse;
 import our.portfolio.devspace.domain.post.dto.PostPreviewResponse;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.post.repository.PostRepository;
+import our.portfolio.devspace.exception.CustomException;
+import our.portfolio.devspace.exception.ErrorDetail;
 
 @RequiredArgsConstructor
 public abstract class PostPaginationService {
@@ -19,6 +21,16 @@ public abstract class PostPaginationService {
     public abstract GetPostsResponse getPosts(GetPostsQuery query);
 
     protected abstract String createNextRequestUriIfHasNext(List<Post> posts, GetPostsQuery query);
+
+    protected boolean isFirstPage(GetPostsQuery query) {
+        return query.getCursor() == null;
+    }
+
+    protected void postsExistOrThrow(List<Post> posts) {
+        if (posts.size() == 0) {
+            throw new CustomException("포스팅이 존재하지 않습니다.", ErrorDetail.POSTS_NOT_FOUND);
+        }
+    }
 
     protected GetPostsResponse createResponse(GetPostsQuery query, List<Post> posts) {
         return GetPostsResponse.builder()
