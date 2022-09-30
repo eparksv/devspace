@@ -32,7 +32,7 @@ public class PostController {
 
         // HTTP Status Code: 201 Created, Response Body: { message, data: PostCreationResponse}
         HttpResponseBody<CreatePostResponse> body = new HttpResponseBody<>("등록되었습니다.", responseDto);
-        return new ResponseEntity<>(body, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 
     /**
