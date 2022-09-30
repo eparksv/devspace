@@ -12,6 +12,11 @@ public class PostPaginationServiceFactory {
 
     private final Map<String, PostPaginationService> services = new HashMap<>();
 
+    /**
+     * PostPaginationService의 구현 클래스를 services 필드에 키-클래스명, 값-클래스 인스턴스의 Map으로 저장한다.
+     *
+     * @param services PostPaginationService 구현 클래스의 List
+     */
     public PostPaginationServiceFactory(List<PostPaginationService> services) {
         for (PostPaginationService service : services) {
             this.services.put(AopUtils.getTargetClass(service).getSimpleName(), service);

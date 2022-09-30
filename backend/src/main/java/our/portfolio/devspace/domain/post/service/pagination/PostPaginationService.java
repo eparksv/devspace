@@ -27,10 +27,22 @@ public abstract class PostPaginationService {
             .build();
     }
 
+    /**
+     * 다음 페이지가 존재하는지 판별한다.<br> Repository가 포스팅을 조회할 때, 한 페이지의 최대 포스팅 개수를 초과하여 조회되면 다음 페이지가 존재한다.
+     *
+     * @param posts 조회된 {@link Post}의 List
+     * @return List의 크기가 한 페이지의 포스팅 개수보다 크면 true, 작거나 같으면 false
+     */
     protected boolean hasNext(List<Post> posts) {
         return posts.size() > PAGE_SIZE; // 조회된 포스팅이 페이지 당 포스팅 개수를 초과하면 다음 페이지가 존재함
     }
 
+    /**
+     * 조회된 포스팅 목록에서 다음 페이지의 포스팅을 제외한 현재 페이지의 포스팅을 {@link PostPreviewResponse}로 변환하여 반환한다.
+     *
+     * @param posts 조회된 {@link Post}의 List
+     * @return 변환된 {@link PostPreviewResponse}의 List
+     */
     private List<PostPreviewResponse> createPostPreviewResponses(List<Post> posts) {
         List<PostPreviewResponse> postPreviewResponses;
 

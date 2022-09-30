@@ -15,8 +15,15 @@ import our.portfolio.devspace.domain.job.service.JobService;
 @RequiredArgsConstructor
 @RestController
 public class JobController {
+
     private final JobService jobService;
 
+    /**
+     * 직군 타입으로 직군 목록을 요청하면 해당하는 직군 목록을 반환한다.
+     *
+     * @param type {@link JobType} 찾는 직군의 타입
+     * @return 결과 메시지와 {@link JobResponse}의 List를 담은 {@link HttpResponseBody}, Status 200 OK
+     */
     @GetMapping("/api/jobs/{type}")
     public ResponseEntity<HttpResponseBody<List<JobResponse>>> listJobs(@PathVariable JobType type) {
         HttpResponseBody<List<JobResponse>> body = new HttpResponseBody<>("직군 목록이 조회되었습니다.", jobService.listJobs(type));

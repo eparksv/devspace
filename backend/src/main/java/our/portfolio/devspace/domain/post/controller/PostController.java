@@ -26,6 +26,13 @@ public class PostController {
     private final PostService postService;
     private final PostPaginationServiceFactory factory;
 
+    /**
+     * 포스팅을 생성하면 생성된 포스팅의 ID를 반환한다.
+     *
+     * @param dto    {@link CreatePostRequest} 작성한 포스팅의 DTP
+     * @param userId {@link Long} 작성자의 ID
+     * @return 결과 메시지와 {@link CreatePostResponse}를 담은 {@link HttpResponseBody}, Status 201 CREATED
+     */
     @PostMapping("/api/posts")
     public ResponseEntity<HttpResponseBody<CreatePostResponse>> createPost(@RequestBody @Valid CreatePostRequest dto, @UserId Long userId) {
         CreatePostResponse responseDto = postService.createPost(userId, dto);
