@@ -20,6 +20,6 @@ public class JobController {
     @GetMapping("/api/jobs/{type}")
     public ResponseEntity<HttpResponseBody<List<JobResponse>>> listJobs(@PathVariable JobType type) {
         HttpResponseBody<List<JobResponse>> body = new HttpResponseBody<>("직군 목록이 조회되었습니다.", jobService.listJobs(type));
-        return new ResponseEntity<>(body, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 }

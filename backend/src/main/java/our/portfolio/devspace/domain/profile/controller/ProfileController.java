@@ -25,6 +25,6 @@ public class ProfileController {
 
         // HTTP Status Code: 201 Created, Response Body: { message, data: CreateProfileResponse}
         HttpResponseBody<CreateProfileResponse> body = new HttpResponseBody<>("프로필이 저장되었습니다.", responseDto);
-        return new ResponseEntity<>(body, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 }
