@@ -22,16 +22,32 @@ public class EntityMapper {
         this.repositories = new Repositories(context);
     }
 
+    /**
+     * Entity의 {@link Class}로 해당 Entity의 Repository를 찾아서 반환한다.<br> ex) Post -> PostRepository, Category -> CategoryRepository
+     *
+     * @param entityClass {@link Class} 찾을 Repository의 Entity {@link Class}
+     * @return {@link JpaRepository} entityClass의 Repository
+     */
     private <T, N extends Number> JpaRepository<T, N> getRepository(Class<T> entityClass) {
         return (JpaRepository<T, N>) repositories.getRepositoryFor(entityClass).orElseThrow(IllegalArgumentException::new);
     }
 
+    /**
+     * Repository에서 id로 entity를 찾아서 반환한다.
+     *
+     * @param id          검색할 id
+     * @param entityClass 찾을 entity의 {@link Class}
+     * @return 검색된 entity
+     */
     @IdToEntity
     public <T, N extends Number> T resolve(N id, @TargetType Class<T> entityClass) {
         return getRepository(entityClass).findById(id)
             .orElseThrow(() -> new CustomException(entityClass.getSimpleName() + " ID " + id + "에 해당하는 리소스가 없습니다.", ErrorDetail.ENTITY_NOT_FOUND));
     }
 
+    /**
+     * Entity id를 Entity로 매핑할 때 @Mapping(qualifiedBy)의 값으로 넣는다.
+     */
     @Qualifier
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.CLASS)
