@@ -6,6 +6,10 @@ on:
       - 'develop'
     paths:
       - 'backend/**'
+
+env:
+  DEVSPACE_JASYPT_PASSWORD: ${{ secrets.DEVSPACE_JASYPT_PASSWORD }}
+
 jobs:
   backend-dev-push:
     runs-on: ubuntu-latest
@@ -28,8 +32,8 @@ jobs:
       -
         name: Build API Document
         uses: gradle/gradle-build-action@v2
-        env:
-          SPRING_CONFIG_LOCATION: ../devspace-sub/application.yml
+        #env:
+          #SPRING_CONFIG_LOCATION: ../devspace-sub/application.yml
         with:
           build-root-directory: backend
           arguments: clean openapi3

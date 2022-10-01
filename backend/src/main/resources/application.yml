@@ -1,0 +1,57 @@
+spring:
+  ## DB
+  h2:
+    console:
+      enabled: true  # H2 콘솔 사용 설정
+      path: /h2-console  # H2 콘솔 주소
+  datasource:
+    driver-class-name: org.h2.Driver # DB 드라이버
+    url: jdbc:h2:mem:testdb;MODE=MYSQL  # DB URL
+    username: sa # DB USER
+  jpa:
+    generate-ddl: true # 어플리케이션 시작 시 테이블 자동 생성
+    hibernate:
+      ddl-auto: create # 어플리케이션 시작 시 기존 테이블 삭제 후 재생성
+    properties:
+      hibernate:
+        format_sql: true # SQL 출력 줄바꿈 적용
+        dialect:
+          nodeValue: MySQL8Dialect # SQL 방언 설정
+          storage_engine: innodb # 스토리지 엔진 설정
+    show-sql: true # 실행되는 SQL 출력
+    defer-datasource-initialization: true # Hibernate 초기화 이후 data.sql DML 실행
+  sql:
+    init:
+      encoding: UTF-8
+  ## OAuth 2.0
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ENC(YfzzmAiwt+/vclTJ0PyP8eRhw8aA34dA2wUKPAQbsKOGVkJsDOQmlRj8bfzZyoNiebof0mWneCuweBFJdhY2IO4RYfB83SGEP5HsfUVy6daSDLgqOehkiQ==)
+            client-secret: ENC(x2NvQFcdrCbV42gSaeWpsOtIShMHTA36E81S+Nmz29FGAmneoZZFg2nVYt9NLoDl)
+            scope: "profile,email"
+          github:
+            client-id: ENC(+UvDRCyeOEbPrtd2QY5bJcFOGsdJeoXRQVlNdZ/dEYo=)
+            client-secret: ENC(PCv/NxiXTmp/MW/QOetVW6W+7eOzbcBthGcVosVhECJ9b7nuNfLaOIyLxLsJt8vufhGBc3ya3nw=)
+            scope: "read:user"
+## API Doc
+springdoc:
+  api-docs:
+    enabled: false # API 문서 자동으로 생성하지 않음
+  swagger-ui:
+    url: "/docs/api-doc.yaml" # API specification 경로
+    path: "/docs" # Swagger UI 접속 경로
+    disable-swagger-default-url: true # Swagger UI 기본 경로 사용하지 않음
+
+security:
+  jwt:
+    base64-secret: ENC(N3P73NYw6gwgXDKa8G30MwbER1nhKMzmxCjiGbbn4Oj5vTY63mX/ol5KFstafZLvuuv4X9/8k7U5zuASXwhaxLUIlwQsMaZzDYisbSz56IILZT8BXxIGfAjdE7vJlNnD7ymcmj8gNt9RzVMGSreNfkX2ByOhRewNwuLTRDFlSatO3qha9kgphwkAVx1HeACD)
+    expiration-time: 1800000 # 액세스 토큰 만료기간 30분 (30 * 60 * 1000)
+    refresh-expiration-time: 604800000 # 리프레시 토큰 만료기간 7일 (7 * 24 * 60 * 60 * 1000)
+  oauth:
+    # OAuth 2.0 인증 후 기본 리다이렉트 경로. 향후에 수정할 필요가 있음
+    default-redirect-uri: http://localhost:3000
+    # OAuth 2.0 인증 후 허가되는 리다이렉트 경로. 향후에 수정할 필요가 있음
+    authorized-redirect-uri: http://localhost:3000/oauth
