@@ -1,4 +1,7 @@
 spring:
+  test:
+    database:
+      replace: none
   ## DB
   h2:
     console:
@@ -14,10 +17,9 @@ spring:
       ddl-auto: create # 어플리케이션 시작 시 기존 테이블 삭제 후 재생성
     properties:
       hibernate:
+        auto_quote_keyword: true # 예약어 사용을 방지하기 위한 따옴표 추가 설정
         format_sql: true # SQL 출력 줄바꿈 적용
-        dialect:
-          nodeValue: MySQL8Dialect # SQL 방언 설정
-          storage_engine: innodb # 스토리지 엔진 설정
+        dialect: our.portfolio.devspace.configuration.jpa.ImprovedMySQL8Dialect # SQL 방언 설정
     show-sql: true # 실행되는 SQL 출력
     defer-datasource-initialization: true # Hibernate 초기화 이후 data.sql DML 실행
   sql:
