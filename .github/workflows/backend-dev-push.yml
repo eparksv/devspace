@@ -32,14 +32,9 @@ jobs:
       -
         name: Build API Document
         uses: gradle/gradle-build-action@v2
-        #env:
-          #SPRING_CONFIG_LOCATION: ../devspace-sub/application.yml
         with:
           build-root-directory: backend
           arguments: clean openapi3
-      -
-        name: Delete Configuration file
-        run: rm devspace-sub/application.yml
       -
         name: Build with Gradle
         uses: gradle/gradle-build-action@v2

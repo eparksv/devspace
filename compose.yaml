@@ -11,10 +11,4 @@ services:
     pull_policy: always
     ports:
       - "8080:8080"
-    secrets:
-      - source: server-configuration
-        target: application.yml
-    command: java -Dspring.config.location=/run/secrets/application.yml -jar app/app.jar
-secrets:
-  server-configuration:
-    file: ./devspace-sub/application.yml
+    command: java -jar app/app.jar
