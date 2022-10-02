@@ -1,4 +1,7 @@
 spring:
+  test:
+    database:
+      replace: none
   ## DB
   h2:
     console:
@@ -15,9 +18,7 @@ spring:
     properties:
       hibernate:
         format_sql: true # SQL 출력 줄바꿈 적용
-        dialect:
-          nodeValue: MySQL8Dialect # SQL 방언 설정
-          storage_engine: innodb # 스토리지 엔진 설정
+        dialect: org.hibernate.dialect.MySQL57Dialect
     show-sql: true # 실행되는 SQL 출력
     defer-datasource-initialization: true # Hibernate 초기화 이후 data.sql DML 실행
   sql:
