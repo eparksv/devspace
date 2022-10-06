@@ -9,6 +9,7 @@ import our.portfolio.devspace.domain.comment.entity.Comment;
 import our.portfolio.devspace.domain.comment.repository.CommentRepository;
 import our.portfolio.devspace.domain.post.entity.Post;
 import our.portfolio.devspace.domain.post.repository.PostRepository;
+import our.portfolio.devspace.domain.user.entity.User;
 import our.portfolio.devspace.domain.user.repository.UserRepository;
 import our.portfolio.devspace.exception.CustomException;
 import our.portfolio.devspace.exception.ErrorDetail;
@@ -19,6 +20,12 @@ public class CommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+
+    public Long postComment(Long userId, Long postId, String content) {
+        User foundUser = userRepository.findByIdOrThrow(userId);
+        Post foundPost = postRepository.findByIdOrThrow(postId);
+        return commentRepository.save(new Comment(foundUser, foundPost, content)).getId();
+    }
 
     public void deleteComment(Long userId, Long commentId) {
         Comment foundComment = commentRepository.findByIdOrThrow(commentId);
