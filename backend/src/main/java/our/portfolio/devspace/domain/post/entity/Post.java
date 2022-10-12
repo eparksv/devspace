@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import our.portfolio.devspace.domain.BaseTimeEntity;
 import our.portfolio.devspace.domain.category.entity.Category;
+import our.portfolio.devspace.domain.like.entity.Like;
 import our.portfolio.devspace.domain.profile.entity.Profile;
 
 @Getter
@@ -53,6 +54,9 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
+    private final List<Like> likes = new ArrayList<>();
 
     @Builder
     public Post(String title, String content, Profile profile, Boolean secret, List<Hashtag> hashtags, Category category) {
