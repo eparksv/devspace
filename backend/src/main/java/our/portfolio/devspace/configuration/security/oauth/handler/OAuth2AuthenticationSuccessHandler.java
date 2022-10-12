@@ -1,13 +1,9 @@
 package our.portfolio.devspace.configuration.security.oauth.handler;
 
-import static our.portfolio.devspace.configuration.security.oauth.repository.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 import static our.portfolio.devspace.configuration.security.oauth.repository.HttpCookieOAuth2AuthorizationRequestRepository.REFRESH_TOKEN_PARAM_COOKIE_NAME;
 
 import java.io.IOException;
-import java.net.URI;
-import java.util.Arrays;
 import java.util.Optional;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +36,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Value("${security.oauth.default-redirect-uri}")
     private String defaultRedirectUri;
 
-    @Value("${security.oauth.authorized-redirect-uri}")
-    private String[] authorizedRedirectUris;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
         Authentication authentication) throws IOException {
@@ -62,17 +55,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
-    private String getTargetUrl(HttpServletRequest request) {
-        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
-            .map(Cookie::getValue);
-
-        if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-            throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
-        }
-
-        return redirectUri.orElse(defaultRedirectUri);
-    }
-
     private String saveRefreshToken(OAuth2UserPrincipal principal) {
         String refreshToken = tokenProvider.createRefreshToken(principal);
 
@@ -90,7 +72,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         OAuth2UserPrincipal principal = (OAuth2UserPrincipal) authentication.getPrincipal();
 
-        String targetUrl = getTargetUrl(request);
+        String targetUrl = defaultRedirectUri;
         String accessToken = tokenProvider.createAccessToken(principal);
         String refreshToken = saveRefreshToken(principal);
         Integer jobId = profileRepository.findById(principal.getId())
@@ -112,15 +94,5 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         CookieUtils.deleteCookie(request, response, REFRESH_TOKEN_PARAM_COOKIE_NAME);
         CookieUtils.addCookie(response, REFRESH_TOKEN_PARAM_COOKIE_NAME, refreshToken, cookieMaxAge);
-    }
-
-    private boolean isAuthorizedRedirectUri(String uri) {
-        URI clientRedirectUri = URI.create(uri);
-        return Arrays.stream(authorizedRedirectUris)
-            .anyMatch(authorizedRedirectUri -> {
-                URI authorizedUri = URI.create(authorizedRedirectUri);
-                return authorizedUri.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                    && authorizedUri.getPort() == clientRedirectUri.getPort();
-            });
     }
 }
