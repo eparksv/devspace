@@ -8,13 +8,13 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "like")
+@Table(name = "likes")
 @Entity
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id", nullable = false)
@@ -25,7 +25,7 @@ public class Like {
     private Post post;
 
     @Builder
-    public Like(Integer id, Profile profile, Post post) {
+    public Like(Long id, Profile profile, Post post) {
         this.id = id;
         this.profile = profile;
         this.post = post;

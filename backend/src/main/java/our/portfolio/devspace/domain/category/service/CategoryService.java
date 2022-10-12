@@ -14,9 +14,11 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryMapper categoryMapper;
+
     private final CategoryRepository categoryRepository;
 
     public List<CategoryResponse> listCategories(CategoryType type) {
+
         return categoryMapper.toCategoryResponses(categoryRepository.findAllByType(type));
     }
 }

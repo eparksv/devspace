@@ -27,6 +27,7 @@ public class CategoryController {
      */
     @GetMapping("/api/categorys/{type}")
     public ResponseEntity<HttpResponseBody<List<CategoryResponse>>> listCategories(@PathVariable CategoryType type) {
+
         HttpResponseBody<List<CategoryResponse>> body = new HttpResponseBody<>("카테고리 목록이 조회되었습니다.", categoryService.listCategories(type));
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
