@@ -10,6 +10,7 @@ type Props = {
 		title: string | undefined;
 		target: HTMLDivElement | null;
 		hashtags: string[];
+		secret: boolean;
 	};
 };
 
@@ -21,8 +22,8 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 
 	//부모 컴포넌트의 ref.curent의 값을 받는 함수.
 	const click = () => {
-		const { title, target, hashtags } = getValue();
-		postSubmit(title, target, hashtags);
+		const { title, target, hashtags, secret } = getValue();
+		postSubmit(title, target, hashtags, secret);
 	};
 
 	const { mutate } = useMutation(
@@ -49,7 +50,8 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 	const postSubmit = (
 		title: string | undefined,
 		target: HTMLDivElement | null,
-		hashtags: string[]
+		hashtags: string[],
+		secret: boolean
 	) => {
 		console.log('전송!!!');
 
@@ -57,11 +59,10 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 			const targetEle = target;
 			const content = target.querySelector('.ProseMirror')?.innerHTML;
 			const imgs = targetEle.querySelectorAll('img');
-
 			const data = {
-				title: '제목',
+				title: title ? title : null,
 				content: content,
-				secret: false,
+				secret: secret,
 				hashtags: hashtags, //빈 배열 가능 []
 				categoryId: 1,
 			};
@@ -80,6 +81,7 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 					console.log(res.data);
 				} catch (e) {
 					console.log(e);
+					alert('죄송합니다, 다시 시도해주세요');
 				}
 			};
 			test();
@@ -88,7 +90,7 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 
 			//나중에 지울 코드. 테스트용
 			//setTimeout(() => setLoading(false), 2500);
-			//setTimeout(() => setOpen(false), 2600);
+			setTimeout(() => setOpen(false), 2600);
 		}
 	};
 	return (

@@ -6,6 +6,7 @@ import ModalJob from './ModalJob';
 
 function ModalSignUp2({ setOpen, setTest }: ModalProps) {
 	const ref = useRef<HTMLDivElement>(null);
+	const nextBt = useRef<HTMLButtonElement>(null);
 	const value: Value = {};
 
 	const getValue = () => {
@@ -18,19 +19,34 @@ function ModalSignUp2({ setOpen, setTest }: ModalProps) {
 		}
 	};
 
+	const checkPass = () => {
+		const name = ref.current?.querySelector('.wrap-name');
+		const text = ref.current?.querySelector('.wrap-text');
+		if (name?.classList.contains('pass') && text?.classList.contains('pass')) {
+			nextBt.current?.classList.add('on');
+		} else if (
+			name?.classList.contains('nopass') ||
+			text?.classList.contains('nopass')
+		) {
+			nextBt.current?.classList.remove('on');
+		}
+	};
+
 	return (
 		<ModalWrap>
 			<h1>프로필입력</h1>
 			<p> 나에 대해 자유롭게 소개해주세요.</p>
 
 			<div ref={ref}>
-				<ValidationAll />
+				<ValidationAll checkPass={checkPass} />
 			</div>
 
 			<button
 				className='next'
+				ref={nextBt}
 				onClick={() => {
-					if (setTest)
+					getValue();
+					if (setTest && nextBt.current?.classList.contains('on'))
 						setTest(
 							<ModalJob setOpen={setOpen} setTest={setTest} value={value} />
 						);

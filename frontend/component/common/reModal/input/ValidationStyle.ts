@@ -111,7 +111,7 @@ export const StyledValidationSpc = styled.div`
 			border-radius: 8px;
 			border: 1px solid #5b5b5b;
 			resize: none;
-			padding: 14px;
+			padding: 10px;
 		}
 		p {
 			position: relative;

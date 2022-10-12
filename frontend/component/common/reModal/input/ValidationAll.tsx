@@ -3,7 +3,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
 import { StyledValidationAll } from './ValidationStyle';
 
-function ValidationAll() {
+type Props = {
+	checkPass: () => void;
+};
+
+function ValidationAll({ checkPass }: Props) {
 	const name = useRef<HTMLInputElement>(null);
 	const text = useRef<HTMLTextAreaElement>(null);
 	const submit = useRef<HTMLInputElement>(null);
@@ -69,20 +73,6 @@ function ValidationAll() {
 			text.current.parentElement?.classList.remove('pass');
 			text.current.parentElement?.classList.add('nopass');
 			setTextMessage('자기소개를 입력해주세요');
-		}
-	};
-
-	const checkPass = () => {
-		if (
-			name.current?.parentElement?.classList.contains('pass') &&
-			text.current?.parentElement?.classList.contains('pass')
-		) {
-			submit.current?.classList.add('on');
-		} else if (
-			name.current?.parentElement?.classList.contains('nopass') ||
-			text.current?.parentElement?.classList.contains('nopass')
-		) {
-			submit.current?.classList.remove('on');
 		}
 	};
 

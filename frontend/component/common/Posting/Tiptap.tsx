@@ -15,6 +15,7 @@ const Tiptap = ({ setOpen }: Props) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const tags = useRef<HTMLDivElement>(null);
 	const protect = useRef<HTMLDivElement>(null);
+	let secret: boolean;
 
 	const [inputSize, setInputSize] = useState<number>();
 
@@ -36,7 +37,12 @@ const Tiptap = ({ setOpen }: Props) => {
 			title: titleValue,
 			target: targetCurrent,
 			hashtags: hashtags,
+			secret: secret,
 		};
+	};
+
+	const checkPrivate = (st: string) => {
+		st === 'public' ? (secret = false) : (secret = true);
 	};
 
 	return (
@@ -65,6 +71,8 @@ const Tiptap = ({ setOpen }: Props) => {
 				<div className='link'>링크</div>
 				<div className='protect' ref={protect}>
 					공개여부
+					<button onClick={() => checkPrivate('public')}>전체 공개</button>
+					<button onClick={() => checkPrivate('private')}>나만 보기</button>
 				</div>
 
 				<Tiptap_submit getValue={getValue} setOpen={setOpen} />

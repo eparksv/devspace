@@ -8,6 +8,7 @@ import ButtonFinishAdd from './button/ButtonFinishAdd';
 
 function ModalWriteLink({ setOpen, setTest, linkList, type, value }: Props) {
 	const ref = useRef<HTMLDivElement>(null);
+	const nextBt = useRef<HTMLDivElement>(null);
 
 	const getValue = () => {
 		if (ref.current) {
@@ -22,25 +23,43 @@ function ModalWriteLink({ setOpen, setTest, linkList, type, value }: Props) {
 		}
 	};
 
+	const checkPass = () => {
+		const link = ref.current?.querySelector('.link');
+		const linkName = ref.current?.querySelector('.link-name');
+		const isPass1 = link?.classList.contains('pass');
+		const isPass2 = linkName?.classList.contains('pass');
+		if (isPass1 && isPass2) {
+			console.log(nextBt.current?.querySelector('button'));
+			nextBt.current?.querySelector('button')?.classList.add('on');
+		} else {
+			nextBt.current?.querySelector('button')?.classList.remove('on');
+		}
+	};
+
 	return (
 		<ModalWrap>
 			<h1>링크 입력</h1>
 			<p> 링크 URL을 입력해주세요.</p>
 
 			<div className='link-wrap' ref={ref}>
-				<ValidationHttps />
-
-				<ValidationSpcNum name={'link-name'} maxLength={10} />
+				<ValidationHttps checkPass={checkPass} />
+				<ValidationSpcNum
+					name={'link-name'}
+					maxLength={10}
+					checkPass={checkPass}
+				/>
 			</div>
-			<ButtonFinishAdd
-				setOpen={setOpen}
-				setTest={setTest}
-				linkList={linkList}
-				getValue={getValue}
-				type={type}
-				value={value}
-			/>
 
+			<div ref={nextBt}>
+				<ButtonFinishAdd
+					setOpen={setOpen}
+					setTest={setTest}
+					linkList={linkList}
+					getValue={getValue}
+					type={type}
+					value={value}
+				/>
+			</div>
 			<button
 				className='prev'
 				onClick={() => {

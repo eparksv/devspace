@@ -93,4 +93,32 @@ export const StyledDiv = styled.div`
 	border: 1px solid #dbdbdb;
 	border-radius: 8px;
 	margin: 8px auto 0;
+	padding-left: 12px;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 28px;
+	letter-spacing: 0em;
+	text-align: left;
+`;
+
+export const StyledButton = styled.button`
+	display: block;
+	position: relative;
+	margin: 8px auto;
+	padding: 0 16px;
+	color: #424242;
+	background: none;
+	width: 90%;
+	height: 48px;
+	font: bold 16px/1.5 'Pretendard';
+	text-align: left;
+	border: 1px solid #dbdbdb;
+	border-radius: 8px;
+	cursor: pointer;
+	&:hover,
+	&.job-on {
+		background: #cdd3ef;
+		border: none;
+	}
 `;

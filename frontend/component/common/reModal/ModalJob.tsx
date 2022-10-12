@@ -4,6 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModalJob2 from './ModalJob2';
 import ModalWrap from './modalwrap/ModalWrap';
 import { ModalProps, Value } from './ModalTypes';
+import { StyledButton } from './modalwrap/ModalWrapStyle';
 
 interface Props extends ModalProps {
 	value: Value;
@@ -39,10 +40,11 @@ function ModalJob({ setOpen, setTest, value }: Props) {
 		<div ref={ref} tabIndex={0}>
 			<ModalWrap>
 				<h1>직군 선택</h1>
+				<p>같은 직군의 사람들과 정보를 공유할 수 있어요.</p>
 
 				{jobs.map((j, idx) => {
 					return (
-						<button
+						<StyledButton
 							className='job-button'
 							key={idx}
 							aria-label={j + ` 직군 선택`}
@@ -51,7 +53,7 @@ function ModalJob({ setOpen, setTest, value }: Props) {
 								setType(jobType[idx]);
 							}}>
 							{j}
-						</button>
+						</StyledButton>
 					);
 				})}
 

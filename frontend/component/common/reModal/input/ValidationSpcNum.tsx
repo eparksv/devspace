@@ -4,7 +4,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { StyledValidationSpc } from './ValidationStyle';
 import { ValidationProps } from '../ModalTypes';
 
-function ValidationSpcNum({ name, maxLength }: ValidationProps) {
+function ValidationSpcNum({ name, maxLength, checkPass }: ValidationProps) {
 	const ref = useRef<HTMLInputElement>(null);
 
 	const [pass, setPass] = useState<string>();
@@ -72,6 +72,7 @@ function ValidationSpcNum({ name, maxLength }: ValidationProps) {
 					onChange={(e) => {
 						validateName(e);
 						sizing();
+						if (checkPass) checkPass();
 					}}
 					onInput={(e) => {
 						if (e.currentTarget.value.length > maxLength)

@@ -9,7 +9,6 @@ import ModalCompany from '../common/reModal/ModalCompany';
 
 const Main = (/*{ data }: any*/) => {
 	const [open, setOpen] = useState(false);
-	const [modal, setModal] = useState<boolean | React.ReactNode>(false);
 	const [test, setTest] = useState<boolean | React.ReactNode>(false);
 
 	/*const [list, setList] = useState<
@@ -21,7 +20,7 @@ const Main = (/*{ data }: any*/) => {
 	useEffect(() => {
 		if (context.user.job === '') {
 			setOpen(true);
-			setModal(<ModalSignUp setOpen={setOpen} setModal={setModal} />);
+			setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
 		}
 	}, []);
 
@@ -34,7 +33,7 @@ const Main = (/*{ data }: any*/) => {
 					<button
 						onClick={() => {
 							setOpen(true);
-							setModal(<ModalPost setOpen={setOpen} />);
+							setTest(<ModalPost setOpen={setOpen} />);
 						}}>
 						<EditIcon />
 					</button>
@@ -63,21 +62,22 @@ const Main = (/*{ data }: any*/) => {
 
 				{/* side components*/}
 
+				{/*
 				<button
 					onClick={() => {
 						setOpen(true);
 						setModal(<ModalSignUp setOpen={setOpen} setModal={setModal} />);
 					}}>
 					프로필 설정 테스트
-				</button>
+				</button>*/}
 
-				<button
+				{/* <button
 					onClick={() => {
 						setOpen(true);
 						setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
 					}}>
 					회원가입 모달 리팩토링
-				</button>
+				</button> */}
 
 				{/*모달을 제어하는 컴포넌트로 분리할까? (하위 컴포넌트만 리렌더링 되도록)*/}
 				{/*open && modal*/}

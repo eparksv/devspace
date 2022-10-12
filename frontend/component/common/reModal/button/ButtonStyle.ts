@@ -21,17 +21,24 @@ export const StyledButtonSkip = styled.div`
 
 export const StyledButtonAdd = styled.button`
 	width: 90%;
-	height: 32px;
+	height: 48px;
 	border-radius: 8px;
 	cursor: pointer;
-	margin: 19px auto 8px;
+	margin: 19px auto 16px;
 	position: relative;
 	display: block;
 	font: 700 14px/21px 'Pretendard';
-	background: #cdd3ef;
+	background: #212c6a;
 	border: none;
 	text-align: center;
-	color: #424242;
+	color: #ffff;
+	opacity: 0.5;
+	&:hover {
+		background: #3a4db7;
+	}
+	&.on {
+		opacity: 1;
+	}
 `;
 
 export const StyledButtonSubmit = styled.button`

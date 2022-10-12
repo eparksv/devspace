@@ -3,7 +3,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
 import { StyledValidationSpc } from './ValidationStyle';
 
-function ValidationHttps() {
+type Props = {
+	checkPass: () => void;
+};
+
+function ValidationHttps({ checkPass }: Props) {
 	const ref = useRef<HTMLInputElement>(null);
 
 	const [pass, setPass] = useState<string>();
@@ -36,7 +40,7 @@ function ValidationHttps() {
 
 	return (
 		<StyledValidationSpc>
-			<div className={`standard ${name}`}>
+			<div className={`standard link`}>
 				<input
 					type='text'
 					name='이름'
@@ -45,7 +49,10 @@ function ValidationHttps() {
 					onKeyDown={(e) => {
 						if (e.key === ' ') e.preventDefault();
 					}}
-					onBlur={validateHttps}
+					onBlur={(e) => {
+						validateHttps(e);
+						checkPass();
+					}}
 				/>
 				{pass === 'ok' ? <CheckIcon /> : null}
 				{pass === 'no' ? <ErrorIcon /> : null}

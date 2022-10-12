@@ -194,8 +194,7 @@ export const StyledModalPost = styled.div`
 			}
 			img {
 				display: inline-block;
-				max-width: 200px;
-				max-height: 250px;
+				width: 100%;
 				margin: 4px;
 				object-fit: cover;
 
@@ -300,13 +299,13 @@ export const StyledModalSignUp = styled.div`
 			resize: none;
 			padding: 10px;
 		}
-		.wrap-p{
-			display:flex;
+		.wrap-p {
+			display: flex;
 			justify-content: space-between;
-			p{
-			position: relative;
-			font: 400 12px/0 'Pretendard';
-			margin: 10px;
+			p {
+				position: relative;
+				font: 400 12px/0 'Pretendard';
+				margin: 10px;
 			}
 		}
 		.wrap-name {
@@ -332,24 +331,24 @@ export const StyledModalSignUp = styled.div`
 			&.pass {
 				p,
 				svg {
-					color: #88E25D;
+					color: #88e25d;
 				}
 				input {
-					border-color: #88E25D;
+					border-color: #88e25d;
 					&:focus {
-						outline: 1px solid #88E25D;
+						outline: 1px solid #88e25d;
 					}
 				}
 			}
 			&.nopass {
 				p,
 				svg {
-					color: #FF5C00;
+					color: #ff5c00;
 				}
 				input {
-					border-color: #FF5C00;
+					border-color: #ff5c00;
 					&:focus {
-						outline: 1px solid #FF5C00;
+						outline: 1px solid #ff5c00;
 					}
 				}
 			}
@@ -359,31 +358,30 @@ export const StyledModalSignUp = styled.div`
 			&.pass {
 				p,
 				svg {
-					color: #88E25D;
+					color: #88e25d;
 				}
 				textarea {
-					border-color: #88E25D;
+					border-color: #88e25d;
 					&:focus {
-						outline: 1px solid #88E25D;
+						outline: 1px solid #88e25d;
 					}
 				}
 			}
 			&.nopass {
 				p,
 				svg {
-					color: #FF5C00;
+					color: #ff5c00;
 				}
 				textarea {
-					border-color: #FF5C00;
+					border-color: #ff5c00;
 					&:focus {
-						outline: 1px solid #FF5C00;
+						outline: 1px solid #ff5c00;
 					}
 				}
 			}
 			textarea {
 				margin-top: 5px;
 			}
-			
 		}
 
 		input[type='submit'] {
@@ -393,10 +391,10 @@ export const StyledModalSignUp = styled.div`
 			border: none;
 			opacity: 0.5;
 			cursor: pointer;
-			&.on{
+			&.on {
 				opacity: 1;
-				&:hover{
-					background: #3A4DB7;
+				&:hover {
+					background: #3a4db7;
 				}
 			}
 		}
@@ -410,11 +408,9 @@ export const StyledModalSignUp = styled.div`
 		border: none;
 		background: none;
 		cursor: pointer;
-		&:hover{
-			color:#808DD7;
+		&:hover {
+			color: #808dd7;
 		}
-	}
-
 	}
 `;
 
@@ -436,7 +432,7 @@ export const StyledModalJob = styled.div`
 
 	p {
 		position: relative;
-		width:100%;
+		width: 100%;
 		padding: 0 32px;
 		font: 400 14px/1.5 'Pretendard';
 		margin-bottom: 19px;
@@ -452,14 +448,14 @@ export const StyledModalJob = styled.div`
 		width: 90%;
 		height: 48px;
 		font: bold 16px/1.5 'Pretendard';
-		text-align:left;
-		border: 1px solid #DBDBDB;
+		text-align: left;
+		border: 1px solid #dbdbdb;
 		border-radius: 8px;
 		cursor: pointer;
 		&:hover,
 		&.job-on {
 			background: #cdd3ef;
-			border:none;
+			border: none;
 		}
 	}
 	.close,
@@ -470,7 +466,7 @@ export const StyledModalJob = styled.div`
 		height: 24px;
 		color: #5b5b5b;
 		font: 400 20px/1 'arial';
-		border:none;
+		border: none;
 		cursor: pointer;
 		&:hover {
 			background: none;
@@ -493,103 +489,105 @@ export const StyledModalJob = styled.div`
 		color: #fff;
 		opacity: 0.5;
 		font: 700 14px/21px 'Pretendard';
-		background: #212C6A;
-		border:none;
-		text-align:center;
-		&:hover{
-			background: #212C6A;
+		background: #212c6a;
+		border: none;
+		text-align: center;
+		&:hover {
+			background: #212c6a;
 		}
-		&.on{
+		&.on {
 			opacity: 1;
-			&:hover{
-				background: #3A4DB7;
+			&:hover {
+				background: #3a4db7;
 			}
+		}
 	}
 `;
 
 export const StyledModalJob2 = styled.div`
-position: fixed;
-width: 320px;
-background: #fff;
-left: 50%;
-top: 50%;
-transform: translate(-50%, -50%);
-border-radius: 24px;
+	position: fixed;
+	width: 320px;
+	background: #fff;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 24px;
 
-h1 {
-	font: 700 20px/1.5 'Pretendard';
-	color: #424242;
-	margin-bottom: 8px;
-	text-align: center;
-}
-
-p {
-	position: relative;
-	width:100%;
-	padding: 0 32px;
-	font: 400 14px/1.5 'Pretendard';
-	margin-bottom: 19px;
-}
-
-button {
-	display: block;
-	position: relative;
-	margin: 8px auto;
-	color: #424242;
-	background: none;
-	width: 90%;
-	height: 48px;
-	font: bold 16px/1.5 'Pretendard';
-	text-align:left;
-	border: 1px solid #DBDBDB;
-	border-radius: 8px;
-	cursor: pointer;
-	&:hover,
-	&.job-on {
-		background: #cdd3ef;
-		border:none;
+	h1 {
+		font: 700 20px/1.5 'Pretendard';
+		color: #424242;
+		margin-bottom: 8px;
+		text-align: center;
 	}
-}
-.close,
-.prev {
-	position: absolute;
-	top: 17px;
-	width: 24px;
-	height: 24px;
-	color: #5b5b5b;
-	font: 400 20px/1 'arial';
-	border:none;
-	cursor: pointer;
-	&:hover {
+
+	p {
+		position: relative;
+		width: 100%;
+		padding: 0 32px;
+		font: 400 14px/1.5 'Pretendard';
+		margin-bottom: 19px;
+	}
+
+	button {
+		display: block;
+		position: relative;
+		margin: 8px auto;
+		color: #424242;
 		background: none;
-		color: #808dd7;
-	}
-}
-.close {
-	right: 16px;
-}
-.prev {
-	left: 0.5rem;
-	width: 32px;
-	svg {
-		font: 400 24px/1 'arial';
-	}
-}
-.next {
-	position: relative;
-	margin: 16px auto;
-	color: #fff;
-	opacity: 0.5;
-	font: 700 14px/21px 'Pretendard';
-	background: #212C6A;
-	border:none;
-	text-align:center;
-	&.on{
-		opacity: 1;
-		&:hover{
-			background: #3A4DB7;
+		width: 90%;
+		height: 48px;
+		font: bold 16px/1.5 'Pretendard';
+		text-align: left;
+		border: 1px solid #dbdbdb;
+		border-radius: 8px;
+		cursor: pointer;
+		&:hover,
+		&.job-on {
+			background: #cdd3ef;
+			border: none;
 		}
-}
+	}
+	.close,
+	.prev {
+		position: absolute;
+		top: 17px;
+		width: 24px;
+		height: 24px;
+		color: #5b5b5b;
+		font: 400 20px/1 'arial';
+		border: none;
+		cursor: pointer;
+		&:hover {
+			background: none;
+			color: #808dd7;
+		}
+	}
+	.close {
+		right: 16px;
+	}
+	.prev {
+		left: 0.5rem;
+		width: 32px;
+		svg {
+			font: 400 24px/1 'arial';
+		}
+	}
+	.next {
+		position: relative;
+		margin: 16px auto;
+		color: #fff;
+		opacity: 0.5;
+		font: 700 14px/21px 'Pretendard';
+		background: #212c6a;
+		border: none;
+		text-align: center;
+		&.on {
+			opacity: 1;
+			&:hover {
+				background: #3a4db7;
+			}
+		}
+	}
 `;
 
 export const StyledModalAlert = styled.div``;
@@ -710,54 +708,54 @@ export const StyledModalCompany = styled.div`
 				margin: 10px;
 			}
 		}
-			p {
-				position: relative;
-				font: 400 12px/1.5 'Pretendard';
-				text-align: left;
-				min-height: 16px;
-				margin: 5px 10px;
+		p {
+			position: relative;
+			font: 400 12px/1.5 'Pretendard';
+			text-align: left;
+			min-height: 16px;
+			margin: 5px 10px;
+		}
+		&.pass {
+			p,
+			svg {
+				color: #88e25d;
 			}
-			&.pass {
-				p,
-				svg {
-					color: #88e25d;
-				}
-				input {
-					border-color: #88e25d;
-					&:focus {
-						outline: 1px solid #88e25d;
-					}
-				}
-			}
-			&.nopass {
-				p,
-				svg {
-					color: #ff5c00;
-				}
-				input {
-					border-color: #ff5c00;
-					&:focus {
-						outline: 1px solid #ff5c00;
-					}
+			input {
+				border-color: #88e25d;
+				&:focus {
+					outline: 1px solid #88e25d;
 				}
 			}
 		}
-
-		.next {
-			color: #fff;
-			background: #212c6a;
-			margin: 0.5rem auto;
-			border: none;
-			opacity: 0.5;
-			cursor: pointer;
-			&.on {
-				opacity: 1;
-				&:hover {
-					background: #3a4db7;
+		&.nopass {
+			p,
+			svg {
+				color: #ff5c00;
+			}
+			input {
+				border-color: #ff5c00;
+				&:focus {
+					outline: 1px solid #ff5c00;
 				}
 			}
 		}
 	}
+
+	.next {
+		color: #fff;
+		background: #212c6a;
+		margin: 0.5rem auto;
+		border: none;
+		opacity: 0.5;
+		cursor: pointer;
+		&.on {
+			opacity: 1;
+			&:hover {
+				background: #3a4db7;
+			}
+		}
+	}
+
 	.close {
 		position: absolute;
 		top: 15px;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ModalAddLink, { Props } from '../ModalAddLink';
 import { Value } from '../ModalTypes';
 import { StyledButtonAdd } from './ButtonStyle';
@@ -20,10 +20,12 @@ function ButtonFinishAdd({
 	value,
 	type,
 }: Newprops) {
+	const nextBt = useRef<HTMLButtonElement>(null);
 	return (
 		<StyledButtonAdd
+			ref={nextBt}
 			onClick={() => {
-				if (setTest) {
+				if (setTest && nextBt.current?.classList.contains('on')) {
 					const obj = getValue();
 					linkList.push(obj);
 					setTest(

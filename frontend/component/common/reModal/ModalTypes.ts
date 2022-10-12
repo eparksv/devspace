@@ -15,6 +15,7 @@ export type WrapProps = {
 export type ValidationProps = {
 	name: string;
 	maxLength: number;
+	checkPass?: () => void;
 };
 
 export type Value = {

@@ -3,7 +3,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { StyledValidationSpc } from './ValidationStyle';
 import { ValidationProps } from '../ModalTypes';
 
-function ValidationSpc({ name, maxLength }: ValidationProps) {
+function ValidationSpc({ name, maxLength, checkPass }: ValidationProps) {
 	const ref = useRef<HTMLInputElement>(null);
 
 	const [pass, setPass] = useState<string>();
@@ -56,8 +56,12 @@ function ValidationSpc({ name, maxLength }: ValidationProps) {
 			<div className={`standard ${name}`}>
 				<input
 					type='text'
-					name='이름'
-					placeholder='이름을 입력해주세요'
+					name={name}
+					placeholder={
+						name === 'company'
+							? '회사명을 입력해주세요.'
+							: '경력을 입력해주세요'
+					}
 					ref={ref}
 					onKeyDown={(e) => {
 						if (e.key === ' ') e.preventDefault();
@@ -65,6 +69,7 @@ function ValidationSpc({ name, maxLength }: ValidationProps) {
 					onChange={(e) => {
 						validateName(e);
 						sizing();
+						checkPass();
 					}}
 					onInput={(e) => {
 						if (e.currentTarget.value.length > maxLength)

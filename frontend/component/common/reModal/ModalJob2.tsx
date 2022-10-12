@@ -6,6 +6,7 @@ import { ContextUser } from '@/pages/_app';
 import { ModalProps, Value } from './ModalTypes';
 import ModalWrap from './modalwrap/ModalWrap';
 import ModalJob from './ModalJob';
+import { StyledButton } from './modalwrap/ModalWrapStyle';
 
 interface Props extends ModalProps {
 	value: Value;
@@ -84,10 +85,11 @@ function ModalJob2({ setOpen, setTest, value, type }: Props) {
 		<div ref={ref} tabIndex={0}>
 			<ModalWrap>
 				<h1>{type}</h1>
+				<p>구체적으로 어떤 일을 하시나요?</p>
 
 				{jobs.map((j: { id: number; title: string }, idx) => {
 					return (
-						<button
+						<StyledButton
 							className='job-button'
 							key={idx}
 							aria-label={j.title + ` 직군 선택`}
@@ -96,7 +98,7 @@ function ModalJob2({ setOpen, setTest, value, type }: Props) {
 								setJob(j.id);
 							}}>
 							{j.title}
-						</button>
+						</StyledButton>
 					);
 				})}
 
