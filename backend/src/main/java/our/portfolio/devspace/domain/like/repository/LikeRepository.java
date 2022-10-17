@@ -12,7 +12,7 @@ import java.util.List;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     @Query("select new our.portfolio.devspace.domain.like.dto.GetLikeResponse(f.id, f.name, f.image, j.title, f.company) " +
-            "from Like l join l.post p join l.profile f join f.job j where p.id = :id ")
+            "from Like l join l.post p join l.profile f join f.job j where p.id = :id order by l.id desc ")
     List<GetLikeResponse> findLikeUserByPostId(@Param(value = "id") Long id, Pageable pageable);
 
 }
