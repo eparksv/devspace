@@ -1,6 +1,7 @@
 package our.portfolio.devspace.domain.like.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.repository.LikeRepository;
@@ -13,8 +14,8 @@ public class LikeService {
 
     private final LikeRepository likeRepository;
 
-    public List<GetLikeResponse> listLikes(Long id) {
+    public List<GetLikeResponse> listLikes(Long id, Pageable pageable) {
 
-        return likeRepository.findLikeUserByPostId(id);
+        return likeRepository.findLikeUserByPostId(id, pageable);
     }
 }

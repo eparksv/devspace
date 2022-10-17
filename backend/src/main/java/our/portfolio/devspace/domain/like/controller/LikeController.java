@@ -1,6 +1,7 @@
 package our.portfolio.devspace.domain.like.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +29,10 @@ public class LikeController {
      * @return 결과 메시지와 {@link GetLikeResponse}의 List를 담은 {@link HttpResponseBody}, Status 200 OK
      */
     @GetMapping("api/like/{id}")
-    public ResponseEntity<HttpResponseBody<List<GetLikeResponse>>> listLikes(@PathVariable Long id) {
+    public ResponseEntity<HttpResponseBody<List<GetLikeResponse>>> listLikes(@PathVariable Long id,Pageable pageable) {
 
         HttpResponseBody<List<GetLikeResponse>> body
-                = new HttpResponseBody<>("좋아요 회원 목록이 조회되었습니다.", likeService.listLikes(id));
+                = new HttpResponseBody<>("좋아요 회원 목록이 조회되었습니다.", likeService.listLikes(id, pageable));
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
