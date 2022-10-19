@@ -2518,3 +2518,20 @@ insert into hashtags (id, name, post_id) values (448, 'cubilia', 212);
 insert into hashtags (id, name, post_id) values (236, 'in', 213);
 insert into hashtags (id, name, post_id) values (259, 'montes', 213);
 insert into hashtags (id, name, post_id) values (296, 'tortor', 213);
+
+-- Likes dummy data
+insert into likes (id, post_id, profile_id) values (1, 1, 2);
+insert into likes (id, post_id, profile_id) values (2, 2, 3);
+insert into likes (id, post_id, profile_id) values (3, 2, 1);
+insert into likes (id, post_id, profile_id) values (4, 2, 6);
+insert into likes (id, post_id, profile_id) values (5, 3, 4);
+insert into likes (id, post_id, profile_id) values (6, 3, 5);
+insert into likes (id, post_id, profile_id) values (7, 3, 8);
+insert into likes (id, post_id, profile_id) values (8, 3, 7);
+insert into likes (id, post_id, profile_id) values (9, 3, 10);
+insert into likes (id, post_id, profile_id) values (10, 3, 1);
+insert into likes (id, post_id, profile_id) values (11, 3, 11);
+insert into likes (id, post_id, profile_id) values (12, 3, 12);
+insert into likes (id, post_id, profile_id) values (13, 3, 14);
+insert into likes (id, post_id, profile_id) values (14, 3, 2);
+insert into likes (id, post_id, profile_id) values (15, 3, 17);
