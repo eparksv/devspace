@@ -8,5 +8,6 @@ import lombok.Getter;
 public class CategoryResponse {
 
     private final int id;
+
     private final String title;
 }
