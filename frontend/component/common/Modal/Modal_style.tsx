@@ -26,6 +26,141 @@ export const StyledModal = styled.div`
 	}
 `;
 
+export const StyledForm = styled.form`
+	.tags,
+	.link,
+	.protect {
+		min-height: 40px;
+		font-family: 'Pretendard';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 150%;
+		color: #5b5b5b;
+		display: flex;
+		align-items: center;
+		margin-right: 10px;
+		box-sizing: border-box;
+
+		> button {
+			border: none;
+			background: #cdd3ef;
+			border-radius: 24px;
+			color: white;
+			width: 20px;
+			height: 20px;
+			margin: 0 10px;
+			line-height: 100%;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: flex-end;
+		}
+		.protect-bt {
+			height: 24px;
+			width: 75px;
+			border-radius: 24px;
+			padding: 5px 12px 4px 12px;
+			font-family: 'Roboto';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 12px;
+			line-height: 100%;
+			padding: 0;
+			margin: 0 0 0 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 1px solid #cdd3ef;
+			background: none;
+			color: #cdd3ef;
+			&.on {
+				background: #cdd3ef;
+				color: white;
+			}
+		}
+	}
+
+	.tags,
+	.link {
+		border-bottom: 1px solid #dbdbdb;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 3px 0;
+		.tag-add {
+			margin: 0 10px 0 0;
+		}
+		label {
+			margin-right: 10px;
+		}
+		.tag {
+			margin: 0px 10px 0 0px;
+			.tag-value {
+				padding: 6px 8px;
+				background: #cdd3ef;
+				margin: 0 5px;
+				border-radius: 24px;
+				font: 400 14px/1.5 'arial';
+				&:nth-of-type(1) {
+					margin-left: 25px;
+				}
+			}
+		}
+		.list {
+			display: flex;
+			flex-wrap: wrap;
+			width: 85%;
+		}
+		.tag-wrap {
+			display: flex;
+			align-items: center;
+			position: relative;
+			svg {
+				width: 15px;
+				height: 15px;
+				background: none;
+				color: #8e8e8e;
+			}
+			> button {
+				border: none;
+				background: none;
+				border-radius: 24px;
+				height: 15px;
+				margin: 0px;
+				line-height: 100%;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: flex-end;
+				position: absolute;
+				right: 10px;
+			}
+			.hash {
+				position: absolute;
+				left: 10px;
+			}
+			> input {
+				background: #cdd3ef;
+				border: 0;
+				border-radius: 24px;
+				padding: 5px 30px 5px 15px;
+				font-family: 'Pretendard';
+				font-style: normal;
+				font-weight: 400;
+				font-size: 10px;
+				line-height: 150%;
+				margin: 2px 5px;
+			}
+		}
+		.add-tag {
+			height: 30px;
+		}
+	}
+`;
+
 export const WrapEditor = styled.div`
 	width: 100%;
 	max-height: 550px;
@@ -123,7 +258,8 @@ export const StyledModalPost = styled.div`
 
 	h1 {
 		font: 700 20px/1.5 'Pretendard';
-		margin: 40px 10px;
+		margin: 20px 10px 40px;
+		text-align: center;
 	}
 
 	form {
@@ -145,17 +281,18 @@ export const StyledModalPost = styled.div`
 		}
 
 		.editor-menu {
-			display: inline-block;
+			display: flex;
+			justify-content: space-evenly;
 			position: absolute;
-			top: 14.5%;
-			right: 5%;
+			top: 11%;
+			right: 8%;
 			width: 25%;
 			> button {
 				border: none;
 				background: none;
 				padding: 0;
-				:active > svg {
-					width: 36px;
+				svg {
+					width: 25px;
 					height: auto;
 				}
 			}
@@ -220,52 +357,9 @@ export const StyledModalPost = styled.div`
 			border: none;
 		}
 	}
-	.tags {
-		display: flex;
-		.tag-wrap {
-			display: inline-block;
-		}
-		.tag {
-			margin: 0px 10px 0 10px;
-			font: 700 16px/1.5 'Pretendard';
-			.tag-value {
-				padding: 6px 8px;
-				background: #cdd3ef;
-				margin: 0 5px;
-				border-radius: 24px;
-				font: 400 14px/1.5 'arial';
-				&:nth-of-type(1) {
-					margin-left: 25px;
-				}
-			}
-			.tag-close {
-				color: #8e8e8e;
-				border: none;
-				background: none;
-				font-size: 14px;
-				margin: 0 0 0 3px;
-				padding: 0;
-				vertical-align: middle;
-				> svg {
-					width: 20px;
-					height: auto;
-				}
-			}
-			> input[type='text'] {
-				min-width: 20px;
-				border: none;
-				padding: 0 0 0 10px;
-				font: 400 14px/1.5 'arial';
-				background: #cdd3ef;
-			}
-		}
-		.add-tag {
-			height: 30px;
-		}
-	}
 	.close {
 		position: absolute;
-		top: 25px;
+		top: 10px;
 		right: 17px;
 		border: none;
 		background: none;

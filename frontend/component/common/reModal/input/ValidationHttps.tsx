@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import ErrorIcon from '@mui/icons-material/Error';
-import { StyledValidationSpc } from './ValidationStyle';
+import { StyledValidationHttp } from './ValidationStyle';
 
 type Props = {
 	checkPass: () => void;
@@ -39,7 +39,7 @@ function ValidationHttps({ checkPass }: Props) {
 	};
 
 	return (
-		<StyledValidationSpc>
+		<StyledValidationHttp>
 			<div className={`standard link`}>
 				<input
 					type='text'
@@ -60,7 +60,7 @@ function ValidationHttps({ checkPass }: Props) {
 					<p>{inputMessage}</p>
 				</div>
 			</div>
-		</StyledValidationSpc>
+		</StyledValidationHttp>
 	);
 }
 

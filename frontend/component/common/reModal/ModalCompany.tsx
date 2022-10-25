@@ -1,12 +1,11 @@
 import React, { useRef } from 'react';
-import ButtonSkip from './button/ButtonSkip';
 import ValidationSpc from './input/ValidationSpc';
 import { ModalProps, Value } from './ModalTypes';
 import ModalWrap from './modalwrap/ModalWrap';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModalAddLink from './ModalAddLink';
 import ModalJob2 from './ModalJob2';
-import { check } from 'prettier';
+import ButtonSkipNext from './button/ButtonSkipNext';
 
 interface Props extends ModalProps {
 	value: Value;
@@ -68,7 +67,13 @@ function ModalCompany({ setOpen, setTest, value, type }: Props) {
 				다음
 			</button>
 
-			<ButtonSkip setOpen={setOpen} value={value} />
+			<ButtonSkipNext
+				setOpen={setOpen}
+				setTest={setTest}
+				value={value}
+				linkList={[{ url: '', title: '' }]}
+				type={type}
+			/>
 
 			<button
 				className='prev'
