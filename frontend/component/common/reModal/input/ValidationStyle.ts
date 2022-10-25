@@ -145,4 +145,34 @@ export const StyledValidationSpc = styled.div`
 			height: 15px;
 		}
 	}
+	.link-name {
+		&.pass {
+			p,
+			svg {
+				color: #88e25d;
+			}
+			input {
+				border-color: #88e25d;
+				&:focus {
+					outline: 1px solid #88e25d;
+				}
+			}
+		}
+	}
+`;
+export const StyledValidationHttp = styled(StyledValidationSpc)`
+	.standard {
+		&.pass {
+			p,
+			svg {
+				color: #88e25d;
+			}
+			input {
+				border-color: #88e25d;
+				&:focus {
+					outline: 1px solid #88e25d;
+				}
+			}
+		}
+	}
 `;

@@ -1,5 +1,5 @@
-import React, { KeyboardEvent, useRef, useState } from 'react';
-import { WrapEditor } from '../Modal/Modal_style';
+import React, { MouseEvent, useRef, useState } from 'react';
+import { StyledForm, WrapEditor } from '../Modal/Modal_style';
 import Tiptap_submit from './Tiptap_submit';
 import Tiptap_post from './Tiptap_post';
 import Tiptap_tag from './Tiptap_tag';
@@ -41,13 +41,17 @@ const Tiptap = ({ setOpen }: Props) => {
 		};
 	};
 
-	const checkPrivate = (st: string) => {
+	const checkPrivate = (st: string, e: MouseEvent) => {
 		st === 'public' ? (secret = false) : (secret = true);
+		e.currentTarget.parentElement
+			?.querySelectorAll('.protect-bt')
+			.forEach((a) => a.classList.remove('on'));
+		e.currentTarget.classList.add('on');
 	};
 
 	return (
 		<>
-			<form onSubmit={(e) => e.preventDefault()}>
+			<StyledForm onSubmit={(e) => e.preventDefault()} className='post-form'>
 				{/*fieldset, legend 태그 추가 */}
 				<div className='editor-top'>
 					<input
@@ -71,12 +75,20 @@ const Tiptap = ({ setOpen }: Props) => {
 				<div className='link'>링크</div>
 				<div className='protect' ref={protect}>
 					공개여부
-					<button onClick={() => checkPrivate('public')}>전체 공개</button>
-					<button onClick={() => checkPrivate('private')}>나만 보기</button>
+					<button
+						className='protect-bt on'
+						onClick={(e) => checkPrivate('public', e)}>
+						전체 공개
+					</button>
+					<button
+						className='protect-bt'
+						onClick={(e) => checkPrivate('private', e)}>
+						나만 보기
+					</button>
 				</div>
 
 				<Tiptap_submit getValue={getValue} setOpen={setOpen} />
-			</form>
+			</StyledForm>
 		</>
 	);
 };

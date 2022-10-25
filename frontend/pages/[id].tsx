@@ -13,11 +13,14 @@ const Pages = () => {
 	const query = router.query.id;
 	let component;
 
+	console.log(query);
+
 	useEffect(() => {
+		console.log(query);
 		if (query === 'oauth' && dispatch) {
 			dispatch({ type: 'TOKEN', token: `${router.query.token}` });
 			dispatch({ type: 'JOB', job: `${router.query.job}` });
-			//console.log(user);
+			console.log(user);
 			router.replace('/');
 		}
 	}, [query]);

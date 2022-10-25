@@ -14,7 +14,7 @@ function ButtonSkip({ setOpen, value }: Props) {
 	const submit = async () => {
 		console.log('body', value);
 		try {
-			const req = axios.post(
+			const req = await axios.post(
 				'profiles',
 				{
 					name: value.name,
@@ -30,7 +30,7 @@ function ButtonSkip({ setOpen, value }: Props) {
 					},
 				}
 			);
-			const data = await req;
+			console.log(req.data);
 		} catch (e) {
 			console.log('e', e);
 			alert('죄송합니다. 잠시후 다시 시도해주세요');

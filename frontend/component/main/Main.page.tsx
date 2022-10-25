@@ -6,6 +6,7 @@ import { ContextUser } from '../../pages/_app';
 import { ModalSignUp } from '../common/Modal/ModalSignUp';
 import ModalSignUp2 from '../common/reModal/ModalSignUp2';
 import ModalCompany from '../common/reModal/ModalCompany';
+import axios from 'axios';
 
 const Main = (/*{ data }: any*/) => {
 	const [open, setOpen] = useState(false);
@@ -20,11 +21,25 @@ const Main = (/*{ data }: any*/) => {
 	useEffect(() => {
 		if (context.user.job === '') {
 			setOpen(true);
+			console.log(context.user);
 			setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
 		}
 	}, []);
 
-	const more = () => {};
+	useEffect(() => {
+		const getDate = async () => {
+			try {
+				const req = axios.get(
+					`http://localhost:8080/api/posts?sort=recent&filter=none`
+				);
+				const data = await req;
+				console.log(data.data);
+			} catch (e) {
+				console.log(e);
+			}
+		};
+		getDate();
+	}, []);
 
 	return (
 		<>
@@ -71,13 +86,13 @@ const Main = (/*{ data }: any*/) => {
 					프로필 설정 테스트
 				</button>*/}
 
-				{/* <button
+				<button
 					onClick={() => {
 						setOpen(true);
 						setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
 					}}>
 					회원가입 모달 리팩토링
-				</button> */}
+				</button>
 
 				{/*모달을 제어하는 컴포넌트로 분리할까? (하위 컴포넌트만 리렌더링 되도록)*/}
 				{/*open && modal*/}

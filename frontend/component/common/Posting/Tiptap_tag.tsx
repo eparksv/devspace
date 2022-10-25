@@ -28,7 +28,11 @@ function Tiptap_tag() {
 	return (
 		<>
 			<label htmlFor='tag'>태그</label>
-			<button onClick={add}>+</button>
+			{taglist.length !== 3 ? (
+				<button className='tag-add' onClick={add}>
+					+
+				</button>
+			) : null}
 			{/*
     height: 30px;
     vertical-align: text-bottom; */}
@@ -42,7 +46,7 @@ function Tiptap_tag() {
 								target.current = idx;
 								//console.log('target:', target.current);
 							}}>
-							<span>{idx}</span>
+							<span className='hash'>#</span>
 							<input
 								type='text'
 								className='tag'

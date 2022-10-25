@@ -69,7 +69,7 @@ function ValidationSpc({ name, maxLength, checkPass }: ValidationProps) {
 					onChange={(e) => {
 						validateName(e);
 						sizing();
-						checkPass();
+						if (checkPass) checkPass();
 					}}
 					onInput={(e) => {
 						if (e.currentTarget.value.length > maxLength)
