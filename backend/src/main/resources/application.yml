@@ -54,6 +54,6 @@ security:
     refresh-expiration-time: 604800000 # 리프레시 토큰 만료기간 7일 (7 * 24 * 60 * 60 * 1000)
   oauth:
     # OAuth 2.0 인증 후 기본 리다이렉트 경로. 향후에 수정할 필요가 있음
-    default-redirect-uri: http://localhost:3000
+    default-redirect-uri: http://localhost:3000/oauth
     # OAuth 2.0 인증 후 허가되는 리다이렉트 경로. 향후에 수정할 필요가 있음
     authorized-redirect-uri: http://localhost:3000/oauth
