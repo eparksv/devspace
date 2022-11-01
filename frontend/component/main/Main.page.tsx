@@ -7,6 +7,47 @@ import { ModalSignUp } from '../common/Modal/ModalSignUp';
 import ModalSignUp2 from '../common/reModal/ModalSignUp2';
 import ModalCompany from '../common/reModal/ModalCompany';
 import axios from 'axios';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import styled from '@emotion/styled';
+
+type PostArr = {
+	id: number;
+	profile: {
+		id: number;
+		name: string;
+		job: string;
+		company: string;
+		image: null | string;
+	};
+	title: string;
+	likeCount: number;
+	commentCount: number;
+	content: string;
+	createdDate: string;
+	hashtags: string[];
+};
+
+type DataArr =
+	| {
+			/*	data: {
+				count : null;
+				posts : object[];
+				[key:string] : string; */
+			data: {
+				messege: string;
+				data: {
+					count: null;
+					posts: PostArr[];
+					[key: string]: string | null | object; // 추가적으로 생길 수 있는 객체에 대한 타입 처리.
+				};
+			};
+			status: number;
+			statusText: string;
+			header: Object;
+			request: XMLHttpRequest;
+			config: Object;
+	  }
+	| undefined;
 
 const Main = (/*{ data }: any*/) => {
 	const [open, setOpen] = useState(false);
@@ -26,7 +67,7 @@ const Main = (/*{ data }: any*/) => {
 		}
 	}, []);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		const getDate = async () => {
 			try {
 				const req = axios.get(
@@ -39,7 +80,31 @@ const Main = (/*{ data }: any*/) => {
 			}
 		};
 		getDate();
-	}, []);
+	}, []); */
+
+	const { data, isLoading, isError } = useQuery(
+		['posts'],
+		async () =>
+			axios.get(`http://localhost:8080/api/posts?sort=recent&filter=none`),
+		{
+			staleTime: Infinity,
+			cacheTime: Infinity,
+			onSuccess: (data) => {
+				// 성공시 호출
+				console.log(data.data.data.posts);
+			},
+			onError: (e) => {
+				// 실패시 호출 (401, 404 같은 error가 아니라 정말 api 호출이 실패한 경우만 호출됩니다.)
+				// 강제로 에러 발생시키려면 api단에서 throw Error 날립니다. (참조: https://react-query.tanstack.com/guides/query-functions#usage-with-fetch-and-other-clients-that-do-not-throw-by-default)
+				console.log(e);
+			},
+		}
+	);
+
+	const queryClient = useQueryClient();
+	const arr: DataArr = queryClient.getQueryData(['posts']);
+	//console.log('쿼리키', arr?.['data']?.['data']?.['posts']);
+	const list = arr?.data.data.posts;
 
 	return (
 		<>
@@ -55,25 +120,39 @@ const Main = (/*{ data }: any*/) => {
 					<button onClick={() => setOpen(true)}>x</button>
 				</TextBar>
 
-				{/*list.map((l, idx) => {
-					const now = dayjs();
-					return (
-						<StyledArticle key={idx} onClick={more}>
-							<div className='user-info'>
-								{<img /> 유저 프로필 이미지 }
-								<span>{l.userId}</span>
-								<p>{l.postCreated}</p>
-								{l.preImage ? (
-									<img src={l.preImage} alt='이미지 미리보기' />
-								) : null}
-								<div className='prev'>
-									{l.postTitle ? <p>{l.postTitle}</p> : null}
-									<p>{l.preText}</p>
-								</div>
-							</div>
-						</StyledArticle>
-					);
-				})*/}
+				<Header>
+					<h2>전체 카테고리</h2>
+					<div className='flex_box'>
+						<span> 최신</span>
+						<span> 팔로잉</span>
+					</div>
+				</Header>
+				{list
+					? list.map((a) => {
+							return (
+								<Wrap key={a.id}>
+									<div className='user_info'>
+										<img src='' alt='' />
+										<div className='name_time'>
+											<div></div>
+											<div></div>
+										</div>
+										<div className='job'></div>
+										<div className='corp'></div>
+									</div>
+									<div className='hashtags'></div>
+									<p className='title'></p>
+									<p className='prev_text'>{a.content}</p>
+									<div className='like_box'>
+										<img />
+										<img src='' alt='' />
+										<div className='liked'></div>
+										<div className='commented'></div>
+									</div>
+								</Wrap>
+							);
+					  })
+					: null}
 
 				{/* side components*/}
 
@@ -86,16 +165,6 @@ const Main = (/*{ data }: any*/) => {
 					프로필 설정 테스트
 				</button>*/}
 
-				<button
-					onClick={() => {
-						setOpen(true);
-						setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
-					}}>
-					회원가입 모달 리팩토링
-				</button>
-
-				{/*모달을 제어하는 컴포넌트로 분리할까? (하위 컴포넌트만 리렌더링 되도록)*/}
-				{/*open && modal*/}
 				{open && test}
 			</StyledSection>
 		</>
@@ -103,3 +172,62 @@ const Main = (/*{ data }: any*/) => {
 };
 
 export default Main;
+
+const Header = styled.div`
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	margin-top: 42px;
+
+	> h2 {
+		font-family: 'Pretendard';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 150%;
+		color: #5b5b5b;
+	}
+
+	.flex_box > span {
+		font-family: 'Pretendard';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 150%;
+		text-align: center;
+		color: #8e8e8e;
+		padding: 4px;
+		&.on {
+			color: #808dd7;
+			border-bottom: 1px solid #808dd7;
+		}
+	}
+`;
+
+const Wrap = styled.div`
+	width: 604px;
+	margin: 16px 0px;
+	border: 1px solid gray;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 16px;
+	background: #ffff;
+
+	p {
+		margin: 0 auto;
+		width: 500px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: normal;
+		word-wrap: break-word;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		height: 144px;
+
+		font-family: 'Pretendard';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 150%;
+	}
+`;

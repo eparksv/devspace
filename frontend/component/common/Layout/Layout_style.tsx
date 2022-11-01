@@ -17,7 +17,7 @@ export const Inner = styled.div`
 		width: 100%;
 		padding-left: 24px;
 		section {
-			background: #ffff;
+			background: none;
 			min-height: 150vh;
 		}
 	}
