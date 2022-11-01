@@ -73,11 +73,15 @@ function Tiptap_submit({ getValue, setOpen }: Props) {
 
 			const test = async () => {
 				try {
-					const res = await axios.post(`posts`, data, {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					});
+					const res = await axios.post(
+						`http://localhost:8080/api/posts`,
+						data,
+						{
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
 					console.log(res.data);
 				} catch (e) {
 					console.log(e);
