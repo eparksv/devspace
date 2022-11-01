@@ -86,7 +86,7 @@ function ModalAddLink({ setOpen, setTest, linkList, value, type }: Props) {
 					try {
 						//처음 로그인 후(회원가입 안한 상태에서-세션에 기록없을때-) 딱 한번만 가능.
 						const req = axios.post(
-							'profiles',
+							'http://localhost:8080/api/profiles',
 							{
 								name: value.name,
 								introduction: value.introduction,
