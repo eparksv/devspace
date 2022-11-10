@@ -2,16 +2,21 @@ package our.portfolio.devspace.domain.like.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
+import our.portfolio.devspace.configuration.security.oauth.domain.UserId;
+import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.service.LikeService;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,9 +42,13 @@ public class LikeController {
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-    @PostMapping("api/like/{id}")
-    public void createLike(@PathVariable Long id) {
-        likeService.createLike(id);
+    @PostMapping("api/like/{postId}")
+    public ResponseEntity<HttpResponseBody<CreateLikeResponse>> createLike(@PathVariable Long postId, @UserId Long userId) {
+
+        CreateLikeResponse responseDto = likeService.createLike(postId, userId);
+        HttpResponseBody<CreateLikeResponse> body = new HttpResponseBody<>("좋아요 회원이 등록 되었습니다.", responseDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
 }
