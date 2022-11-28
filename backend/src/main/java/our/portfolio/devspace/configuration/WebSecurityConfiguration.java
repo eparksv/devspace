@@ -40,6 +40,7 @@ public class WebSecurityConfiguration {
                 .antMatchers(HttpMethod.POST, "/api/profiles").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/jobs").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/posts").hasRole("USER")
+                .antMatchers(HttpMethod.POST,"/api/like").hasRole("USER")
                 .anyRequest().permitAll()
             )
             .exceptionHandling()
