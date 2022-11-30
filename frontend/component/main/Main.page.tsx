@@ -8,8 +8,9 @@ import axios from 'axios';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
+import PostedModal from '../common/Posted/PostedModal';
 
-type PostArr = {
+export type PostArr = {
 	id: number;
 	profile: {
 		id: number;
@@ -105,6 +106,11 @@ const Main = (/*{ data }: any*/) => {
 	//console.log('쿼리키', arr?.['data']?.['data']?.['posts']);
 	const list = arr?.data.data.posts;
 
+	const handleModal = (data: PostArr, comment?: boolean) => {
+		setOpen(true);
+		setTest(<PostedModal arr={data} setOpen={setOpen} comment={comment} />);
+	};
+
 	return (
 		<>
 			<StyledSection>
@@ -166,16 +172,23 @@ const Main = (/*{ data }: any*/) => {
 												  })
 												: null}
 										</div>
-										<p className='title'>{a.title ? a.title : null}</p>
-										<p className='prev_text'>{a.content}</p>
+										<ContentBox onClick={() => handleModal(a)}>
+											<p className='title'>{a.title ? a.title : null}</p>
+											<p className='prev_text'>{a.content}</p>
+										</ContentBox>
 										<div className='like_box'>
 											<img src='/images/comment.png' alt='' />
 											<img src='/images/like.png' alt='' />
 											<div className='box'>
 												<div className='liked'>좋아요 {a.likeCount}</div>
-												<div className='commented'>댓글 {a.commentCount}</div>
+												<div
+													className='commented'
+													onClick={() => handleModal(a, true)}>
+													댓글 {a.commentCount}
+												</div>
 											</div>
 										</div>
+										{/*로그인 && <img className='picked' src='/images/pick.png' alt='' />*/}
 									</Wrapper>
 								</Wrap>
 							);
@@ -236,6 +249,10 @@ const Wrapper = styled.div`
 	margin: 40px;
 `;
 
+const ContentBox = styled.div`
+	cursor: pointer;
+`;
+
 const Wrap = styled.div`
 	width: 604px;
 	margin: 16px 0px;
@@ -244,6 +261,15 @@ const Wrap = styled.div`
 	border-radius: 16px;
 	background: #ffff;
 	font-family: 'Pretendard';
+	position: relative;
+
+	.picked {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 14px;
+		height: 18px;
+	}
 
 	p {
 		margin: 0 auto;
@@ -361,6 +387,10 @@ const Wrap = styled.div`
 			color: #5b5b5b;
 			.liked {
 				margin-right: 8px;
+				cursor: pointer;
+			}
+			.commented {
+				cursor: pointer;
 			}
 		}
 	}
