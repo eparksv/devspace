@@ -147,7 +147,7 @@ class LikeControllerTest {
     private FieldDescriptors likeCreationDescriptors() {
         ConstrainedFields likeCreationDtoField = new ConstrainedFields(CreateLikeRequest.class);
         return new FieldDescriptors(
-                likeCreationDtoField.withPath("[].id").type(JsonFieldType.NUMBER).description("좋아요 회원 ID")
+                likeCreationDtoField.withPath("id").type(JsonFieldType.NUMBER).description("좋아요 회원 ID")
         );
     }
 
