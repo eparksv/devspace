@@ -131,7 +131,7 @@ class LikeControllerTest {
         resultActions.andDo(
                 document("좋아요를 성공적으로 생성한다", resource(ResourceSnippetParameters.builder()
                         .summary("좋아요 생성")
-                        .tag("Post")
+                        .tag("Like")
                         .requestSchema(schema("LikeCreatRequest"))
                         .requestHeaders(
                                 ControllerTestUtils.authorizationHeader(),
