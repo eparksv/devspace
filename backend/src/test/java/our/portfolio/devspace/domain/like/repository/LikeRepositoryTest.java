@@ -7,6 +7,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
+import our.portfolio.devspace.domain.like.entity.Like;
+import our.portfolio.devspace.utils.factory.LikeFactory;
 
 import java.util.List;
 
@@ -31,5 +33,25 @@ class LikeRepositoryTest {
 
         // ** Then **
         assertThat(Like.size()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("id에 해당하는 좋아요 회원에 저장한 회원 id가 있는지 확인한다.")
+    void conatinLikeUserByPostId() throws IllegalAccessException {
+
+        // ** Given **
+        Like like = new LikeFactory().likeEntity();
+        Pageable pageable = PageRequest.of(0, 10);
+
+        // ** When **
+        likeRepository.save(like);
+        List<GetLikeResponse> likes = likeRepository.findLikeUserByPostId(like.getPost().getId(), pageable);
+
+        for (GetLikeResponse getLikeResponse : likes) {
+            System.out.println("getLikeResponse = " + getLikeResponse.getId());
+        }
+        // ** Then **
+        Long userId = likes.get(0).getId();
+        assertThat(like.getProfile().getId()).isEqualTo(userId);
     }
 }
