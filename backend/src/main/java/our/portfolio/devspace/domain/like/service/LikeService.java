@@ -40,7 +40,7 @@ public class LikeService {
     }
 
     public DeleteLikeResponse deleteLike(Long postId, Long userId) {
-        Long likeId = likeRepository.findIdByUserId(postId, userId);
+        Long likeId = likeRepository.findIdByProfileIdAndPostId(postId, userId);
         likeRepository.deleteById(likeId);
 
         return likeMapper.toDeleteLikeResponse(postId);

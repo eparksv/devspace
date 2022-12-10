@@ -15,4 +15,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
             "from Like l join l.post p join l.profile f join f.job j where p.id = :id order by l.id desc ")
     List<GetLikeResponse> findLikeUserByPostId(@Param(value = "id") Long id, Pageable pageable);
 
+    @Query("select l.id from Like l where l.post.id=:postId and l.profile.id=:profileId")
+    Long findIdByProfileIdAndPostId(@Param(value = "postId") Long post, @Param(value = "profileId") Long profile);
 }
