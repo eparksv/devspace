@@ -34,6 +34,7 @@ public class LikeService {
     public CreateLikeResponse createLike(CreateLikeRequest likeRequest, Long userId) {
 
         Like like = likeMapper.toEntity(likeRequest, userId);
+
         likeRepository.save(like);
 
         return likeMapper.toCreateLikeResponse(like);
@@ -41,6 +42,10 @@ public class LikeService {
 
     public DeleteLikeResponse deleteLike(Long postId, Long userId) {
         Long likeId = likeRepository.findIdByProfileIdAndPostId(postId, userId);
+
+        if (likeId == null) {
+            throw new CustomException(INVALID_PARAMETER_VALUE);
+        }
         likeRepository.deleteById(likeId);
 
         return likeMapper.toDeleteLikeResponse(postId);
