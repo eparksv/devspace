@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import our.portfolio.devspace.common.mapper.LikeMapper;
+import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.entity.Like;
@@ -29,8 +30,8 @@ public class LikeService {
         return likeRepository.findLikeUserByPostId(id, pageable);
     }
 
-    public CreateLikeResponse createLike(Long postId, Long userId) {
-        Like like = likeMapper.toEntity(postId, userId);
+    public CreateLikeResponse createLike(CreateLikeRequest likeRequest, Long userId) {
+        Like like = likeMapper.toEntity(likeRequest, userId);
         likeRepository.save(like);
 
         return likeMapper.toCreateLikeResponse(like);

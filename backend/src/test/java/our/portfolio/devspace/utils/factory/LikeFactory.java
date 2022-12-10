@@ -1,11 +1,13 @@
 package our.portfolio.devspace.utils.factory;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 import our.portfolio.devspace.domain.category.entity.CategoryType;
 import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
+import our.portfolio.devspace.domain.like.entity.Like;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import static our.portfolio.devspace.utils.CommonTestUtils.setIdField;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class LikeFactory {
 
     private Long id;
@@ -28,8 +31,28 @@ public class LikeFactory {
 
     private CategoryType type = CategoryType.DEVELOP;
 
+    private ProfileFactory profile = new ProfileFactory(1L);
+
+    private PostFactory post = new PostFactory(1L);
+
     public LikeFactory(Long id) {
         this.id = id;
+    }
+
+
+    public Like likeEntity() throws IllegalAccessException {
+
+        Like entity = Like.builder()
+                .id(this.id)
+                .profile(this.profile.profileEntity())
+                .post(this.post.postEntity())
+                .build();
+
+        if (this.id != null) {
+            setIdField(entity, this.id);
+        }
+
+        return entity;
     }
 
     public static List<GetLikeResponse> GetLikeResponses(Pageable pageable) {
