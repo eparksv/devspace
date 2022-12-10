@@ -20,9 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
-import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
-import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
-import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
+import our.portfolio.devspace.domain.like.dto.*;
 import our.portfolio.devspace.domain.like.service.LikeService;
 import our.portfolio.devspace.utils.CommonTestUtils;
 import our.portfolio.devspace.utils.ControllerTestUtils;
@@ -37,8 +35,7 @@ import static com.epages.restdocs.apispec.Schema.schema;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -118,7 +115,7 @@ class LikeControllerTest {
 
 
         // ** When **
-        ResultActions resultActions = postCreationResultActions();
+        ResultActions resultActions = likeCreationResultActions();
 
         // ** Then **
         HttpResponseBody<CreateLikeResponse> body = new HttpResponseBody<>("등록되었습니다.", responseDto);
@@ -139,7 +136,7 @@ class LikeControllerTest {
                         .requestFields(likeCreationDescriptors())
                         .responseSchema(schema("LikeCreationResponse"))
                         .responseFields(ControllerTestUtils.fieldDescriptorsWithMessage(
-                                new FieldDescriptors(fieldWithPath("id").description("생성한 좋아요 ID").type(JsonFieldType.NUMBER))))
+                                new FieldDescriptors(fieldWithPath("id").description("생성한 좋아요 게시판 ID").type(JsonFieldType.NUMBER))))
                         .build())));
 
     }
@@ -151,7 +148,7 @@ class LikeControllerTest {
         );
     }
 
-    private ResultActions postCreationResultActions() throws Exception {
+    private ResultActions likeCreationResultActions() throws Exception {
         return mockMvc.perform(
                 post("/api/like")
                         .content(CommonTestUtils.valueToString(new LikeFactory(1L).createLikeRequest()))
@@ -160,5 +157,50 @@ class LikeControllerTest {
                         .with(csrf())
         );
     }
+
+    @Test
+    @DisplayName("좋아요 삭제 요청에 성공하면 HTTP status 201으로 응답, 게시글 ID를 반환한다.")
+    @WithMockUser(username = "1")
+    void deleteLike() throws Exception {
+        // ** Given **
+        DeleteLikeResponse responseDto = new DeleteLikeResponse(1L);
+        given(likeService.deleteLike(anyLong(), anyLong())).willReturn(responseDto);
+
+
+        // ** When **
+        ResultActions resultActions = likeDeleteResultActions();
+
+        // ** Then **
+        HttpResponseBody<DeleteLikeResponse> body = new HttpResponseBody<>("삭제되었습니다.", responseDto);
+        resultActions.andExpectAll(
+                status().isOk(),
+                content().json(CommonTestUtils.valueToString(body))
+        );
+
+        // ** API Docs **
+        resultActions.andDo(
+                document("좋아요를 성공적으로 삭제한다", resource(ResourceSnippetParameters.builder()
+                        .summary("좋아요 삭제")
+                        .tag("Like")
+                        .pathParameters(parameterWithName("postId").type(SimpleType.NUMBER).description("게시판 id ex) 0, 1, 2, ..."))
+                        .requestHeaders(
+                                ControllerTestUtils.authorizationHeader(),
+                                ControllerTestUtils.contentTypeApplicationJsonHeader())
+                        .responseSchema(schema("LikeDeleteResponse"))
+                        .responseFields(ControllerTestUtils.fieldDescriptorsWithMessage(
+                                new FieldDescriptors(fieldWithPath("id").description("삭제한 좋아요 게시판 ID").type(JsonFieldType.NUMBER))))
+                        .build())));
+
+    }
+
+    private ResultActions likeDeleteResultActions() throws Exception {
+        return mockMvc.perform(
+                delete("/api/like/{postId}",1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", ControllerTestUtils.authorizationToken())
+                        .with(csrf())
+        );
+    }
+
 
 }

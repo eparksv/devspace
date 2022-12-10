@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import our.portfolio.devspace.common.mapper.LikeMapper;
 import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
+import our.portfolio.devspace.domain.like.dto.DeleteLikeResponse;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.entity.Like;
 import our.portfolio.devspace.domain.like.repository.LikeRepository;
@@ -14,7 +15,6 @@ import our.portfolio.devspace.exception.CustomException;
 import java.util.List;
 
 import static our.portfolio.devspace.exception.ErrorDetail.INVALID_PARAMETER_VALUE;
-import static our.portfolio.devspace.exception.ErrorDetail.POSTS_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -32,14 +32,22 @@ public class LikeService {
     }
 
     public CreateLikeResponse createLike(CreateLikeRequest likeRequest, Long userId) {
+
         Like like = likeMapper.toEntity(likeRequest, userId);
 
-        try {
-            likeRepository.save(like);
-        } catch (IllegalArgumentException e) {
-            throw new CustomException(POSTS_NOT_FOUND);
-        }
+        likeRepository.save(like);
 
         return likeMapper.toCreateLikeResponse(like);
+    }
+
+    public DeleteLikeResponse deleteLike(Long postId, Long userId) {
+        Long likeId = likeRepository.findIdByProfileIdAndPostId(postId, userId);
+
+        if (likeId == null) {
+            throw new CustomException(INVALID_PARAMETER_VALUE);
+        }
+        likeRepository.deleteById(likeId);
+
+        return likeMapper.toDeleteLikeResponse(postId);
     }
 }

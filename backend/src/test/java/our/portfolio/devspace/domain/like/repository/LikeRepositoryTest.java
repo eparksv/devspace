@@ -54,4 +54,20 @@ class LikeRepositoryTest {
         Long userId = likes.get(0).getId();
         assertThat(like.getProfile().getId()).isEqualTo(userId);
     }
+
+    @Test
+    @DisplayName("게시판 id와 유저 id로 좋아요 id 찾고 삭제하기")
+    void deleteLikeUserByIds() throws IllegalAccessException {
+
+        // ** Given **
+        Like like = new LikeFactory().likeEntity();
+
+        // ** When **
+        likeRepository.save(like);
+        Long likeId = likeRepository.findIdByProfileIdAndPostId(like.getPost().getId(), like.getProfile().getId());
+        likeRepository.deleteById(likeId);
+
+        // ** Then **
+        assertThat(likeRepository.findById(likeId)).isEmpty();
+    }
 }

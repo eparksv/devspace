@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import our.portfolio.devspace.common.mapper.LikeMapper;
 import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
+import our.portfolio.devspace.domain.like.dto.DeleteLikeResponse;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.entity.Like;
 import our.portfolio.devspace.domain.like.repository.LikeRepository;
@@ -75,6 +76,20 @@ class LikeServiceTest {
 
         // ** When **
         CreateLikeResponse responseDto = likeService.createLike(requestDto, 1L);
+
+        // ** Then **
+        assertThat(responseDto.getId()).isEqualTo(postId);
+    }
+
+    @Test
+    @DisplayName("좋아요 삭제가 성공하면, 삭제된 좋아요 게시글 ID를 반환한다.")
+    void shouldReturnLikeIdWhenDeleteLike() {
+        // ** Given **
+        Long postId = 1L;
+        given(likeMapper.toDeleteLikeResponse(anyLong())).willReturn(new DeleteLikeResponse(postId));
+
+        // ** When **
+        DeleteLikeResponse responseDto = likeService.deleteLike(postId, 1L);
 
         // ** Then **
         assertThat(responseDto.getId()).isEqualTo(postId);
