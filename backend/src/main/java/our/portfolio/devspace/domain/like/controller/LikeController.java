@@ -9,6 +9,7 @@ import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.domain.UserId;
 import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
+import our.portfolio.devspace.domain.like.dto.DeleteLikeResponse;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.service.LikeService;
 
@@ -39,19 +40,36 @@ public class LikeController {
 
 
     /**
-     * 좋아요를 생성하면 생성된 좋아요의 ID를 반환한다.
+     * 좋아요를 생성하면 생성된 좋아요 게시판 ID를 반환한다.
      *
      * @param dto    {@link CreateLikeRequest} 작성한 포스팅의 DTP
      * @param userId {@link Long} 작성자의 ID
      * @return 결과 메시지와 {@link CreateLikeResponse}를 담은 {@link HttpResponseBody}, Status 201 CREATED
      */
     @PostMapping("api/like")
-    public ResponseEntity<HttpResponseBody<CreateLikeResponse>> createLike(@RequestBody CreateLikeRequest likeRequest, @UserId Long userId) {
+    public ResponseEntity<HttpResponseBody<CreateLikeResponse>> createLike(
+            @RequestBody CreateLikeRequest likeRequest, @UserId Long userId) {
 
         CreateLikeResponse responseDto = likeService.createLike(likeRequest, userId);
 
         HttpResponseBody<CreateLikeResponse> body = new HttpResponseBody<>("등록되었습니다.", responseDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
+    }
+
+    /**
+     * 좋아요를 삭제하면 생성된 좋아요 게시판 ID를 반환한다.
+     *
+     * @param postId {@link Long} 작성한 포스팅의 DTP
+     * @param userId {@link Long} 작성자의 ID
+     * @return 결과 메시지와 {@link DeleteLikeResponse}를 담은 {@link HttpResponseBody}, Status 201 OK
+     */
+    @DeleteMapping("api/like/{postId}")
+    public ResponseEntity<HttpResponseBody<DeleteLikeResponse>> deleteLike(@PathVariable Long postId, @UserId Long userId) {
+
+        DeleteLikeResponse responseDto = likeService.deleteLike(postId, userId);
+
+        HttpResponseBody<DeleteLikeResponse> body = new HttpResponseBody<>("삭제되었습니다.", responseDto);
+        return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
 }
