@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import our.portfolio.devspace.common.dto.HttpResponseBody;
 import our.portfolio.devspace.configuration.security.oauth.domain.UserId;
+import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.CreateLikeResponse;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 import our.portfolio.devspace.domain.like.service.LikeService;
@@ -39,13 +37,21 @@ public class LikeController {
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
-    @PostMapping("api/like/{postId}")
-    public ResponseEntity<HttpResponseBody<CreateLikeResponse>> createLike(@PathVariable Long postId, @UserId Long userId) {
 
-        CreateLikeResponse responseDto = likeService.createLike(postId, userId);
-        HttpResponseBody<CreateLikeResponse> body = new HttpResponseBody<>("좋아요 회원이 등록 되었습니다.", responseDto);
+    /**
+     * 좋아요를 생성하면 생성된 좋아요의 ID를 반환한다.
+     *
+     * @param dto    {@link CreateLikeRequest} 작성한 포스팅의 DTP
+     * @param userId {@link Long} 작성자의 ID
+     * @return 결과 메시지와 {@link CreateLikeResponse}를 담은 {@link HttpResponseBody}, Status 201 CREATED
+     */
+    @PostMapping("api/like")
+    public ResponseEntity<HttpResponseBody<CreateLikeResponse>> createLike(@RequestBody CreateLikeRequest likeRequest, @UserId Long userId) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(body);
+        CreateLikeResponse responseDto = likeService.createLike(likeRequest, userId);
+
+        HttpResponseBody<CreateLikeResponse> body = new HttpResponseBody<>("등록되었습니다.", responseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 
 }
