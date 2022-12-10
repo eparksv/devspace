@@ -14,6 +14,7 @@ import our.portfolio.devspace.exception.CustomException;
 import java.util.List;
 
 import static our.portfolio.devspace.exception.ErrorDetail.INVALID_PARAMETER_VALUE;
+import static our.portfolio.devspace.exception.ErrorDetail.POSTS_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,12 @@ public class LikeService {
 
     public CreateLikeResponse createLike(CreateLikeRequest likeRequest, Long userId) {
         Like like = likeMapper.toEntity(likeRequest, userId);
-        likeRepository.save(like);
+
+        try {
+            likeRepository.save(like);
+        } catch (IllegalArgumentException e) {
+            throw new CustomException(POSTS_NOT_FOUND);
+        }
 
         return likeMapper.toCreateLikeResponse(like);
     }
