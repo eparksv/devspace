@@ -83,7 +83,7 @@ class LikeServiceTest {
 
     @Test
     @DisplayName("좋아요 삭제가 성공하면, 삭제된 좋아요 게시글 ID를 반환한다.")
-    void shouldReturnLikeIdWhenDeleteLike() throws IllegalAccessException {
+    void shouldReturnLikeIdWhenDeleteLike() {
         // ** Given **
         Long postId = 1L;
         given(likeMapper.toDeleteLikeResponse(anyLong())).willReturn(new DeleteLikeResponse(postId));
