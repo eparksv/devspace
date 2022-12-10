@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 import our.portfolio.devspace.domain.category.entity.CategoryType;
+import our.portfolio.devspace.domain.like.dto.CreateLikeRequest;
 import our.portfolio.devspace.domain.like.dto.GetLikeResponse;
 
 import java.util.ArrayList;
@@ -69,5 +70,11 @@ public class LikeFactory {
         }
 
         return dto;
+    }
+
+    public CreateLikeRequest createLikeRequest() {
+        return CreateLikeRequest.builder()
+                .id(this.id)
+                .build();
     }
 }
