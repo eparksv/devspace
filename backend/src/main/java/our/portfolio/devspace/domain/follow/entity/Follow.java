@@ -23,4 +23,9 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "followee_id", nullable = false)
     private User followee;
+
+    public Follow(User follower, User followee) {
+        this.follower = follower;
+        this.followee = followee;
+    }
 }
