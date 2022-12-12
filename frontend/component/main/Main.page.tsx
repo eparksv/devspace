@@ -27,6 +27,14 @@ export type PostArr = {
 	hashtags: string[];
 };
 
+export type likeData = {
+	id: number;
+	name: string;
+	image: string | null;
+	job: string;
+	company: string;
+};
+
 type DataArr =
 	| {
 			/*	data: {
@@ -106,6 +114,20 @@ const Main = (/*{ data }: any*/) => {
 	//console.log('쿼리키', arr?.['data']?.['data']?.['posts']);
 	const list = arr?.data.data.posts;
 
+	const getLike = (id: number) => {
+		/* 모달을 키고, 그 모달에 id값을 넘겨주어서 모달안에서 API get().
+		const { data: like } = useQuery<likeData>(
+			['postLike'],
+			async () =>
+				axios.get(`http://localhost:8080/api/like/${id}?page=0&size=8`),
+			{
+				staleTime: Infinity,
+				cacheTime: Infinity,
+				onSuccess: () => console.log(like),
+			}
+		);*/
+	};
+
 	const handleModal = (data: PostArr, comment?: boolean) => {
 		setOpen(true);
 		setTest(<PostedModal arr={data} setOpen={setOpen} comment={comment} />);
@@ -180,7 +202,9 @@ const Main = (/*{ data }: any*/) => {
 											<img src='/images/comment.png' alt='' />
 											<img src='/images/like.png' alt='' />
 											<div className='box'>
-												<div className='liked'>좋아요 {a.likeCount}</div>
+												<div className='liked' onClick={() => getLike(a.id)}>
+													좋아요 {a.likeCount}
+												</div>
 												<div
 													className='commented'
 													onClick={() => handleModal(a, true)}>
@@ -262,6 +286,10 @@ const Wrap = styled.div`
 	background: #ffff;
 	font-family: 'Pretendard';
 	position: relative;
+
+	&:hover {
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	}
 
 	.picked {
 		position: absolute;
