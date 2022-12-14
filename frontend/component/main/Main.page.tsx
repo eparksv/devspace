@@ -9,6 +9,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import PostedModal from '../common/Posted/PostedModal';
+import LikedModal from '../common/Posted/LikedModal';
 
 export type PostArr = {
 	id: number;
@@ -59,6 +60,7 @@ type DataArr =
 
 const Main = (/*{ data }: any*/) => {
 	const [open, setOpen] = useState(false);
+	const [topModalOpen, setTopModalOpen] = useState<string>('');
 	const [test, setTest] = useState<boolean | React.ReactNode>(false);
 
 	/*const [list, setList] = useState<
@@ -115,22 +117,20 @@ const Main = (/*{ data }: any*/) => {
 	const list = arr?.data.data.posts;
 
 	const getLike = (id: number) => {
-		/* 모달을 키고, 그 모달에 id값을 넘겨주어서 모달안에서 API get().
-		const { data: like } = useQuery<likeData>(
-			['postLike'],
-			async () =>
-				axios.get(`http://localhost:8080/api/like/${id}?page=0&size=8`),
-			{
-				staleTime: Infinity,
-				cacheTime: Infinity,
-				onSuccess: () => console.log(like),
-			}
-		);*/
+		/* 모달을 키고, 그 모달에 id값을 넘겨주어서 모달안에서 API get().;*/
+		setTopModalOpen(String(id));
 	};
 
 	const handleModal = (data: PostArr, comment?: boolean) => {
 		setOpen(true);
-		setTest(<PostedModal arr={data} setOpen={setOpen} comment={comment} />);
+		setTest(
+			<PostedModal
+				arr={data}
+				setOpen={setOpen}
+				comment={comment}
+				setTopModalOpen={setTopModalOpen}
+			/>
+		);
 	};
 
 	return (
@@ -202,7 +202,7 @@ const Main = (/*{ data }: any*/) => {
 											<img src='/images/comment.png' alt='' />
 											<img src='/images/like.png' alt='' />
 											<div className='box'>
-												<div className='liked' onClick={() => getLike(a.id)}>
+												<div className='liked' onClick={() => getLike(2)}>
 													좋아요 {a.likeCount}
 												</div>
 												<div
@@ -231,6 +231,9 @@ const Main = (/*{ data }: any*/) => {
 				</button>*/}
 
 				{open && test}
+				{topModalOpen && (
+					<LikedModal setTopModalOpen={setTopModalOpen} id={topModalOpen} />
+				)}
 			</StyledSection>
 		</>
 	);

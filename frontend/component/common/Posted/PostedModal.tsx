@@ -8,9 +8,10 @@ type Props = {
 	arr: PostArr;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	comment?: boolean;
+	setTopModalOpen: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const PostedModal = ({ arr, setOpen, comment }: Props) => {
+const PostedModal = ({ arr, setOpen, comment, setTopModalOpen }: Props) => {
 	const user = useContext(ContextUser);
 	const commnetRef = useRef<HTMLDivElement>(null);
 	//console.log(user);
@@ -67,7 +68,11 @@ const PostedModal = ({ arr, setOpen, comment }: Props) => {
 					{arr.title && <StyledH1>{arr.title}</StyledH1>}
 					<Text>{arr.content}</Text>
 					<IconBox>
-						<FlexBox /* 유저 정보를 가져와서 스타일값 다르게 주기 */>
+						<FlexBox
+							onClick={() =>
+								setTopModalOpen(String(arr.id))
+							} /* 유저 정보를 가져와서 스타일값 다르게 주기 */
+						>
 							<img src='/images/comment.png' alt='좋아요' />
 							<span>좋아요</span>
 							<span>{arr.likeCount}</span>
@@ -226,6 +231,7 @@ const IconBox = styled.div`
 const FlexBox = styled.div`
 	display: flex;
 	margin-right: 10px;
+	cursor: pointer;
 
 	img {
 		width: 20px;
