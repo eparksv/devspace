@@ -1,6 +1,7 @@
 package our.portfolio.devspace.domain.follow.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import our.portfolio.devspace.domain.user.entity.User;
@@ -24,7 +25,9 @@ public class Follow {
     @JoinColumn(name = "followee_id", nullable = false)
     private User followee;
 
-    public Follow(User follower, User followee) {
+    @Builder
+    public Follow(Long id, User follower, User followee) {
+        this.id = id;
         this.follower = follower;
         this.followee = followee;
     }
