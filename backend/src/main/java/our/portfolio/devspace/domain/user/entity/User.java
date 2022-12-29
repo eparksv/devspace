@@ -1,15 +1,7 @@
 package our.portfolio.devspace.domain.user.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import our.portfolio.devspace.configuration.security.oauth.userinfo.OAuth2Provider;
 import our.portfolio.devspace.domain.BaseTimeEntity;
+import our.portfolio.devspace.domain.follow.entity.Follow;
+import our.portfolio.devspace.domain.like.entity.Like;
 import our.portfolio.devspace.domain.profile.entity.Profile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,6 +40,12 @@ public class User extends BaseTimeEntity {
     @Setter(AccessLevel.PACKAGE)
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Profile profile;
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.PERSIST)
+    private final List<Follow> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "followee", cascade = CascadeType.PERSIST)
+    private final List<Follow> followees = new ArrayList<>();
 
     @Builder
     public User(String subject, OAuth2Provider provider, Role role) {
