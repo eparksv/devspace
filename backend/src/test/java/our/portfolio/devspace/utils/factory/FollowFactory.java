@@ -28,7 +28,6 @@ public class FollowFactory {
     public Follow followEntity() throws IllegalAccessException {
 
         Follow entity = Follow.builder()
-                .id(this.id)
                 .follower(this.follower.userEntity())
                 .followee(this.followee.userEntity())
                 .build();
