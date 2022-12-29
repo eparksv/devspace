@@ -49,7 +49,7 @@ class FollowServiceTest {
             CommonTestUtils.setIdField(invocation.getArgument(0), followeeId);
             return follow;
         });
-        given(followRepository.findIdByFollowerIdAndFolloweeId(followerId, followeeId)).willReturn(0L);
+
         given(followMapper.toCreateFollowResponse(any(Follow.class))).willReturn(new CreateFollowResponse(followeeId));
 
         // ** When **
@@ -58,5 +58,4 @@ class FollowServiceTest {
         // ** Then **
         assertThat(responseDto.getId()).isEqualTo(followeeId);
     }
-
 }

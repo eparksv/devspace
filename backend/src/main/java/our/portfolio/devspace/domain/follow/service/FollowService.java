@@ -28,11 +28,10 @@ public class FollowService {
             throw new CustomException(INVALID_INPUT_VALUE);
         }
 
-        Long id = followRepository.findIdByFollowerIdAndFolloweeId(userId, followRequest.getId());
-
-        if (followRepository.findIdByFollowerIdAndFolloweeId(userId, followRequest.getId()) != 0) {
-            throw new CustomException(AREADY_EXIST_VALUE);
-        }
+        followRepository.findIdByFollowerIdAndFolloweeId(userId, followRequest.getId())
+                .ifPresent(e -> {
+                    throw new CustomException(AREADY_EXIST_VALUE);
+                });
 
         Follow follow = followMapper.toEntity(followRequest, userId);
         followRepository.save(follow);
