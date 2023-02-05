@@ -68,6 +68,7 @@ const Content = styled.div`
 	/* 스크롤바 숨기기 */
 
 	> p {
+		margin: 0;
 		font-family: 'Pretendard';
 		font-style: normal;
 		font-weight: 700;
@@ -86,12 +87,18 @@ const Content = styled.div`
 		padding: 0;
 		border: none;
 		background: transparent;
+		cursor: pointer;
 		> img {
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
+
+			&:hover {
+				filter: invert(78%) sepia(76%) saturate(4961%) hue-rotate(209deg)
+					brightness(91%) contrast(84%);
+			}
 		}
 	}
 `;
