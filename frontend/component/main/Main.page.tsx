@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyledSection, TextBar } from './Main_style';
-import EditIcon from '@mui/icons-material/Edit';
 import { ModalPost } from '../common/Modal/ModalPost';
 import { ContextUser } from '../../pages/_app';
 import ModalSignUp2 from '../common/reModal/ModalSignUp2';
@@ -10,6 +9,9 @@ import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import PostedModal from '../common/Posted/PostedModal';
 import LikedModal from '../common/Posted/LikedModal';
+import Image from 'next/image';
+import pencilIcon from '../../public/images/pencilIcon.png';
+import Profile from '../../public/images/Profile.png';
 
 export type PostArr = {
 	id: number;
@@ -137,14 +139,17 @@ const Main = (/*{ data }: any*/) => {
 		<>
 			<StyledSection>
 				<TextBar>
-					<button
+					<Image src={Profile} alt='' width={40} height={40} />
+					<div
+						className='mainTopWrap'
 						onClick={() => {
+							//나중에 로그인 후 유저값이 저장되면, 유저값이 있을 때만 포스팅 모달 키고 유저값 없으면 로그인 모달창 on
 							setOpen(true);
 							setTest(<ModalPost setOpen={setOpen} />);
 						}}>
-						<EditIcon />
-					</button>
-					<button onClick={() => setOpen(true)}>x</button>
+						데브스페이스와 함께 당신의 IT 커리어를 성장시켜 보세요!
+						<Image src={pencilIcon} alt='' width={18} height={18} />
+					</div>
 				</TextBar>
 
 				<Header>
