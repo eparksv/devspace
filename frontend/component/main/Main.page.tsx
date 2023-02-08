@@ -72,7 +72,9 @@ const Main = (/*{ data }: any*/) => {
 	const context = useContext(ContextUser); // /ouath를 거쳐넘어온 main컴포넌트라면 ContextUser 객체 업데이트됨.
 
 	useEffect(() => {
-		if (context.user.job === '') {
+		const isUserInfo = localStorage.getItem('devS_user');
+		if (isUserInfo && JSON.parse(isUserInfo).job === '') {
+			console.log(JSON.parse(isUserInfo).job);
 			setOpen(true);
 			console.log(context.user);
 			setTest(<ModalSignUp2 setOpen={setOpen} setTest={setTest} />);
