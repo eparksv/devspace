@@ -23,7 +23,7 @@ function Layout({ children }: childType) {
 				<Inner>
 					<div className='wrap'>
 						{children}
-						<Aside />
+						{/*<Aside />*/}
 					</div>
 				</Inner>
 			</main>

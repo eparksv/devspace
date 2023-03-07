@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { ContextDispatch, ContextUser } from './_app';
 import Main from '../component/main/Main.page';
+import Profile from '@/component/profile/Profile';
 
 const Pages = () => {
 	const router = useRouter();
@@ -59,6 +60,10 @@ const Pages = () => {
 				//그 후 메인페이지로 이동
 
 				console.log('test:', user);
+				break;
+
+			case 'profile':
+				component = <Profile />;
 				break;
 		}
 	}

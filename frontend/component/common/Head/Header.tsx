@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyledHeader, HeaderBox } from '../Head/Header_style';
-import { ContextDispatch, ContextUser } from '../../../pages/_app';
 import { ModalSignIn } from '../Modal/ModalSignIn';
 
 function Header() {
-	const { token } = useContext(ContextUser);
-	const dispatch = useContext(ContextDispatch);
-
 	const [open, setOpen] = useState(false);
 	const [modal, setModal] = useState<React.ReactElement | null>();
 	const [user, setUser] = useState<string>('');

@@ -5,7 +5,7 @@ import { StyledModalWrap, StyledWrap } from './ModalWrapStyle';
 function ModalWrap({ children }: WrapProps) {
 	return (
 		<StyledWrap>
-			<StyledModalWrap>{children}</StyledModalWrap>
+			<StyledModalWrap className='???'>{children}</StyledModalWrap>
 		</StyledWrap>
 	);
 }
