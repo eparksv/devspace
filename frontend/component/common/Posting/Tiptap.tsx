@@ -3,12 +3,15 @@ import { StyledForm, WrapEditor } from '../Modal/Modal_style';
 import Tiptap_submit from './Tiptap_submit';
 import Tiptap_post from './Tiptap_post';
 import Tiptap_tag from './Tiptap_tag';
+import { dataObj } from '../Modal/ModalPost';
 
 type Props = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setCateOn: React.Dispatch<React.SetStateAction<boolean>>;
+	setData: React.Dispatch<React.SetStateAction<dataObj | undefined>>;
 };
 
-const Tiptap = ({ setOpen }: Props) => {
+const Tiptap = ({ setOpen, setCateOn, setData }: Props) => {
 	console.log('tiiptap start');
 
 	const title = useRef<HTMLInputElement>(null);
@@ -87,7 +90,12 @@ const Tiptap = ({ setOpen }: Props) => {
 					</button>
 				</div>
 
-				<Tiptap_submit getValue={getValue} setOpen={setOpen} />
+				<Tiptap_submit
+					getValue={getValue}
+					setOpen={setOpen}
+					setCateOn={setCateOn}
+					setData={setData}
+				/>
 			</StyledForm>
 		</>
 	);
