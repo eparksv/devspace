@@ -12,7 +12,6 @@ import LikedModal from '../common/Posted/LikedModal';
 import Image from 'next/image';
 import pencilIcon from '../../public/images/pencilIcon.png';
 import Profile from '../../public/images/Profile.png';
-
 export type PostArr = {
 	id: number;
 	profile: {
@@ -68,7 +67,6 @@ const Main = (/*{ data }: any*/) => {
 	/*const [list, setList] = useState<
 		[] | firebase.default.firestore.DocumentData[]
 	>([]); */
-
 	const context = useContext(ContextUser); // /ouath를 거쳐넘어온 main컴포넌트라면 ContextUser 객체 업데이트됨.
 
 	useEffect(() => {

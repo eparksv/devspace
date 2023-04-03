@@ -5,8 +5,9 @@ import React, { useContext, useEffect } from 'react';
 import { ContextDispatch, ContextUser } from './_app';
 import Main from '../component/main/Main.page';
 import Profile from '@/component/profile/Profile';
+import { GetServerSideProps } from 'next';
 
-const Pages = () => {
+const Pages = ({ data }: any) => {
 	const router = useRouter();
 	const user = useContext(ContextUser);
 	const dispatch = useContext(ContextDispatch);
@@ -14,6 +15,7 @@ const Pages = () => {
 	const query = router.query.params;
 	let component;
 
+	console.log('params', data);
 	console.log(query);
 
 	useEffect(() => {
@@ -76,3 +78,10 @@ const Pages = () => {
 };
 
 export default Pages;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	console.log('get', context.params);
+	const data = context.params ? context.params : '/';
+
+	return { props: { data } };
+};
